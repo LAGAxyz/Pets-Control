@@ -4,74 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pets Control | Acceso</title>
-    <meta name="author" content="Grupo 04 - Titulación Software 2021">
+    <meta name="author" content="Grupo 01 - Titulación Software 2021">
     <meta name="copyright" content="PET ID">
     <meta name="robots" content="noindex">
-    <!-- Favicon -->
-    <!-- <link rel="icon" type="image/png" href=""> -->
+    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@master/devicon.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+        integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ=="
+        crossorigin="anonymous">
     <link rel="stylesheet" href="../assets/css/accesoYregistro.css">
 </head>
 <body>
     <div class="contenedor">
         <div class="login">
             <form class="formulario">
-                <span class="titulo">Acceso</span>
+                <span class="titulo">Acceder con</span>
                 <button type="button" class="btnFB" id="btnFB">
                     <i class="devicon-facebook-plain"></i>Facebook
                 </button>
                 <button type="button" class="btnGG" id="btnGG">
                     <img src="../assets/img/logoGG.png" alt="GOOGLE">Google
                 </button>
-                <div class="usuario"><span>Usuario</span></div>
+                <div class="usuario"><span>Correo</span></div>
                 <div class="input-contenedor">
                     <input class="txtUsuario" type="text" id="txtUsuario">
-                    <span class="inputBorder"></span>
                 </div>
                 <div class="contrasenia">
                     <span>Contraseña</span>
-                    <a class="linkContraO" id="linkContraO">olvidada?</a>
+                    <a class="linkContraO" id="linkContraO" rel="nofollow" target="_self">olvidada?</a>
                 </div>
                 <div class="input-contenedor">
                     <input class="txtContrasenia" type="password" id="txtContrasenia">
-                    <span class="inputBorder"></span>
+                    <i class="fas fa-eye-slash btnOjo" id="btnOjo"></i>
                 </div>
+                <small class="msmError" id="msmError">Mensaje de error</small>
                 <div class="CbtnIngresarCrear">
                     <button class="btnIngresarCrear" id="btnIngresarCrear" type="button">Acceder</button>
                 </div>
                 <div class="sinCuenta">
                     <span>No tienes una cuenta?</span>
-                    <a class="linkCrearIngresar" id="linkCrearIngresar">Crear cuenta</a>
+                    <a class="linkCrearIngresar" id="linkCrearIngresar" rel="nofollow" target="_self">Crear cuenta</a>
                 </div>
             </form>
         </div>
     </div>
-    <!-- Firebase CDN -->
-    <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.0.1/firebase-firestore.js"></script>
-    
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+
     <script>
         var firebaseConfig = {
-          apiKey: "AIzaSyAVk8MYXI-ku91JPcBUYbvvjdHoBo_p8dQ",
-          authDomain: "social-laga.firebaseapp.com",
-          databaseURL: "https://social-laga.firebaseio.com",
-          projectId: "social-laga",
-          storageBucket: "social-laga.appspot.com",
-          messagingSenderId: "1020931431985",
-          appId: "1:1020931431985:web:0a1d97835d840a0c963f10"
+            apiKey: "AIzaSyAjuPOXu1P52gm-ggd_EJZnfpDwDY9EnOU",
+            authDomain: "pets-control-d5e55.firebaseapp.com",
+            databaseURL: "https://pets-control-d5e55.firebaseio.com",
+            projectId: "pets-control-d5e55",
+            storageBucket: "pets-control-d5e55.appspot.com",
+            messagingSenderId: "295982271654",
+            appId: "1:295982271654:web:a8cc495027ee37f3d5f867"
         };
         firebase.initializeApp(firebaseConfig);
     </script>
 
-    <!-- JQuery CDN -->
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js" crossorigin="anonymous"
-        integrity="sha512-jGsMH83oKe9asCpkOVkBnUrDDTp8wl+adkB2D+//JtlxO4SrLoJdhbOysIFQJloQFD+C4Fl1rMsQZF76JjV0eQ==">
-    </script>
-    <!-- Sweet Alert 2 CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <!-- My own JS -->
-    <script src="./assets/js/accesoYregistro.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="../assets/js/accesoYregistro.js"></script>
 </body>
 </html>
