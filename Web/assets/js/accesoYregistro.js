@@ -203,7 +203,7 @@ linkContraO.onclick = ()=> {
 
 firebase.auth().onAuthStateChanged(user=>{
     if (user) {
-        location.href = "../plataforma/";
+        // location.href = "../plataforma/";
     } else {
         iniciarSesion();
     }
