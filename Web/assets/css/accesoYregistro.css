@@ -7,13 +7,6 @@
     box-sizing: border-box;
 }
 
-a:hover{
-    cursor: pointer;
-    color: #655fc5;
-    text-decoration: none;
-    border-color: #655fc5;
-}
-
 input{
 	border: none;
 	outline: none;
@@ -29,14 +22,12 @@ button{
 body{
     width: 100%;
     height: 100vh;
-    /* background-image: url(../img/fondo.jpg); */
-    background-color: #4063ad;
-    /* ------------------------------------------------ */
-    /* background-size: cover; */
-    /* background-position: center; */
-    /* background-repeat: no-repeat; */
     font-weight: 400;
     font-family: 'Poppins', sans-serif;
+    background-image: url("../img/fondos/accesoYregistro.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .contenedor{
@@ -49,10 +40,45 @@ body{
 }
 
 .login{
+    position: relative;
+    overflow: hidden;
     max-width: 600px;
     border-radius: 10px;
     background-color: #fff;
     padding: 40px 60px 20px 60px;
+}
+
+.back{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    background-color: #333;
+    border-bottom-right-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back:hover{
+    background-color: #222;
+}
+
+.back a{
+    width: 100%;
+    height: 100%;
+    color: #999;
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Poppins';
+}
+
+.back a:hover{
+    color: #ddd;
 }
 
 .formulario{
@@ -79,62 +105,72 @@ body{
     width: calc((100% - 20px) / 2);
     padding: 15px;
     font-size: 18px;
+    font-weight: 600;
+    position: relative;
     margin-bottom: 15px;
+    border-radius: 10px;
+    transition: all 0.4s;
+    font-family: 'Montserrat';
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.btnFB::before, .btnGG::before{
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    content: "";
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: #222;
     border-radius: 10px;
-    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
-    position: relative;
     transition: all 0.4s;
-    font-weight: 600;
-    font-family: 'Montserrat';
 }
 
-.btnFB::before,
-.btnGG::before{
-  content: "";
-  z-index: -1;
-  width: 100%;
-  height: 100%;
-  display: block;
-  border-radius: 10px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: #a64bf4;
-  background: linear-gradient(45deg, #00dbde, #fc00ff);
-  opacity: 0;
-  transition: all 0.4s;
-}
-
-.btnFB {
+.btnFB{
     color: #fff;
     background-color: #3b5998;
 }
 
-.btnFB i {
+.btnFB i{
     font-size: 30px;
     margin-right: 15px;
     padding-bottom: 3px;
 }
 
-.btnGG {
+.btnGG{
     color: #555;
     background-color: #fff;
 }
 
-.btnGG img {
+.btnGG img{
     width: 30px;
     margin-right: 15px;
     padding-bottom: 3px;
 }
 
-.btnFB:hover, .btnGG:hover {color: #fff;}
-.btnFB:hover:before, .btnGG:hover:before {opacity: 1;}
+.btnFB:hover,
+.btnGG:hover{
+    color: #fff;
+}
 
-.usuario{padding: 30px 0px 10px 0px;}
-.contrasenia{padding: 13px 0px 10px 0px;}
+.btnFB:hover:before,
+.btnGG:hover:before{
+    opacity: 0.5;
+}
+
+.usuario{
+    padding: 30px 0px 10px 0px;
+}
+
+.contrasenia{
+    padding: 13px 0px 10px 0px;
+}
 
 .usuario span,
 .contrasenia span{
@@ -152,7 +188,8 @@ body{
     border: 1px solid #e6e6e6;
 }
 
-.txtUsuario, .txtContrasenia{
+.txtUsuario,
+.txtContrasenia{
     width: 100%;
     height: 50px;
     color: #333;
@@ -177,8 +214,6 @@ body{
 
 .CbtnIngresarCrear{
     width: 100%;
-    display: flex;
-    flex-wrap: wrap;
     margin-top: 20px;
 }
 
@@ -186,36 +221,34 @@ body{
     z-index: 1;
     width: 100%;
     height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #333333;
-    border-radius: 10px;
     color: #fff;
     font-size: 16px;
     font-weight: 500;
-    font-family: 'Poppins';
     position: relative;
+    border-radius: 10px;
     transition: all 0.4s;
+    font-family: 'Poppins';
+    background-color: #333;
 }
 
 .btnIngresarCrear::before{
-    content: "";
-    display: block;
     position: absolute;
     top: 0;
     left: 0;
+    opacity: 0;
+    content: "";
     z-index: -1;
     width: 100%;
     height: 100%;
+    display: block;
     border-radius: 10px;
-    background: #a64bf4;
-    background: -webkit-linear-gradient(45deg, #00dbde, #fc00ff);
-    opacity: 0;
     transition: all 0.4s;
+    background-color: #222;
 }
 
-.btnIngresarCrear:hover:before{opacity: 1;}
+.btnIngresarCrear:hover:before{
+    opacity: 1;
+}
 
 .msmError{
     width: 100%;
@@ -246,11 +279,23 @@ body{
     margin-left: 5px;
     font-weight: 400;
     font-family: 'Poppins';
-    border-bottom: 1px solid #999999;
+    border-bottom: 1px solid #999;
+}
+
+.linkContraO:hover,
+.linkCrearIngresar:hover{
+    cursor: pointer;
+    color: #655fc5;
+    text-decoration: none;
+    border-color: #655fc5;
 }
 
 @media (max-width: 700px){
     .contenedor{padding: 20px 20px;}
     .login{padding: 20px 20px 20px 20px;}
     .btnFB, .btnGG{width: 100%;}
+}
+
+@media (max-height: 580px){
+    body{height: auto;}
 }

@@ -99,73 +99,73 @@ const validarData = ()=>{
     } else {validacion = true;}
 };
 
-const iniciarSesion = ()=>{
-    btnGG.onclick = async ()=>{
-        try {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            await firebase.auth().signInWithPopup(provider)
-        } catch (error) {console.log(error);}
-    }
-    btnFB.onclick = async ()=>{
-        try {
-            const provider = new firebase.auth.FacebookAuthProvider();
-            await firebase.auth().signInWithPopup(provider)
-        } catch (error) {console.log(error);}
-    }
-    btnIngresarCrear.onclick = async ()=>{
-        validarData();
-        if(btnIngresarCrear.innerText === "Acceder"){
-            if(validacion===true){
-                const email = txtUsuario.value.trim();
-                const password = txtContrasenia.value.trim();
-                try {
-                    firebase.auth().signInWithEmailAndPassword(email, password).catch((error)=>{
-                        if(error.code === 'auth/invalid-email'){
-                            mostrarErrorUsuario();
-                            msmError.innerText = "El correo ingresado no es válido";
-                        }
-                        else if(error.code === 'auth/user-not-found'){
-                            mostrarErrorUsuario();
-                            msmError.innerText = "El correo ingresado no pertenece a ninguna cuenta";
-                        }
-                        else if(error.code === 'auth/wrong-password'){
-                            mostrarErrorContrasenia();
-                            msmError.innerText = "La contraseña ingresada no es correcta";
-                        }
-                        else{
-                            mostrarErrorUsuario();
-                            mostrarErrorContrasenia();
-                            msmError.innerText = "Error, revise los campos ingresados y vuelva a intentarlo";
-                        }
-                    });
-                } catch (error) {console.log(error);}
-            }
-        } else {
-            if(validacion===true){
-                const email = txtUsuario.value.trim();
-                const password = txtContrasenia.value.trim();
-                try {
-                    firebase.auth().createUserWithEmailAndPassword(email, password).catch((error)=>{
-                        if(error.code === 'auth/invalid-email'){
-                            mostrarErrorUsuario();
-                            msmError.innerText = "El correo ingresado no es válido";
-                        }
-                        else if(error.code === 'auth/email-already-in-use'){
-                            mostrarErrorUsuario();
-                            msmError.innerText = "El correo ingresado ya está en uso";
-                        }
-                        else if(error.code === 'auth/weak-password'){
-                            mostrarErrorContrasenia();
-                            msmError.innerText = "La contraseña ingresada no cumple con los parámetros de seguridad";
-                        }
-                        else{
-                            mostrarErrorUsuario();
-                            mostrarErrorContrasenia
-                            msmError.innerText = "Error, revise los campos ingresados y vuelva a intentarlo";
-                        }
-                    })
-                } catch (error) {console.log(error);}
-            }
+btnGG.onclick = async ()=>{
+    try {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        await firebase.auth().signInWithPopup(provider)
+    } catch (error) {console.log(error);}
+};
+
+btnFB.onclick = async ()=>{
+    try {
+        const provider = new firebase.auth.FacebookAuthProvider();
+        await firebase.auth().signInWithPopup(provider)
+    } catch (error) {console.log(error);}
+};
+
+btnIngresarCrear.onclick = async ()=>{
+    validarData();
+    if(btnIngresarCrear.innerText === "Acceder"){
+        if(validacion===true){
+            const email = txtUsuario.value.trim();
+            const password = txtContrasenia.value.trim();
+            try {
+                firebase.auth().signInWithEmailAndPassword(email, password).catch((error)=>{
+                    if(error.code === 'auth/invalid-email'){
+                        mostrarErrorUsuario();
+                        msmError.innerText = "El correo ingresado no es válido";
+                    }
+                    else if(error.code === 'auth/user-not-found'){
+                        mostrarErrorUsuario();
+                        msmError.innerText = "El correo ingresado no pertenece a ninguna cuenta";
+                    }
+                    else if(error.code === 'auth/wrong-password'){
+                        mostrarErrorContrasenia();
+                        msmError.innerText = "La contraseña ingresada no es correcta";
+                    }
+                    else{
+                        mostrarErrorUsuario();
+                        mostrarErrorContrasenia();
+                        msmError.innerText = "Error, revise los campos ingresados y vuelva a intentarlo";
+                    }
+                });
+            } catch (error) {console.log(error);}
+        }
+    } else {
+        if(validacion===true){
+            const email = txtUsuario.value.trim();
+            const password = txtContrasenia.value.trim();
+            try {
+                firebase.auth().createUserWithEmailAndPassword(email, password).catch((error)=>{
+                    if(error.code === 'auth/invalid-email'){
+                        mostrarErrorUsuario();
+                        msmError.innerText = "El correo ingresado no es válido";
+                    }
+                    else if(error.code === 'auth/email-already-in-use'){
+                        mostrarErrorUsuario();
+                        msmError.innerText = "El correo ingresado ya está en uso";
+                    }
+                    else if(error.code === 'auth/weak-password'){
+                        mostrarErrorContrasenia();
+                        msmError.innerText = "La contraseña ingresada no cumple con los parámetros de seguridad";
+                    }
+                    else{
+                        mostrarErrorUsuario();
+                        mostrarErrorContrasenia
+                        msmError.innerText = "Error, revise los campos ingresados y vuelva a intentarlo";
+                    }
+                })
+            } catch (error) {console.log(error);}
         }
     }
 };
@@ -208,5 +208,3 @@ firebase.auth().onAuthStateChanged(user=>{
         iniciarSesion();
     }
 });
-
-window.addEventListener("load", init);
