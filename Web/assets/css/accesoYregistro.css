@@ -169,7 +169,11 @@ body{
 }
 
 .contrasenia{
+    width: 100%;
     padding: 13px 0px 10px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .usuario span,
@@ -279,6 +283,7 @@ body{
     margin-left: 5px;
     font-weight: 400;
     font-family: 'Poppins';
+    text-align: right;
     border-bottom: 1px solid #999;
 }
 
@@ -294,6 +299,10 @@ body{
     .contenedor{padding: 20px 20px;}
     .login{padding: 20px 20px 20px 20px;}
     .btnFB, .btnGG{width: 100%;}
+}
+
+@media (max-width: 400px){
+    .linkContraO{font-size: 12px;}
 }
 
 @media (max-height: 580px){
