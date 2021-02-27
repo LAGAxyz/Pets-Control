@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pets Control | Ubícanos</title>
+  <meta name="author" content="Grupo 01 - Titulación Software 2021">
+  <meta name="copyright" content="PET ID">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" crossorigin=""
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="top">
+    <h1 class="title">Ubícanos en nuestra sede principal</h1>
+    <div class="float">
+      <div class="section">
+        <small>Departamento</small>
+        <span id="ip">Lima</span>
+      </div>
+      <div class="line"></div>
+      <div class="section">
+        <small>Distrito</small>
+        <span id="location">Jesús María</span>
+      </div>
+      <div class="line"></div>
+      <div class="section">
+        <small>Avenida</small>
+        <span id="timezone">Mariategui 1030</span>
+      </div>
+      <div class="line"></div>
+      <div class="section">
+        <small>Atención</small>
+        <span id="isp">08:00 a 20:00</span>
+      </div>
+    </div>
+  </div>
+  <div class="bottom">
+    <div class="map" id="map"></div>
+  </div>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" crossorigin=""
+          integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==">
+  </script>
+  <script src="./main.js"></script>
+</body>
+</html>
