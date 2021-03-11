@@ -2904,12 +2904,7 @@
             l = i[r] || a(r, {});
         e.exports = l;
     },
-    function (e, t, n) {
-        var i = n(1),
-            a = n(193),
-            r = i.WeakMap;
-        e.exports = "function" == typeof r && /native code/.test(a(r));
-    },
+    function (e, t, n) {},
     function (e, t, n) {
         var i = n(37),
             a = n(194);
@@ -3609,7 +3604,6 @@
                     return i < 0 ? n.push([e, t]) : (n[i][1] = t), this;
                 }),
                 (w.prototype.clear = function () {
-                    this.__data__ = { hash: new x(), map: new (M || L)(), string: new x() };
                 }),
                 (w.prototype.delete = function (e) {
                     return D(this, e).delete(e);
@@ -3630,60 +3624,7 @@
     function (e, t, n) {
         "use strict";
         (function (e) {
-            var n = (function () {
-                    if ("undefined" != typeof Map) return Map;
-                    function e(e, t) {
-                        var n = -1;
-                        return (
-                            e.some(function (e, i) {
-                                return e[0] === t && ((n = i), !0);
-                            }),
-                            n
-                        );
-                    }
-                    return (function () {
-                        function t() {
-                            this.__entries__ = [];
-                        }
-                        return (
-                            Object.defineProperty(t.prototype, "size", {
-                                get: function () {
-                                    return this.__entries__.length;
-                                },
-                                enumerable: !0,
-                                configurable: !0,
-                            }),
-                            (t.prototype.get = function (t) {
-                                var n = e(this.__entries__, t),
-                                    i = this.__entries__[n];
-                                return i && i[1];
-                            }),
-                            (t.prototype.set = function (t, n) {
-                                var i = e(this.__entries__, t);
-                                ~i ? (this.__entries__[i][1] = n) : this.__entries__.push([t, n]);
-                            }),
-                            (t.prototype.delete = function (t) {
-                                var n = this.__entries__,
-                                    i = e(n, t);
-                                ~i && n.splice(i, 1);
-                            }),
-                            (t.prototype.has = function (t) {
-                                return !!~e(this.__entries__, t);
-                            }),
-                            (t.prototype.clear = function () {
-                                this.__entries__.splice(0);
-                            }),
-                            (t.prototype.forEach = function (e, t) {
-                                void 0 === t && (t = null);
-                                for (var n = 0, i = this.__entries__; n < i.length; n++) {
-                                    var a = i[n];
-                                    e.call(t, a[1], a[0]);
-                                }
-                            }),
-                            t
-                        );
-                    })();
-                })(),
+            var n = (function () {})(),
                 i = "undefined" != typeof window && "undefined" != typeof document && window.document === document,
                 a = void 0 !== e && e.Math === Math ? e : "undefined" != typeof self && self.Math === Math ? self : "undefined" != typeof window && window.Math === Math ? window : Function("return this")(),
                 r =
@@ -3893,47 +3834,6 @@
                         (this.callback_ = e), (this.controller_ = t), (this.callbackCtx_ = i);
                     }
                     return (
-                        (e.prototype.observe = function (e) {
-                            if (!arguments.length) throw new TypeError("1 argument required, but only 0 present.");
-                            if ("undefined" != typeof Element && Element instanceof Object) {
-                                if (!(e instanceof u(e).Element)) throw new TypeError('parameter 1 is not of type "Element".');
-                                var t = this.observations_;
-                                t.has(e) || (t.set(e, new y(e)), this.controller_.addObserver(this), this.controller_.refresh());
-                            }
-                        }),
-                        (e.prototype.unobserve = function (e) {
-                            if (!arguments.length) throw new TypeError("1 argument required, but only 0 present.");
-                            if ("undefined" != typeof Element && Element instanceof Object) {
-                                if (!(e instanceof u(e).Element)) throw new TypeError('parameter 1 is not of type "Element".');
-                                var t = this.observations_;
-                                t.has(e) && (t.delete(e), t.size || this.controller_.removeObserver(this));
-                            }
-                        }),
-                        (e.prototype.disconnect = function () {
-                            this.clearActive(), this.observations_.clear(), this.controller_.removeObserver(this);
-                        }),
-                        (e.prototype.gatherActive = function () {
-                            var e = this;
-                            this.clearActive(),
-                                this.observations_.forEach(function (t) {
-                                    t.isActive() && e.activeObservations_.push(t);
-                                });
-                        }),
-                        (e.prototype.broadcastActive = function () {
-                            if (this.hasActive()) {
-                                var e = this.callbackCtx_,
-                                    t = this.activeObservations_.map(function (e) {
-                                        return new v(e.target, e.broadcastRect());
-                                    });
-                                this.callback_.call(e, t, e), this.clearActive();
-                            }
-                        }),
-                        (e.prototype.clearActive = function () {
-                            this.activeObservations_.splice(0);
-                        }),
-                        (e.prototype.hasActive = function () {
-                            return this.activeObservations_.length > 0;
-                        }),
                         e
                     );
                 })(),
@@ -3958,33 +3858,15 @@
     function (e, t, n) {
         e.exports = (function () {})();
     },
-    function (e, t, n) {},
-    function (e, t, n) {},
+    function (e, t, n) {}, function (e, t, n) {}, function (e, t) {}, function (e, t, n) {},
+    function (e, t, n) {}, function (e, t, n) {}, function (e, t, n) {}, function (e, t, n) {},
+    function (e, t, n) {}, function (e, t, n) {}, function (e, t) {}, function (e, t) {},
+    function (e, t, n) {}, function (e, t, n) {}, function (e, t, n) {}, function (e, t, n) {},
+    function (e, t, n) {}, function (e, t, n) {}, function (e, t, n) {}, function (e, t, n) {},
+    function (e, t) {}, function (e, t) {}, function (e, t, n) {}, function (e, t, n) {},
     function (e, t) {},
-    function (e, t, n) {},
-    function (e, t, n) {    },
-    function (e, t, n) {    },
-    function (e, t, n) {    },
-    function (e, t, n) {},
-    function (e, t, n) {    },
-    function (e, t, n) {},
-    function (e, t) {    },
-    function (e, t) {    },
-    function (e, t, n) {},
-    function (e, t, n) {    },
-    function (e, t, n) {    },
-    function (e, t, n) {},
-    function (e, t, n) {    },
-    function (e, t, n) {    },
-    function (e, t, n) {    },
-    function (e, t, n) {    },
-    function (e, t) {    },
-    function (e, t) {    },
-    function (e, t, n) {    },
-    function (e, t, n) {},
-    function (e, t) {    },
     function (e, t) {
-        e.exports = function (e) {        };
+        e.exports = function (e) {    };
     },
     function (e, t, n) {
         var i = {};
@@ -3997,21 +3879,10 @@
             (e.exports = a),
             (a.id = 252);
     },
-    function (e, t, n) {    },
-    function (e, t, n) {    },
-    function (e, t, n) {    },
-    function (e, t, n) {    },
-    function (e, t, n) {    },
-    function (e, t, n) {    },
-    function (e, t, n) {    },
-    function (e, t, n) {    },
-    function (e, t, n) {    },
-    function (e, t, n) {    },
-    function (e, t, n) {    },
-    function (e, t, n) {    },
-    function (e, t, n) {    },
-    function (e, t, n) {    },
-    function (e, t, n) {    },
+    function (e, t, n) {},    function (e, t, n) {},    function (e, t, n) {},    function (e, t, n) {},
+    function (e, t, n) {},    function (e, t, n) {},    function (e, t, n) {},    function (e, t, n) {},
+    function (e, t, n) {},    function (e, t, n) {},    function (e, t, n) {},    function (e, t, n) {},
+    function (e, t, n) {},    function (e, t, n) {},    function (e, t, n) {},
     function (e, t, n) {
         var i = n(3),
             a = n(207),
@@ -4040,443 +3911,15 @@
             return (e.prototype = a(i, { next: r(1, n) })), l(e, d, !1, !0), (o[d] = s), e;
         };
     },
-    function (e, t, n) {    },
-    function (e, t, n) {    },
-    function (e, t, n) {    },
+    function (e, t, n) {},    function (e, t, n) {},    function (e, t, n) {},    function (e, t, n) {},
+    function (e, t, n) {},    function (e, t, n) {},    function (e, t, n) {},    function (e, t, n) {},
+    function (e, t, n) {},    function (e, t, n) {},    function (e, t, n) {},    function (e, t, n) {},
+    function (e, t, n) {},    function (e, t, n) {},    function (e, t, n) {},    function (e, t, n) {},
+    function (e, t, n) {},    function (e, t, n) {},    function (e, t, n) {},    function (e, t, n) {},
+    function (e, t, n) {},    function (e, t, n) {},    function (e, t, n) {},    function (e, t, n) {},
+    function (e, t, n) {},    function (e, t, n) {},    function (e, t, n) {},
     function (e, t, n) {},
-    function (e, t, n) {    },
-    function (e, t, n) {    },
-    function (e, t, n) {    },
-    function (e, t, n) {    },
-    function (e, t, n) {    },
-    function (e, t, n) {    },
-    function (e, t, n) {},
-    function (e, t, n) {    },
-    function (e, t, n) {},
-    function (e, t, n) {    },
-    function (e, t, n) {    },
-    function (e, t, n) {    },
-    function (e, t, n) {},
-    function (e, t, n) {    },
-    function (e, t, n) {},
-    function (e, t, n) {},
-    function (e, t, n) {    },
-    function (e, t, n) {},
-    function (e, t, n) {    },
-    function (e, t, n) {    },
-    function (e, t, n) {},
-    function (e, t, n) {},
-    function (e, t, n) {},
-    function (e, t, n) {
-        e.exports = (function () {
-            "use strict";
-            Element.prototype.matches ||
-                (Element.prototype.matches =
-                    Element.prototype.matchesSelector ||
-                    Element.prototype.mozMatchesSelector ||
-                    Element.prototype.msMatchesSelector ||
-                    Element.prototype.oMatchesSelector ||
-                    Element.prototype.webkitMatchesSelector ||
-                    function (e) {
-                        for (var t = (this.document || this.ownerDocument).querySelectorAll(e), n = t.length; --n >= 0 && t.item(n) !== this; );
-                        return n > -1;
-                    }),
-                Object.assign ||
-                    Object.defineProperty(Object, "assign", {
-                        enumerable: !1,
-                        configurable: !0,
-                        writable: !0,
-                        value: function (e) {
-                            if (null == e) throw new TypeError("Cannot convert first argument to object");
-                            for (var t = Object(e), n = 1; n < arguments.length; n++) {
-                                var i = arguments[n];
-                                if (null != i) {
-                                    i = Object(i);
-                                    for (var a = Object.keys(Object(i)), r = 0, l = a.length; r < l; r++) {
-                                        var o = a[r],
-                                            s = Object.getOwnPropertyDescriptor(i, o);
-                                        void 0 !== s && s.enumerable && (t[o] = i[o]);
-                                    }
-                                }
-                            }
-                            return t;
-                        },
-                    });
-            var e = (function () {e})(),
-                t = function (e) {},
-                n = "function" == typeof Symbol && Symbol.for ? Symbol.for("react.element") : 60103;
-            function i(e, t) {}
-            function a(e, t, n) {}
-            function r(e) {}
-            function l(e, t) {}
-            function o(e, t, n) {}
-            var s = function (e, n, r) {
-                    ((r = r || {}).arrayMerge = r.arrayMerge || a), (r.isMergeableObject = r.isMergeableObject || t), (r.cloneUnlessOtherwiseSpecified = i);
-                    var l = Array.isArray(n);
-                    return l === Array.isArray(e) ? (l ? r.arrayMerge(e, n, r) : o(e, n, r)) : i(n, r);
-                },
-                d = function (e) {
-                    return /\.(jpg|gif|png)$/.test(e);
-                },
-                u = function (e, t, n, i) {
-                    void 0 === i && (i = !1);
-                    var a = document.createElement(e);
-                    return n && (a[i ? "innerHTML" : "textContent"] = n), t && (a.className = t), a;
-                },
-                c = function (t) {
-                    return new e(t);
-                },
-                h = function (e) {
-                    return e
-                        .replace(/[\w]([A-Z])/g, function (e) {
-                            return e[0] + "-" + e[1];
-                        })
-                        .toLowerCase();
-                },
-                m = function (e) {
-                    return "function" == typeof e;
-                },
-                f = function (e) {
-                    return "object" == typeof e;
-                },
-                p = function (e) {
-                    return "string" == typeof e;
-                },
-                _ = function (e) {
-                    return Array.isArray(e);
-                },
-                g = function (e, t) {
-                    return s(e, t);
-                };
-            function y(e, t) {
-                (e.prototype = Object.create(t.prototype)), (e.prototype.constructor = e), (e.__proto__ = t);
-            }
-            function v(e) {
-                if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-                return e;
-            }
-            var M = (function () {
-                    function e(e, t) {
-                        (this.name = e), (this.properties = {}), (this.node = this.createElement(e)), t && this.set(t);
-                    }
-                    var t = e.prototype;
-                    return (
-                        (t.createElement = function (e) {
-                            return document.createElementNS("http://www.w3.org/2000/svg", e);
-                        }),
-                        (t.addClass = function (e) {
-                            this.node.setAttribute("class", e);
-                        }),
-                        (t.getElementCtr = function (e) {
-                            return SVG + e;
-                        }),
-                        (t.getBBox = function () {
-                            return this.node.getBBox();
-                        }),
-                        (t.set = function (e, t) {
-                            if (f(e)) for (var n in e) (this.properties[n] = e[n]), this.applyAttr(n, e[n]);
-                            else (this.properties[e] = t), this.applyAttr(e, t);
-                        }),
-                        (t.get = function (e) {
-                            return this.properties[e];
-                        }),
-                        (t.applyAttr = function (e, t) {
-                            this.node.setAttribute(h(e), t);
-                        }),
-                        (t.remove = function () {
-                            this.node.parentNode.removeChild(this.node);
-                        }),
-                        e
-                    );
-                })(),
-                b = (function (e) {
-                    function t(t, n, i) {
-                        var a;
-                        return ((a = e.call(this, t, n) || this).style = i || {}), (a.style.current = a.style.current || {}), (a.isHovered = !1), (a.isSelected = !1), a.updateStyle(), a;
-                    }
-                    y(t, e);
-                    var n = t.prototype;
-                    return (
-                        (n.setStyle = function (e, t) {
-                            var n = {};
-                            f(e) ? (n = e) : (n[e] = t), Object.assign(this.style.current, n), this.updateStyle();
-                        }),
-                        (n.updateStyle = function () {
-                            var e = {};
-                            this.mergeStyles(e, this.style.initial),
-                                this.mergeStyles(e, this.style.current),
-                                this.isHovered && this.mergeStyles(e, this.style.hover),
-                                this.isSelected && (this.mergeStyles(e, this.style.selected), this.isHovered && this.mergeStyles(e, this.style.selectedHover)),
-                                this.set(e);
-                        }),
-                        (n.mergeStyles = function (e, t) {
-                            for (var n in (t = t || {})) null === t[n] ? delete e[n] : (e[n] = t[n]);
-                        }),
-                        t
-                    );
-                })(M),
-                x = (function (e) {
-                    function t(t, n) {
-                        return e.call(this, "text", t, n) || this;
-                    }
-                    return (
-                        y(t, e),
-                        (t.prototype.applyAttr = function (t, n) {
-                            "text" === t ? (this.node.textContent = n) : e.prototype.applyAttr.call(this, t, n);
-                        }),
-                        t
-                    );
-                })(b),
-                L = (function (e) {
-                    function t(t, n) {
-                        return e.call(this, "image", t, n) || this;
-                    }
-                    y(t, e);
-                    var n = t.prototype;
-                    return (
-                        (n.applyAttr = function (t, n) {
-                            var i;
-                            "image" == t
-                                ? (f(n) ? ((i = n.url), (this.offset = n.offset)) : ((i = n), (this.offset = [0, 0])),
-                                  this.node.setAttributeNS("http://www.w3.org/1999/xlink", "href", i),
-                                  (this.width = 23),
-                                  (this.height = 23),
-                                  this.applyAttr("width", this.width),
-                                  this.applyAttr("height", this.height),
-                                  this.applyAttr("x", this.cx - this.width / 2 + this.offset[0]),
-                                  this.applyAttr("y", this.cy - this.height / 2 + this.offset[1]))
-                                : "cx" == t
-                                ? ((this.cx = n), this.width && this.applyAttr("x", n - this.width / 2 + this.offset[0]))
-                                : "cy" == t
-                                ? ((this.cy = n), this.height && this.applyAttr("y", n - this.height / 2 + this.offset[1]))
-                                : e.prototype.applyAttr.apply(this, arguments);
-                        }),
-                        (n.setStyle = function () {
-                            e.prototype.setStyle.apply(this, arguments);
-                        }),
-                        t
-                    );
-                })(b),
-                w = (function (e) {
-                    function t(t, n, i) {
-                        var a;
-                        return (
-                            ((a = e.call(this, "svg") || this).container = t),
-                            (a.defsElement = new M("defs")),
-                            a.node.appendChild(a.defsElement.node),
-                            (a.rootElement = new M("g")),
-                            a.node.appendChild(a.rootElement.node),
-                            a.container.append(a.node),
-                            a
-                        );
-                    }
-                    y(t, e);
-                    var n = t.prototype;
-                    return (
-
-                        t
-                    );
-                })(M),
-                k = (function () {
-                    function e() {}
-                    var t = e.prototype;
-                    return (e);
-                })(),
-                Y = (function (e) {
-                    function t(t) {}
-                    return (
-                        y(t, e),
-                        (t.prototype.updateLabelPosition = function () {
-                            this.label && this.label.set({ x: this.labelX * this.map.scale + this.map.transX * this.map.scale, y: this.labelY * this.map.scale + this.map.transY * this.map.scale });
-                        }),
-                        t
-                    );
-                })(k),
-                D = (function (e) {
-                    function t(t) {}
-                    y(t, e);
-                    var n = t.prototype;
-                    return (
-                        (n.createShape = function () {
-                            this.shape && this.shape.remove(),
-                                (this.shape = this.config.map.canvas[this.isImage ? "createImage" : "createCircle"]({ "data-index": this.config.index, cx: this.config.cx, cy: this.config.cy }, this.config.style, this.config.group)),
-                                this.shape.addClass("jsvmap-marker jsvmap-element"),
-                                this.isImage && this.updateLabelPosition();
-                        }),
-                        (n.updateLabelPosition = function () {
-                            this.label &&
-                                this.label.set({
-                                    x: this.labelX * this.map.scale + this.offsets[0] + this.map.transX * this.map.scale + 5 + (this.isImage ? (this.shape.width || 0) / 2 : this.shape.properties.r),
-                                    y: this.labelY * this.map.scale + this.map.transY * this.map.scale + this.offsets[1],
-                                });
-                        }),
-                        (n.setStyle = function (t, n) {
-                            e.prototype.setStyle.call(this, t, n), "r" === t && this.updateLabelPosition(), !!this.shape.get("image") != this.isImage && ((this.config.style = Object.assign({}, this.shape.style)), this.createShape());
-                        }),
-                        t
-                    );
-                })(k),
-                T = (function () {
-                    function e(e) {
-                        (this.params = e || {}),
-                            (this.map = this.params.map),
-                            (this.series = this.params.series),
-                            (this.body = u("div", "jsvmap-legend")),
-                            this.params.cssClass && this.body.setAttribute("class", this.params.cssClass),
-                            e.vertical ? this.map.legendVertical.appendChild(this.body) : this.map.legendHorizontal.appendChild(this.body),
-                            this.render();
-                    }
-                    return (
-                        (e.prototype.render = function () {
-                            var e,
-                                t,
-                                n,
-                                i = this.series.scale.getTicks(),
-                                a = u("div", "jsvmap-legend-inner");
-                            if (((this.body.innderHTML = ""), this.params.title)) {
-                                var r = u("div", "jsvmap-legend-title", this.params.title);
-                                this.body.appendChild(r);
-                            }
-                            this.body.appendChild(a);
-                            for (var l = 0; l < i.length; l++) {
-                                switch (((e = u("div", "jsvmap-legend-tick")), (t = u("div", "jsvmap-legend-tick-sample")), this.series.legendConfig.attribute)) {
-                                    case "fill":
-                                        d(i[l].value) ? (t.style.background = "url(" + i[l].value + ")") : (t.style.background = i[l].value);
-                                        break;
-                                    case "stroke":
-                                        t.style.background = i[l].value;
-                                        break;
-                                    case "image":
-                                        (t.style.background = "url(" + (f(i[l].value) ? i[l].value.url : i[l].value) + ") no-repeat center center"), (t.style.backgroundSize = "cover");
-                                }
-                                e.appendChild(t), (n = i[l].label), this.params.labelRender && (n = this.params.labelRender(n));
-                                var o = u("div", "jsvmap-legend-tick-text", n);
-                                e.appendChild(o), a.appendChild(e);
-                            }
-                        }),
-                        e
-                    );
-                })(),
-                S = (function () {
-                    function e(e) {
-                        this.scale = e;
-                    }
-                    var t = e.prototype;
-                    return (
-                        (t.getValue = function (e) {
-                            return this.scale[e];
-                        }),
-                        (t.getTicks = function () {
-                            var e = [];
-                            for (var t in this.scale) e.push({ label: t, value: this.scale[t] });
-                            return e;
-                        }),
-                        e
-                    );
-                })(),
-                j = (function () {
-                    function e(e, t, n) {
-                        void 0 === e && (e = {}),
-                            (this.map = n),
-                            (this.elements = t),
-                            (this.legendConfig = e),
-                            (this.legendConfig.attribute = e.attribute || "fill"),
-                            (this.values = e.values || {}),
-                            e.attributes && this.setAttributes(e.attributes),
-                            f(e.scale) && (this.scale = new S(e.scale)),
-                            this.parseValues(this.values),
-                            this.legendConfig.legend && (this.legend = new T(Object.assign({ map: this.map, series: this }, this.legendConfig.legend)));
-                    }
-                    var t = e.prototype;
-                    return (
-                        (t.parseValues = function (e) {
-                            var t = {};
-                            for (var n in e) e[n] && (t[n] = this.scale.getValue(e[n]));
-                            this.setAttributes(t), Object.assign(this.values, e);
-                        }),
-                        (t.setAttributes = function (e) {
-                            for (var t in e) this.elements[t] && this.elements[t].element.setStyle(this.legendConfig.attribute, e[t]);
-                        }),
-                        (t.clear = function () {
-                            var e,
-                                t = {};
-                            for (e in this.values) this.elements[e] && (t[e] = this.elements[e].element.shape.style.initial[this.legendConfig.attribute]);
-                            this.setAttributes(t), (this.values = {});
-                        }),
-                        e
-                    );
-                })();
-            function E(e, t, n) {
-                var i = c(t),
-                    a = -1 === i.attr("class").indexOf("jsvmap-region") ? "marker" : "region",
-                    r = "region" === a ? i.attr("data-code") : i.attr("data-index"),
-                    l = a + ":select";
-                return (
-                    n && (l = a + ".tooltip:show"),
-                    { event: l, type: a, code: r, element: "region" === a ? e.regions[r].element : e.markers[r].element, tooltipText: "region" === a ? e.mapData.paths[r].name || "" : e.markers[r].config.name || "" }
-                );
-            }
-            var H = {
-                mill: function (e, t, n) {
-                    return { x: this.radius * (t - n) * this.radDeg, y: (-this.radius * Math.log(Math.tan((45 + 0.4 * e) * this.radDeg))) / 0.8 };
-                },
-                merc: function (e, t, n) {
-                    return { x: this.radius * (t - n) * this.radDeg, y: -this.radius * Math.log(Math.tan(Math.PI / 4 + (e * Math.PI) / 360)) };
-                },
-                aea: function (e, t, n) {
-                },
-                lcc: function (e, t, n) {
-                },
-            };
-            (H.degRad = 180 / Math.PI), (H.radDeg = Math.PI / 180), (H.radius = 6381372);
-            var O = Object.freeze({}),
-                A = {
-                },
-                P = (function () {
-                    function e(t) {}
-                    var t = e.prototype;
-                    return (
-                        e
-                    );
-                })();
-            (P.maps = {}),
-                (P.defaults = {}),
-                Object.assign(P.prototype, O);
-            var C = (function () {
-                function e(e) {
-                    if ((void 0 === e && (e = {}), !e.selector)) throw new Error("Selector is not given.");
-                    return new P(e);
-                }
-                return (
-                    (e.prototype.addMap = function (e, t) {
-                        P.maps[e] = t;
-                    }),
-                    e
-                );
-            })();
-            return (window.jsVectorMap = window.JsVectorMap = C);
-        })();
-    },
-    function (e, t) {
-        JsVectorMap.prototype.addMap("world", {
-            insets: [
-                {
-                    width: 900,
-                    top: 0,
-                    left: 0,
-                    height: 440.70631074413296,
-                    bbox: [
-                        { y: -12671671.123330014, x: -20004297.151525836 },
-                        { y: 6930392.025135122, x: 20026572.39474939 },
-                    ],
-                },
-            ],
-            paths: {},
-            height: 440.70631074413296,
-            width: 900,
-            projection: { type: "mill", centralMeridian: 11.5 },
-        });
-    },
+    function (e, t) {},
     function (e, t, n) {
         "use strict";
         n.r(t);
@@ -6130,6 +5573,7 @@
                 }
                 var t = e.prototype;
                 return (
+                    
                     (t.enable = function () {
                         this._isEnabled = !0;
                     }),
@@ -6372,19 +5816,7 @@
                         if (this.config) for (var t in this.config) this.constructor.Default[t] !== this.config[t] && (e[t] = this.config[t]);
                         return e;
                     }),
-                    (t._cleanTipClass = function () {
-                        var e = this.getTipElement(),
-                            t = e.getAttribute("class").match(Pt);
-                        null !== t &&
-                            t.length > 0 &&
-                            t
-                                .map(function (e) {
-                                    return e.trim();
-                                })
-                                .forEach(function (t) {
-                                    return e.classList.remove(t);
-                                });
-                    }),
+                    (t._cleanTipClass = function () {}),
                     (t._handlePopperPlacementChange = function (e) {
                         var t = e.instance;
                         (this.tip = t.popper), this._cleanTipClass(), this._addAttachmentClass(this._getAttachment(e.placement));
@@ -6493,91 +5925,6 @@
                 (n = e), ((t = i).prototype = Object.create(n.prototype)), (t.prototype.constructor = t), (t.__proto__ = n);
                 var a = i.prototype;
                 return (
-                    (a.isWithContent = function () {
-                        return this.getTitle() || this._getContent();
-                    }),
-                    (a.setContent = function () {
-                        var e = this.getTipElement();
-                        this.setElementContent(de.findOne(".popover-header", e), this.getTitle());
-                        var t = this._getContent();
-                        "function" == typeof t && (t = t.call(this.element)), this.setElementContent(de.findOne(".popover-body", e), t), e.classList.remove("fade", "show");
-                    }),
-                    (a._addAttachmentClass = function (e) {
-                        this.getTipElement().classList.add("bs-popover-" + e);
-                    }),
-                    (a._getContent = function () {
-                        return this.element.getAttribute("data-content") || this.config.content;
-                    }),
-                    (a._cleanTipClass = function () {
-                        var e = this.getTipElement(),
-                            t = e.getAttribute("class").match(Qt);
-                        null !== t &&
-                            t.length > 0 &&
-                            t
-                                .map(function (e) {
-                                    return e.trim();
-                                })
-                                .forEach(function (t) {
-                                    return e.classList.remove(t);
-                                });
-                    }),
-                    (i.jQueryInterface = function (e) {
-                        return this.each(function () {
-                            var t = j(this, Kt),
-                                n = "object" == typeof e ? e : null;
-                            if ((t || !/dispose|hide/.test(e)) && (t || ((t = new i(this, n)), S(this, Kt, t)), "string" == typeof e)) {
-                                if (void 0 === t[e]) throw new TypeError('No method named "' + e + '"');
-                                t[e]();
-                            }
-                        });
-                    }),
-                    (i.getInstance = function (e) {
-                        return j(e, Kt);
-                    }),
-                    r(i, null, [
-                        {
-                            key: "VERSION",
-                            get: function () {
-                                return "5.0.0-alpha1";
-                            },
-                        },
-                        {
-                            key: "Default",
-                            get: function () {
-                                return en;
-                            },
-                        },
-                        {
-                            key: "NAME",
-                            get: function () {
-                                return Xt;
-                            },
-                        },
-                        {
-                            key: "DATA_KEY",
-                            get: function () {
-                                return Kt;
-                            },
-                        },
-                        {
-                            key: "Event",
-                            get: function () {
-                                return nn;
-                            },
-                        },
-                        {
-                            key: "EVENT_KEY",
-                            get: function () {
-                                return $t;
-                            },
-                        },
-                        {
-                            key: "DefaultType",
-                            get: function () {
-                                return tn;
-                            },
-                        },
-                    ]),
                     i
                 );
             })(Jt),
@@ -6618,116 +5965,7 @@
                         S(e, sn, this);
                 }
                 var t = e.prototype;
-                return (
-                    (t.refresh = function () {
-                        var e = this,
-                            t = this._scrollElement === this._scrollElement.window ? "offset" : pn,
-                            n = "auto" === this._config.method ? t : this._config.method,
-                            i = n === pn ? this._getScrollTop() : 0;
-                        (this._offsets = []),
-                            (this._targets = []),
-                            (this._scrollHeight = this._getScrollHeight()),
-                            de
-                                .find(this._selector)
-                                .map(function (e) {
-                                    var t,
-                                        a = _(e);
-                                    if ((a && (t = de.findOne(a)), t)) {
-                                        var r = t.getBoundingClientRect();
-                                        if (r.width || r.height) return [se[n](t).top + i, a];
-                                    }
-                                    return null;
-                                })
-                                .filter(function (e) {
-                                    return e;
-                                })
-                                .sort(function (e, t) {
-                                    return e[0] - t[0];
-                                })
-                                .forEach(function (t) {
-                                    e._offsets.push(t[0]), e._targets.push(t[1]);
-                                });
-                    }),
-                    (t.dispose = function () {
-                        E(this._element, sn),
-                            X.off(this._scrollElement, dn),
-                            (this._element = null),
-                            (this._scrollElement = null),
-                            (this._config = null),
-                            (this._selector = null),
-                            (this._offsets = null),
-                            (this._targets = null),
-                            (this._activeTarget = null),
-                            (this._scrollHeight = null);
-                    }),
-                    (t._getConfig = function (e) {
-                        if ("string" != typeof (e = s(s({}, un), "object" == typeof e && e ? e : {})).target && M(e.target)) {
-                            var t = e.target.id;
-                            t || ((t = f(on)), (e.target.id = t)), (e.target = "#" + t);
-                        }
-                        return x(on, e, cn), e;
-                    }),
-                    (t._getScrollTop = function () {
-                        return this._scrollElement === window ? this._scrollElement.pageYOffset : this._scrollElement.scrollTop;
-                    }),
-                    (t._getScrollHeight = function () {
-                        return this._scrollElement.scrollHeight || Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
-                    }),
-                    (t._getOffsetHeight = function () {
-                        return this._scrollElement === window ? window.innerHeight : this._scrollElement.getBoundingClientRect().height;
-                    }),
-                    (t._process = function () {
-                        var e = this._getScrollTop() + this._config.offset,
-                            t = this._getScrollHeight(),
-                            n = this._config.offset + t - this._getOffsetHeight();
-                        if ((this._scrollHeight !== t && this.refresh(), e >= n)) {
-                            var i = this._targets[this._targets.length - 1];
-                            this._activeTarget !== i && this._activate(i);
-                        } else {
-                            if (this._activeTarget && e < this._offsets[0] && this._offsets[0] > 0) return (this._activeTarget = null), void this._clear();
-                            for (var a = this._offsets.length; a--; ) {
-                                this._activeTarget !== this._targets[a] && e >= this._offsets[a] && (void 0 === this._offsets[a + 1] || e < this._offsets[a + 1]) && this._activate(this._targets[a]);
-                            }
-                        }
-                    }),
-                    (t._activate = function (e) {}),
-                    (t._clear = function () {
-                        de.find(this._selector)
-                            .filter(function (e) {
-                                return e.classList.contains(mn);
-                            })
-                            .forEach(function (e) {
-                                return e.classList.remove(mn);
-                            });
-                    }),
-                    (e.jQueryInterface = function (t) {
-                        return this.each(function () {
-                            var n = j(this, sn);
-                            if ((n || (n = new e(this, "object" == typeof t && t)), "string" == typeof t)) {
-                                if (void 0 === n[t]) throw new TypeError('No method named "' + t + '"');
-                                n[t]();
-                            }
-                        });
-                    }),
-                    (e.getInstance = function (e) {
-                        return j(e, sn);
-                    }),
-                    r(e, null, [
-                        {
-                            key: "VERSION",
-                            get: function () {
-                                return "5.0.0-alpha1";
-                            },
-                        },
-                        {
-                            key: "Default",
-                            get: function () {
-                                return un;
-                            },
-                        },
-                    ]),
-                    e
-                );
+                return (e);
             })();
         X.on(window, "load.bs.scrollspy.data-api", function () {
             de.find('[data-spy="scroll"]').forEach(function (e) {
