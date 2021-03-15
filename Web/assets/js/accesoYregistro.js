@@ -216,7 +216,7 @@ linkContraO.onclick = ()=> {
     }
 };
 
-firebase.auth().onAuthStateChanged(user=>{
+firebase.auth().onAuthStateChanged(user => {
     if (user) {
         location.href = "../.";
     }
