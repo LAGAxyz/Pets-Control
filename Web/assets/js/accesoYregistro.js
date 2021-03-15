@@ -120,7 +120,15 @@ btnIngresarCrear.onclick = async ()=>{
             const email = txtUsuario.value.trim();
             const password = txtContrasenia.value.trim();
             try {
-                firebase.auth().signInWithEmailAndPassword(email, password).catch((error)=>{
+                firebase.auth().signInWithEmailAndPassword(email, password).then(()=>{
+                    Swal.fire({
+                        timer: 1000,
+                        timerProgressBar: true,
+                        allowOutsideClick: false,
+                        title: 'Iniciando Sesión',
+                        didOpen: () => {Swal.showLoading()}
+                    })
+                }).catch((error)=>{
                     if(error.code === 'auth/invalid-email'){
                         mostrarErrorUsuario();
                         msmError.innerText = "El correo ingresado no es válido";
@@ -136,7 +144,7 @@ btnIngresarCrear.onclick = async ()=>{
                     else{
                         mostrarErrorUsuario();
                         mostrarErrorContrasenia();
-                        msmError.innerText = "Error, revise los campos ingresados y vuelva a intentarlo";
+                        msmError.innerText = "Error desconocido, comuníquese con un administrador para solucionar este problema"
                     }
                 });
             } catch (error) {console.log(error);}
@@ -146,7 +154,15 @@ btnIngresarCrear.onclick = async ()=>{
             const email = txtUsuario.value.trim();
             const password = txtContrasenia.value.trim();
             try {
-                firebase.auth().createUserWithEmailAndPassword(email, password).catch((error)=>{
+                firebase.auth().createUserWithEmailAndPassword(email, password).then(()=>{
+                    Swal.fire({
+                        timer: 1000,
+                        icon: 'success',
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                        title: 'Registrado correctamente',
+                    })
+                }).catch((error)=>{
                     if(error.code === 'auth/invalid-email'){
                         mostrarErrorUsuario();
                         msmError.innerText = "El correo ingresado no es válido";
@@ -161,8 +177,8 @@ btnIngresarCrear.onclick = async ()=>{
                     }
                     else{
                         mostrarErrorUsuario();
-                        mostrarErrorContrasenia
-                        msmError.innerText = "Error, revise los campos ingresados y vuelva a intentarlo";
+                        mostrarErrorContrasenia();
+                        msmError.innerText = "Error desconocido, comuníquese con un administrador para solucionar este problema"
                     }
                 })
             } catch (error) {console.log(error);}
@@ -178,10 +194,9 @@ linkContraO.onclick = ()=> {
         const emailAddress = txtUsuario.value.trim();
         firebase.auth().sendPasswordResetEmail(emailAddress).then(()=>{
             Swal.fire({
-                title: "Listo!",
-                text: "Hemos enviado un correo con los pasos para la recuperación de su contraseña",
                 icon: "success",
-                timer: 3000,
+                title: "¡Listo!",
+                text: "Hemos enviado un correo con los pasos para la recuperación de su contraseña",
                 confirmButtonText: "Entendido"
             });
         }).catch((error)=>{
@@ -203,8 +218,6 @@ linkContraO.onclick = ()=> {
 
 firebase.auth().onAuthStateChanged(user=>{
     if (user) {
-        // location.href = "../plataforma/";
-    } else {
-        iniciarSesion();
+        location.href = "../.";
     }
 });
