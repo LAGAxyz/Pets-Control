@@ -1097,24 +1097,62 @@ h3 {
   background: #1c1818;
 }
 
-.header-area .header-top_area .social_media_links {
+.header-area .header-top_area .customer_portal {
   text-align: right;
 }
 
+.header-area .header-top_area .customer_portal img{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
 @media (max-width: 767px) {
-  .header-area .header-top_area .social_media_links {
+  .header-area .header-top_area .customer_portal {
     text-align: center;
   }
 }
 
-.header-area .header-top_area .social_media_links a {
-  font-size: 18px;
+.header-area .header-top_area .customer_portal a {
+  font-size: 16px;
   color: #C7C7C7;
-  margin-left: 32px;
 }
 
-.header-area .header-top_area .social_media_links a:hover {
+.header-area .header-top_area .customer_portal a:hover {
   color: #eb592d;
+}
+
+.menu1{
+  cursor: pointer;
+}
+
+.menu1:hover .menu2{
+  visibility: visible;
+  background-color: #1c1818;
+  transform: translateY(-15px);
+  transition: transform 500ms ease, background 500ms ease;
+}
+
+.menu2{
+  position: absolute;
+  top: 50px;
+  right: 0px;
+  z-index: 100;
+  width: 135px;
+  height: auto;
+  visibility: hidden;
+  padding: 20px 0px 10px 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu2 a{
+  width: 125px;
+  display: block;
+  text-align: left;
+  padding: 5px 3px;
 }
 
 .header-area .header-top_area .short_contact_list {
