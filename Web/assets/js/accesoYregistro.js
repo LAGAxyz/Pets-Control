@@ -102,14 +102,14 @@ const validarData = ()=>{
 btnGG.onclick = async ()=>{
     try {
         const provider = new firebase.auth.GoogleAuthProvider();
-        await firebase.auth().signInWithPopup(provider)
+        await firebase.auth().signInWithPopup(provider);
     } catch (error) {console.log(error);}
 };
 
 btnFB.onclick = async ()=>{
     try {
         const provider = new firebase.auth.FacebookAuthProvider();
-        await firebase.auth().signInWithPopup(provider)
+        await firebase.auth().signInWithPopup(provider);
     } catch (error) {console.log(error);}
 };
 
@@ -216,8 +216,42 @@ linkContraO.onclick = ()=> {
     }
 };
 
+const registrarUsuarioDB = async (user)=>{
+    const query = await firebase.firestore().collection("usuario").get();
+    let usuarioEncontrado = false;
+
+    query.docs.forEach((doc)=>{
+        if(doc.data().correo_usu === user.email){
+            usuarioEncontrado = true;
+            return;
+        }
+    });
+
+    if(usuarioEncontrado === false){
+        firebase.firestore().collection('usuario').add({
+            id_usuario: user.uid,
+            dni_usuario: '88888888',
+            nombre_usu: 'no especificado',
+            apellido_usu: 'no especificado',
+            genero_usu: 'no especificado',
+            nacimiento_usu: firebase.firestore.Timestamp.fromDate(new Date("01, 01, 1815")),
+            direccion_usu: 'no especificado',
+            estado_civil_usu: 'no especificado',
+            telefono_usu: '999666333',
+            correo_usu: user.email,
+            tipo_usu: 1,
+            estado: 1
+        })
+    }
+};
+
+const redirigir = ()=>{
+    location.href = "../.";
+}
+
 firebase.auth().onAuthStateChanged(user => {
     if (user) {
-        location.href = "../.";
+        registrarUsuarioDB(user);
+        setTimeout("redirigir()", 4000);
     }
 });
