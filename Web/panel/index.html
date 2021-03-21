@@ -122,8 +122,8 @@
 								<i class="align-middle" data-feather="settings"></i>
 							</a>
 							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" data-toggle="dropdown">
-								<img src="./avatar.png" class="avatar img-fluid rounded mr-1" alt="Avatar de usuario" id="imgUsuario">
-								<span class="text-dark" id="nombreUsuario">Nombre Completo del Usuario</span>
+								<img src="../assets/img/icons/usuario-anonimo.png" class="avatar img-fluid mr-1" alt="Avatar de usuario" id="userPhoto">
+								<span class="text-dark" id="userName">Nombre Completo del Usuario</span>
 							</a>
 							<div class="dropdown-menu dropdown-menu-right">
 								<a class="dropdown-item" id="opcPerfil2">
@@ -665,6 +665,24 @@
 			</footer>
 		</div>
 	</div>
+
+	<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+    
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyAjuPOXu1P52gm-ggd_EJZnfpDwDY9EnOU",
+            authDomain: "pets-control-d5e55.firebaseapp.com",
+            databaseURL: "https://pets-control-d5e55.firebaseio.com",
+            projectId: "pets-control-d5e55",
+            storageBucket: "pets-control-d5e55.appspot.com",
+            messagingSenderId: "295982271654",
+            appId: "1:295982271654:web:a8cc495027ee37f3d5f867"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
+
 	<script src="./utils.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
@@ -673,6 +691,6 @@
 	</script>
 	<script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 	<script src="./main.js"></script>
-	<script src="./js/especies.js"></script>
+	<!-- <script src=""></script> -->
 </body>
 </html>
