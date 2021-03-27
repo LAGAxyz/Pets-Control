@@ -1,10 +1,9 @@
 
 const formCargos = document.getElementById("formCargos");
-const txtNombrecargo = document.getElementById("txtNombreCargo");
+const txtNombreCargo = document.getElementById("txtNombreCargo");
 const btnCrearActualizarCargo = document.getElementById("btnCrearActualizarCargo");
 const btnCancelarCargo = document.getElementById("btnCancelarCargo");
 const tableCargos = document.getElementById("tableCargos");
-const tblCargo = document.getElementById("tblCargo");
 let tablaCargo = $('#myTableCargos').DataTable();
 let idFilaCargo = "";
 
@@ -17,7 +16,7 @@ opcCargos.onclick = ()=> {
 
 $('#myTableCargos tbody').on('click', 'tr', async function () {
     var data = tablaCargo.row(this).data();
-    txtNombrecargo.value = data[0];
+    txtNombreCargo.value = data[0];
     btnCrearActualizarCargo.innerText = "Editar";
 
     const query = await firebase.firestore().collection('cargo').get();
@@ -56,11 +55,11 @@ const listarCargo = async ()=> {
 }
 
 const crearCargo = async ()=> {
-    if(txtNombrecargo.value.trim() === ""){
+    if(txtNombreCargo.value.trim() === ""){
         Swal.fire({
             icon: "error",
-            title: "Campos vacíos",
-            text: "Debe ingresar un cargo",
+            title: "Campos incompletos",
+            text: "Debe completar los campos",
             confirmButtonText: "Entendido"
         });
     } else {
@@ -68,12 +67,12 @@ const crearCargo = async ()=> {
         let cargoEncontrado = false;
 
         query.docs.forEach((doc)=>{
-            if(doc.data().nombre_cargo == txtNombrecargo.value.trim()){
+            if(doc.data().nombre_cargo == txtNombreCargo.value.trim()){
                 cargoEncontrado = true;
                 Swal.fire({
                     icon: "error",
-                    title: "Cargo ya existente",
-                    text: "El cargo ingresado ya existe en la base de datos",
+                    title: "Registro ya existente",
+                    text: "El registro que trata de ingresar ya existe en la base de datos",
                     confirmButtonText: "Entendido"
                 });
                 return;
@@ -82,17 +81,17 @@ const crearCargo = async ()=> {
     
         if(cargoEncontrado === false){
             firebase.firestore().collection('cargo').add({
-                nombre_cargo: txtNombrecargo.value.trim(),
+                nombre_cargo: txtNombreCargo.value.trim(),
                 estado_cargo: 1,
             })
             Swal.fire({
                 icon: "success",
-                title: "Cargo creado satisfactoriamente",
-                text: "El cargo fue creado de manera satisfactoria",
+                title: "Registro creado satisfactoriamente",
+                text: "El registro fue creado de manera satisfactoria",
                 confirmButtonText: "Entendido",
             }).then((result)=>{
                 if(result.isConfirmed){
-                    txtNombrecargo.value = "";
+                    txtNombreCargo.value = "";
                 }
             })
             listarCargo();
@@ -101,11 +100,11 @@ const crearCargo = async ()=> {
 }
 
 const editarCargo = async ()=> {
-    if(txtNombrecargo.value.trim() === ""){
+    if(txtNombreCargo.value.trim() === ""){
         Swal.fire({
             icon: "error",
-            title: "Campos vacíos",
-            text: "Debe ingresar un cargo",
+            title: "Campos incompletos",
+            text: "Debe completar los campos",
             confirmButtonText: "Entendido"
         });
     } else {
@@ -113,19 +112,19 @@ const editarCargo = async ()=> {
 
         Swal.fire({
             icon: "success",
-            title: "Cargo actualizado satisfactoriamente",
-            text: "El cargo fue actualizado de manera satisfactoria",
+            title: "Registro actualizado satisfactoriamente",
+            text: "El registro fue actualizado de manera satisfactoria",
             confirmButtonText: "Entendido"
         }).then((result)=>{
             if(result.isConfirmed){
                 listarCargo();
-                txtNombrecargo.value = "";
+                txtNombreCargo.value = "";
                 btnCrearActualizarCargo.innerText = "Crear";
             }
         })
 
         cargoSeleccionado.update({
-            nombre_cargo: txtNombrecargo.value.trim(),
+            nombre_cargo: txtNombreCargo.value.trim(),
         });
     }
 }
@@ -134,7 +133,7 @@ const eliminarCargo = async ()=> {
     let cargoSeleccionado = await firebase.firestore().collection("cargo").doc(idFilaCargo);
 
     Swal.fire({
-        title: '¿Deseas eliminar el registro?',
+        title: '¿Desea eliminar el registro?',
         showDenyButton: true,
         confirmButtonText: 'Volver',
         denyButtonText: 'Eliminar',
@@ -142,12 +141,14 @@ const eliminarCargo = async ()=> {
         if (result.isDenied) {
             Swal.fire({
                 icon: "success",
-                title: "Cargo eliminado satisfactoriamente",
-                text: "El cargo fue eliminado de manera satisfactoria",
+                title: "Registro eliminado satisfactoriamente",
+                text: "El registro fue eliminado de manera satisfactoria",
                 confirmButtonText: "Entendido",
             }).then((result)=>{
                 if(result.isConfirmed){
                     listarCargo();
+                    txtNombreCargo.value = "";
+                    btnCrearActualizarCargo.innerText = "Crear";
                 }
             })
             return cargoSeleccionado.update({
@@ -167,6 +168,6 @@ btnCrearActualizarCargo.onclick = (e)=> {
 
 btnCancelarCargo.onclick = ()=> {
     idFilaCargo = "";
-    txtNombrecargo.value = "";
+    txtNombreCargo.value = "";
     btnCrearActualizarCargo.innerText = "Crear";
 }

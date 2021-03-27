@@ -19,7 +19,7 @@ const lstPerros = document.getElementById("lstPerros");
 
 const opcCargos = document.getElementById("opcCargos");
 const opcVacunas = document.getElementById("opcVacunas");
-const opcEspecies = document.getElementById("opcEspecies");
+const opcRazas = document.getElementById("opcRazas");
 const opcAlimentos = document.getElementById("opcAlimentos");
 const opcHistoriasClinicas = document.getElementById("opcHistoriasClinicas");
 const opcHistorialVacunas = document.getElementById("opcHistorialVacunas");
@@ -66,7 +66,6 @@ const asignarPerfil = async (user)=> {
             } else if(doc.data().tipo_usu === 2){
                 lstAdministradores.parentElement.removeChild(lstAdministradores);
                 lstTrabajadores.parentElement.removeChild(lstTrabajadores);
-                opcEspecies.parentElement.removeChild(opcEspecies);
                 opcCargos.parentElement.removeChild(opcCargos);
             } else if(doc.data().tipo_usu === 3){}
             return;
@@ -77,4 +76,7 @@ const asignarPerfil = async (user)=> {
 const ocultarContenido = ()=> {
     formCargos.style.display = "none";
     tableCargos.style.display = "none";
+
+    formRazas.style.display = "none";
+    tableRazas.style.display = "none";
 }

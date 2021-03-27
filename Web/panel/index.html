@@ -77,10 +77,10 @@
 							<span class="align-middle">Vacunas</span>
 						</a>
 					</li>
-					<li class="sidebar-item" id="opcEspecies">
+					<li class="sidebar-item" id="opcRazas">
 						<a class="sidebar-link">
 							<i class="align-middle" data-feather="gitlab"></i>
-							<span class="align-middle">Especies</span>
+							<span class="align-middle">Razas</span>
 						</a>
 					</li>
 					<li class="sidebar-item" id="opcAlimentos">
@@ -170,7 +170,7 @@
 											<th>Cargo</th>
 										</tr>
 									</thead>
-									<tbody id="tblCargo">
+									<tbody>
 									</tbody>
 								</table>
 							</div>
@@ -178,6 +178,51 @@
 					</div>
 				</div>
 				<!-- Contenido Cargo -->
+
+				<!-- Contenido Raza -->
+				<div class="row" id="formRazas">
+					<div class="col-12">
+						<div class="card shadow mt-3 bg-dark">
+							<div class="card-body">
+								<form class="row">
+									<div class="form-group col-md-6 p-1">
+										<input type="text" class="form-control" placeholder="Ingresar Raza" id="txtNombreRaza">
+									</div>
+									<div class="form-group col-md-6 p-1">
+										<select class="form-select" id="cboEspecie">
+											<option value="0">Seleccione</option>
+										</select>
+									</div>
+									<div class="form-group col-md-6 p-1">
+										<button class="btn btn-block btn-primary" type="button" id="btnCrearActualizarRaza">Crear</button>
+									</div>
+									<div class="form-group col-md-6 p-1">
+										<button class="btn btn-block btn-danger" type="button" id="btnCancelarRaza">Cancelar</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row mt-2" id="tableRazas">
+					<div class="col-12">
+						<div class="card shadow">
+							<div class="card-body table-responsive">
+								<table class="table table-hover" style="width:100%" id="myTableRazas">
+									<thead>
+										<tr>
+											<th>Raza</th>
+											<th>Especie</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Contenido Raza -->
 			</main>
 			<footer class="footer">
 				<div class="container-fluid">
@@ -233,5 +278,6 @@
 	<script src="./data-table.js"></script>
 	<script src="./main.js"></script>
 	<script src="./main_cargo.js"></script>
+	<script src="./main_raza.js"></script>
 </body>
 </html>
