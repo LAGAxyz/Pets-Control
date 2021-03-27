@@ -1,5 +1,6 @@
 
 const formRazas = document.getElementById("formRazas");
+const frmRaza = document.getElementById("frmRaza");
 const txtNombreRaza = document.getElementById("txtNombreRaza");
 const btnCrearActualizarRaza = document.getElementById("btnCrearActualizarRaza");
 const btnCancelarRaza = document.getElementById("btnCancelarRaza");
@@ -18,34 +19,41 @@ opcRazas.onclick = ()=> {
 
 const llenarCombo = async ()=> {
     const query = await firebase.firestore().collection('especie').get();
-    cboEspecie.innerHTML = `<option value="0">Seleccione</option>`;
+    cboEspecie.innerHTML = `<option value="0" id="cero">Seleccione</option>`;
 
     query.docs.forEach((doc)=>{
         if(doc.data().estado_especie === 1){
             let option = document.createElement("option");
-                option.value = doc.id;
-                option.text = doc.data().nombre_especie;
-            
+            option.text = doc.data().nombre_especie;
+            option.value = doc.id;
+            option.id = doc.id;
+
             cboEspecie.appendChild(option);
         }
     })
 }
 
+const deseleccionarCBO = (option)=> {
+    for(let i=0; i<cboEspecie.children.length; i++){
+        cboEspecie.children[i].removeAttribute("selected");
+    }
+    document.getElementById(option).setAttribute("selected", "selected");
+}
+
 $('#myTableRazas tbody').on('click', 'tr', async function () {
     var data = tablaRaza.row(this).data();
-    txtNombreRaza.value = data[0];
-    console.log(cboEspecie.value.text)
-    cboEspecie.nodeValue = data[1];
-    // asignar item de combo especifico
-    btnCrearActualizarRaza.innerText = "Editar";
 
     const query = await firebase.firestore().collection('raza').get();
     query.docs.forEach((doc)=>{
         if(doc.data().nombre_raza === data[0]){
             idFilaRaza = doc.id;
+            txtNombreRaza.value = data[0];
+            deseleccionarCBO(doc.data().especie);
             return;
         }
     })
+
+    btnCrearActualizarRaza.innerText = "Editar";
 });
 
 $('#myTableRazas tbody').on('dblclick', 'tr', async function () {
@@ -147,6 +155,7 @@ const editarRaza = async ()=> {
         }).then((result)=>{
             if(result.isConfirmed){
                 listarRaza();
+                llenarCombo();
                 txtNombreRaza.value = "";
                 btnCrearActualizarRaza.innerText = "Crear";
             }
@@ -154,6 +163,7 @@ const editarRaza = async ()=> {
 
         razaSeleccionada.update({
             nombre_raza: txtNombreRaza.value.trim(),
+            especie: cboEspecie.value,
         });
     }
 }
@@ -188,7 +198,7 @@ const eliminarRaza = async ()=> {
     })
 }
 
-btnCrearActualizarRaza.onclick = (e)=> {
+btnCrearActualizarRaza.onclick = ()=> {
     if(btnCrearActualizarRaza.innerText === "Crear"){
         crearRaza();
     } else if(btnCrearActualizarRaza.innerText === "Editar"){
@@ -201,4 +211,8 @@ btnCancelarRaza.onclick = ()=> {
     txtNombreRaza.value = "";
     cboEspecie.value = 0;
     btnCrearActualizarRaza.innerText = "Crear";
+}
+
+frmRaza.onsubmit = (e)=> {
+    e.preventDefault();
 }

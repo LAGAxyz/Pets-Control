@@ -1,5 +1,6 @@
 
 const formCargos = document.getElementById("formCargos");
+const frmCargo = document.getElementById("frmcargo");
 const txtNombreCargo = document.getElementById("txtNombreCargo");
 const btnCrearActualizarCargo = document.getElementById("btnCrearActualizarCargo");
 const btnCancelarCargo = document.getElementById("btnCancelarCargo");
@@ -158,7 +159,7 @@ const eliminarCargo = async ()=> {
     })
 }
 
-btnCrearActualizarCargo.onclick = (e)=> {
+btnCrearActualizarCargo.onclick = ()=> {
     if(btnCrearActualizarCargo.innerText === "Crear"){
         crearCargo();
     } else if(btnCrearActualizarCargo.innerText === "Editar"){
@@ -170,4 +171,8 @@ btnCancelarCargo.onclick = ()=> {
     idFilaCargo = "";
     txtNombreCargo.value = "";
     btnCrearActualizarCargo.innerText = "Crear";
+}
+
+frmCargo.onsubmit = (e)=> {
+    e.preventDefault();
 }
