@@ -1,9 +1,9 @@
 
 $(document).ready( function () {
-    $('#myTable').DataTable();
+    $('#myTableCargos').DataTable();
 } );
 
-$('#myTable').DataTable( {
+$('#myTableCargos').DataTable( {
     language: {
         processing:     "Procesando datos...",
         search:         "Buscar&nbsp;:",
