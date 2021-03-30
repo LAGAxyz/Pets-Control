@@ -12330,3 +12330,7 @@ text {
     left: 0;
     width: 260px;
 }
+
+#contenido {
+    display: none;
+}

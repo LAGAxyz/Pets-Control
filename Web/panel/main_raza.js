@@ -15,6 +15,7 @@ opcRazas.onclick = ()=> {
     tableRazas.style.display = "block";
     listarRaza();
     llenarCombo();
+    btnCancelarRaza.click();
 }
 
 const llenarCombo = async ()=> {
@@ -72,11 +73,9 @@ $('#myTableRazas tbody').on('dblclick', 'tr', async function () {
 const listarRaza = async ()=> {
     const query = await firebase.firestore().collection('raza').get();
     tablaRaza.clear().draw();
-
     query.docs.forEach(async(doc)=>{
         if(doc.data().estado_raza === 1){
             const query = await firebase.firestore().collection('especie').get();
-
             query.docs.forEach((miEspecie)=>{
                 if(miEspecie.id === doc.data().especie){
                     tablaRaza.row.add([

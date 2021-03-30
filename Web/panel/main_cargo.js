@@ -13,6 +13,7 @@ opcCargos.onclick = ()=> {
     formCargos.style.display = "block";
     tableCargos.style.display = "block";
     listarCargo();
+    btnCancelarCargo.click();
 }
 
 $('#myTableCargos tbody').on('click', 'tr', async function () {
@@ -45,7 +46,6 @@ $('#myTableCargos tbody').on('dblclick', 'tr', async function () {
 const listarCargo = async ()=> {
     const query = await firebase.firestore().collection('cargo').get();
     tablaCargo.clear().draw();
-
     query.docs.forEach((doc)=>{
         if(doc.data().estado_cargo === 1){
             tablaCargo.row.add([
