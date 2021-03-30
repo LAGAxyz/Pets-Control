@@ -230,14 +230,14 @@ const registrarUsuarioDB = async (user)=>{
     if(usuarioEncontrado === false){
         firebase.firestore().collection('usuario').add({
             id_usuario: user.uid,
-            dni_usuario: '88888888',
-            nombre_usu: 'no especificado',
-            apellido_usu: 'no especificado',
-            genero_usu: 'no especificado',
-            nacimiento_usu: firebase.firestore.Timestamp.fromDate(new Date("01, 01, 1815")),
-            direccion_usu: 'no especificado',
-            estado_civil_usu: 'no especificado',
-            telefono_usu: '999666333',
+            dni_usuario: 'null',
+            nombre_usu: 'null',
+            apellido_usu: 'null',
+            genero_usu: 'null',
+            direccion_usu: 'null',
+            estado_civil_usu: 'null',
+            telefono_usu: 'null',
+            cargo: "1fpCiOen3xQSt6aRu2ee",
             correo_usu: user.email,
             tipo_usu: 1,
             estado: 1

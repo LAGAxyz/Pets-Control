@@ -140,19 +140,108 @@
 				</div>
 			</nav>
 			<main class="content" id="contenido">
+				<!-- Contenido Usuarios -->
+				<div class="row" id="formUsuarios">
+					<div class="col-12">
+						<div class="card shadow mt-3 bg-dark">
+							<div class="card-body">
+								<form class="row" id="frmUsuario">
+									<div class="form-group col-md-4 col-sm-4 p-1">
+										<input type="text" class="form-control" placeholder="Ingresar DNI" id="txtDniUsuario">
+									</div>
+									<div class="form-group col-md-4 col-sm-4 p-1">
+										<input type="text" class="form-control" placeholder="Ingresar Nombre" id="txtNombreUsuario">
+									</div>
+									<div class="form-group col-md-4 col-sm-4 p-1">
+										<input type="text" class="form-control" placeholder="Ingresar Apellido" id="txtApellidoUsuario">
+									</div>
+									<div class="form-group col-md-4 col-sm-4 col-6 p-1">
+										<select class="form-select" id="cboGeneroUsuario">
+											<!-- <option value="0" id="sinGenero">Seleccionar Género</option>
+											<option value="Masculino" id="Masculino">Masculino</option>
+											<option value="Femenino" id="Femenino">Femenino</option> -->
+										</select>
+									</div>
+									<div class="form-group col-md-4 col-sm-4 col-6 p-1">
+										<select class="form-select" id="cboEstadoCivilUsuario">
+											<!-- <option value="0" id="sinEstadoCivil">Seleccionar Estado Civil</option>
+											<option value="Viudo" id="Viudo">Viudo</option>
+											<option value="Soltero" id="Soltero">Soltero</option>
+											<option value="Casado" id="Casado">Casado</option>
+											<option value="Divorciado" id="Divorciado">Divorciado</option> -->
+										</select>
+									</div>
+									<div class="form-group col-md-4 col-sm-4 col-4 p-1">
+										<select class="form-select" id="cboCargoUsuario"></select>
+									</div>
+									<div class="form-group col-md-8 col-sm-8 col-8 p-1">
+										<input type="text" class="form-control" placeholder="Ingresar Correo" id="txtCorreoUsuario">
+									</div>
+									<div class="form-group col-md-4 col-sm-4 col-4 p-1">
+										<input type="text" class="form-control" placeholder="Ingresar Teléfono" id="txtTelefonoUsuario">
+									</div>
+									<div class="form-group col-md-8 col-sm-8 col-8 p-1">
+										<input type="text" class="form-control" placeholder="Ingresar Dirección" id="txtDireccionUsuario">
+									</div>
+									<div class="form-group col-md-4 col-sm-4 p-1">
+										<select class="form-select" id="cboTipoUsuario">
+											<!-- <option value="0">Seleccionar Tipo</option>
+											<option value="1" id="1">Cliente</option>
+											<option value="2" id="2">Trabajador</option>
+											<option value="3" id="3">Administrador</option> -->
+										</select>
+									</div>
+									<div class="form-group col-md-6 col-sm-6 col-6 p-1">
+										<button class="btn btn-block btn-primary" type="button" id="btnCrearActualizarUsuario">Crear</button>
+									</div>
+									<div class="form-group col-md-6 col-sm-6 col-6 p-1">
+										<button class="btn btn-block btn-danger" type="button" id="btnCancelarUsuario">Cancelar</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row mt-2" id="tableUsuarios">
+					<div class="col-12">
+						<div class="card shadow">
+							<div class="card-body table-responsive">
+								<table class="table table-hover" style="width:100%" id="myTableUsuarios">
+									<thead>
+										<tr>
+											<th>DNI</th>
+											<th>Nombres</th>
+											<th>Apellidos</th>
+											<th>Género</th>
+											<th>Civil</th>
+											<th>Cargo</th>
+											<th>Correo</th>
+											<th>Teléfono</th>
+											<th>Dirección</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Contenido Usuarios -->
+
 				<!-- Contenido Cargo -->
 				<div class="row" id="formCargos">
 					<div class="col-12">
 						<div class="card shadow mt-3 bg-dark">
 							<div class="card-body">
 								<form class="row" id="frmcargo">
-									<div class="form-group col-md-4 p-1">
+									<div class="form-group col-md-4 col-sm-4 p-1">
 										<input type="text" class="form-control" placeholder="Ingresar Cargo" id="txtNombreCargo">
 									</div>
-									<div class="form-group col-md-2 p-1">
+									<div class="form-group col-md-4 col-sm-4 col-6 p-1">
 										<button class="btn btn-block btn-primary" type="button" id="btnCrearActualizarCargo">Crear</button>
 									</div>
-									<div class="form-group col-md-2 p-1">
+									<div class="form-group col-md-4 col-sm-4 col-6 p-1">
 										<button class="btn btn-block btn-danger" type="button" id="btnCancelarCargo">Cancelar</button>
 									</div>
 								</form>
@@ -185,17 +274,16 @@
 						<div class="card shadow mt-3 bg-dark">
 							<div class="card-body">
 								<form class="row" id="frmRaza">
-									<div class="form-group col-md-6 p-1">
+									<div class="form-group col-md-6 col-sm-6 col-6 p-1">
 										<input type="text" class="form-control" placeholder="Ingresar Raza" id="txtNombreRaza">
 									</div>
-									<div class="form-group col-md-6 p-1">
-										<select class="form-select" id="cboEspecie">
-										</select>
+									<div class="form-group col-md-6 col-sm-6 col-6 p-1">
+										<select class="form-select" id="cboEspecieRaza"></select>
 									</div>
-									<div class="form-group col-md-6 p-1">
+									<div class="form-group col-md-6 col-sm-6 col-6 p-1">
 										<button class="btn btn-block btn-primary" type="button" id="btnCrearActualizarRaza">Crear</button>
 									</div>
-									<div class="form-group col-md-6 p-1">
+									<div class="form-group col-md-6 col-sm-6 col-6 p-1">
 										<button class="btn btn-block btn-danger" type="button" id="btnCancelarRaza">Cancelar</button>
 									</div>
 								</form>
@@ -276,6 +364,7 @@
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 	<script src="./data-table.js"></script>
 	<script src="./main.js"></script>
+	<script src="./main_usuario.js"></script>
 	<script src="./main_cargo.js"></script>
 	<script src="./main_raza.js"></script>
 </body>

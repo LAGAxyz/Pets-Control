@@ -7,20 +7,20 @@ const btnCancelarRaza = document.getElementById("btnCancelarRaza");
 const tableRazas = document.getElementById("tableRazas");
 let tablaRaza = $('#myTableRazas').DataTable();
 let idFilaRaza = "";
-const cboEspecie = document.getElementById("cboEspecie");
+const cboEspecieRaza = document.getElementById("cboEspecieRaza");
 
 opcRazas.onclick = ()=> {
     ocultarContenido();
     formRazas.style.display = "block";
     tableRazas.style.display = "block";
     listarRaza();
-    llenarCombo();
+    llenarComboEspecie();
     btnCancelarRaza.click();
 }
 
-const llenarCombo = async ()=> {
+const llenarComboEspecie = async ()=> {
     const query = await firebase.firestore().collection('especie').get();
-    cboEspecie.innerHTML = `<option value="0" id="cero">Seleccione</option>`;
+    cboEspecieRaza.innerHTML = `<option value="0" id="optCeroEspecie">Seleccionar Especie</option>`;
 
     query.docs.forEach((doc)=>{
         if(doc.data().estado_especie === 1){
@@ -29,14 +29,14 @@ const llenarCombo = async ()=> {
             option.value = doc.id;
             option.id = doc.id;
 
-            cboEspecie.appendChild(option);
+            cboEspecieRaza.appendChild(option);
         }
     })
 }
 
-const deseleccionarCBO = (option)=> {
-    for(let i=0; i<cboEspecie.children.length; i++){
-        cboEspecie.children[i].removeAttribute("selected");
+const deseleccionarComboEspecie = (option)=> {
+    for(let i=0; i<cboEspecieRaza.children.length; i++){
+        cboEspecieRaza.children[i].removeAttribute("selected");
     }
     document.getElementById(option).setAttribute("selected", "selected");
 }
@@ -49,7 +49,7 @@ $('#myTableRazas tbody').on('click', 'tr', async function () {
         if(doc.data().nombre_raza === data[0]){
             idFilaRaza = doc.id;
             txtNombreRaza.value = data[0];
-            deseleccionarCBO(doc.data().especie);
+            deseleccionarComboEspecie(doc.data().especie);
             return;
         }
     })
@@ -89,7 +89,7 @@ const listarRaza = async ()=> {
 }
 
 const crearRaza = async ()=> {
-    if(txtNombreRaza.value.trim() === "" || cboEspecie.value === "0"){
+    if(txtNombreRaza.value.trim() === "" || cboEspecieRaza.value === "0"){
         Swal.fire({
             icon: "error",
             title: "Campos incompletos",
@@ -116,7 +116,7 @@ const crearRaza = async ()=> {
         if(razaEncontrada === false){
             firebase.firestore().collection('raza').add({
                 nombre_raza: txtNombreRaza.value.trim(),
-                especie: cboEspecie.value,
+                especie: cboEspecieRaza.value,
                 estado_raza: 1,
             })
             Swal.fire({
@@ -126,17 +126,17 @@ const crearRaza = async ()=> {
                 confirmButtonText: "Entendido",
             }).then((result)=>{
                 if(result.isConfirmed){
+                    listarRaza();
+                    llenarComboEspecie();
                     txtNombreRaza.value = "";
-                    cboEspecie.value = "0";
                 }
             })
-            listarRaza();
         }
     }
 }
 
 const editarRaza = async ()=> {
-    if(txtNombreRaza.value.trim() === "" || cboEspecie.value === "0"){
+    if(txtNombreRaza.value.trim() === "" || cboEspecieRaza.value === "0"){
         Swal.fire({
             icon: "error",
             title: "Campos incompletos",
@@ -154,7 +154,7 @@ const editarRaza = async ()=> {
         }).then((result)=>{
             if(result.isConfirmed){
                 listarRaza();
-                llenarCombo();
+                llenarComboEspecie();
                 txtNombreRaza.value = "";
                 btnCrearActualizarRaza.innerText = "Crear";
             }
@@ -162,7 +162,7 @@ const editarRaza = async ()=> {
 
         razaSeleccionada.update({
             nombre_raza: txtNombreRaza.value.trim(),
-            especie: cboEspecie.value,
+            especie: cboEspecieRaza.value,
         });
     }
 }
@@ -186,7 +186,7 @@ const eliminarRaza = async ()=> {
                 if(result.isConfirmed){
                     listarRaza();
                     txtNombreRaza.value = "";
-                    cboEspecie.value = 0;
+                    cboEspecieRaza.value = 0;
                     btnCrearActualizarRaza.innerText = "Crear";
                 }
             })
@@ -208,7 +208,7 @@ btnCrearActualizarRaza.onclick = ()=> {
 btnCancelarRaza.onclick = ()=> {
     idFilaRaza = "";
     txtNombreRaza.value = "";
-    cboEspecie.value = 0;
+    cboEspecieRaza.value = 0;
     btnCrearActualizarRaza.innerText = "Crear";
 }
 

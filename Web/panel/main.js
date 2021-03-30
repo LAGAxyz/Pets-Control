@@ -80,5 +80,8 @@ const ocultarContenido = ()=> {
     formRazas.style.display = "none";
     tableRazas.style.display = "none";
 
+    // formUsuarios.style.display = "none";
+    // tableUsuarios.style.display = "none";
+
     contenido.style.display = "block";
 }

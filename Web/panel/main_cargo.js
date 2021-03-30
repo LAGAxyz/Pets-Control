@@ -92,10 +92,10 @@ const crearCargo = async ()=> {
                 confirmButtonText: "Entendido",
             }).then((result)=>{
                 if(result.isConfirmed){
+                    listarCargo();
                     txtNombreCargo.value = "";
                 }
             })
-            listarCargo();
         }
     }
 }
