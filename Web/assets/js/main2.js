@@ -31,9 +31,9 @@ const asignarPerfil = async (user)=>{
                 // redirigir al portal del cliente
                 console.log("ir al portal del cliente");
                 // redirigir al portal del cliente
-            } else if(doc.data().tipo_usu === 2){
+            } else if(doc.data().tipo_usu == 2){
                 linkPerfil.setAttribute("href", "./panel/");
-            } else if(doc.data().tipo_usu === 3){
+            } else if(doc.data().tipo_usu == 3){
                 linkPerfil.setAttribute("href", "./panel/");
             }
             return;

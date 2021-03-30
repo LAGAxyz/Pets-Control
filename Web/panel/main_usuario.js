@@ -13,7 +13,7 @@ const cboTipoUsuario = document.getElementById("cboTipoUsuario");
 const txtDireccionUsuario = document.getElementById("txtDireccionUsuario");
 const txtCorreoUsuario = document.getElementById("txtCorreoUsuario");
 
-const btnCrearActualizarUsuario = document.getElementById("btnCrearActualizarUsuario");
+const btnEditarUsuario = document.getElementById("btnEditarUsuario");
 const btnCancelarUsuario = document.getElementById("btnCancelarUsuario");
 
 const tableUsuarios = document.getElementById("tableUsuarios");
@@ -128,8 +128,6 @@ $('#myTableUsuarios tbody').on('click', 'tr', async function () {
             return;
         }
     })
-
-    btnCrearActualizarUsuario.innerText = "Editar";
 });
 
 $('#myTableUsuarios tbody').on('dblclick', 'tr', async function () {
@@ -219,81 +217,45 @@ const listarUsuario = async ()=> {
     }
 }
 
-const crearUsuario = async ()=> {
-    if(txtDniUsuario.value.trim() === "" ||
-        txtNombreUsuario.value.trim() === "" || txtApellidoUsuario.value.trim() === "" ||
-        cboGeneroUsuario.value == 0 || cboEstadoCivilUsuario.value == 0 || cboCargoUsuario.value == 0 ||
-        txtCorreoUsuario.value.trim() === "" || txtTelefonoUsuario.value.trim() === "" ||
-        txtDireccionUsuario.value.trim() === "" || cboTipoUsuario.value == 0){
+const eliminarUsuario = async ()=> {
+    let usuarioSeleccionado = await firebase.firestore().collection("usuario").doc(idFilaUsuario);
 
-        Swal.fire({
-            icon: "error",
-            title: "Campos incompletos",
-            text: "Debe completar los campos",
-            confirmButtonText: "Entendido"
-        });
-    } else {
-        const query = await firebase.firestore().collection("usuario").get();
-        let usuarioEncontrado = false;
-
-        query.docs.forEach((doc)=>{
-            if(doc.data().correo_usu == txtCorreoUsuario.value.trim() ||
-                doc.data().dni_usuario == txtDniUsuario.value.trim()){
-                usuarioEncontrado = true;
-                Swal.fire({
-                    icon: "error",
-                    title: "Registro ya existente",
-                    text: "El registro que trata de ingresar ya existe en la base de datos",
-                    confirmButtonText: "Entendido"
-                });
-                return;
-            }
-        });
-    
-        if(usuarioEncontrado === false){
-            firebase.firestore().collection('usuario').add({
-                // id_usuario: user.uid,
-                dni_usuario: txtDniUsuario.value.trim(),
-                nombre_usu: txtNombreUsuario.value.trim(),
-                apellido_usu: txtApellidoUsuario.value.trim(),
-                genero_usu: cboGeneroUsuario.value,
-                estado_civil_usu: cboEstadoCivilUsuario.value,
-                cargo: cboCargoUsuario.value,
-                correo_usu: txtCorreoUsuario.value.trim(),
-                telefono_usu: txtTelefonoUsuario.value.trim(),
-                direccion_usu: txtDireccionUsuario.value.trim(),
-                tipo_usu: cboTipoUsuario.value,
-                estado: 1,
-            })
+    Swal.fire({
+        title: '¿Desea eliminar el registro?',
+        showDenyButton: true,
+        confirmButtonText: 'Volver',
+        denyButtonText: 'Eliminar',
+    }).then((result) => {
+        if (result.isDenied) {
             Swal.fire({
                 icon: "success",
-                title: "Registro creado satisfactoriamente",
-                text: "El registro fue creado de manera satisfactoria",
+                title: "Registro eliminado satisfactoriamente",
+                text: "El registro fue eliminado de manera satisfactoria",
                 confirmButtonText: "Entendido",
             }).then((result)=>{
                 if(result.isConfirmed){
                     listarUsuario();
-                    llenarComboCargo();
                     txtDniUsuario.value = "";
                     txtNombreUsuario.value = "";
                     txtApellidoUsuario.value = "";
-                    // cboGeneroUsuario.value = 0;
-                    // cboEstadoCivilUsuario.value = 0;
-                    // cboCargoUsuario.value = 0;
+                    cboGeneroUsuario.value = 0;
+                    cboEstadoCivilUsuario.value = 0;
+                    cboCargoUsuario.value = 0;
                     txtCorreoUsuario.value = "";
                     txtTelefonoUsuario.value = "";
                     txtDireccionUsuario.value = "";
-                    // cboTipoUsuario.value = 0;
-                    iniciarCombos();
-                    // txtNombreRaza.value = "";
+                    cboTipoUsuario.value = 0;
                 }
             })
+            return usuarioSeleccionado.update({
+                estado: 0,
+            })
         }
-    }
+    })
 }
 
-const editarUsuario = async ()=> {
-    if(txtDniUsuario.value.trim() === "" ||
+btnEditarUsuario.onclick = async ()=> {
+    if(txtDniUsuario.value.trim() === "" || txtDniUsuario.value.trim().length != 8 ||
         txtNombreUsuario.value.trim() === "" || txtApellidoUsuario.value.trim() === "" ||
         cboGeneroUsuario.value == 0 || cboEstadoCivilUsuario.value == 0 || cboCargoUsuario.value == 0 ||
         txtCorreoUsuario.value.trim() === "" || txtTelefonoUsuario.value.trim() === "" ||
@@ -328,7 +290,6 @@ const editarUsuario = async ()=> {
                 txtDireccionUsuario.value = "";
                 // cboTipoUsuario.value = 0;
                 iniciarCombos();
-                btnCrearActualizarRaza.innerText = "Crear";
             }
         })
 
@@ -344,52 +305,6 @@ const editarUsuario = async ()=> {
             direccion_usu: txtDireccionUsuario.value.trim(),
             tipo_usu: cboTipoUsuario.value,
         });
-    }
-}
-
-const eliminarUsuario = async ()=> {
-    let usuarioSeleccionado = await firebase.firestore().collection("usuario").doc(idFilaUsuario);
-
-    Swal.fire({
-        title: '¿Desea eliminar el registro?',
-        showDenyButton: true,
-        confirmButtonText: 'Volver',
-        denyButtonText: 'Eliminar',
-    }).then((result) => {
-        if (result.isDenied) {
-            Swal.fire({
-                icon: "success",
-                title: "Registro eliminado satisfactoriamente",
-                text: "El registro fue eliminado de manera satisfactoria",
-                confirmButtonText: "Entendido",
-            }).then((result)=>{
-                if(result.isConfirmed){
-                    listarUsuario();
-                    txtDniUsuario.value = "";
-                    txtNombreUsuario.value = "";
-                    txtApellidoUsuario.value = "";
-                    cboGeneroUsuario.value = 0;
-                    cboEstadoCivilUsuario.value = 0;
-                    cboCargoUsuario.value = 0;
-                    txtCorreoUsuario.value = "";
-                    txtTelefonoUsuario.value = "";
-                    txtDireccionUsuario.value = "";
-                    cboTipoUsuario.value = 0;
-                    btnCrearActualizarRaza.innerText = "Crear";
-                }
-            })
-            return usuarioSeleccionado.update({
-                estado: 0,
-            })
-        }
-    })
-}
-
-btnCrearActualizarUsuario.onclick = ()=> {
-    if(btnCrearActualizarUsuario.innerText === "Crear"){
-        crearUsuario();
-    } else if(btnCrearActualizarUsuario.innerText === "Editar"){
-        editarUsuario();
     }
 }
 
@@ -409,6 +324,6 @@ btnCancelarUsuario.onclick = ()=> {
     iniciarCombos();
 }
 
-frmRaza.onsubmit = (e)=> {
+frmUsuario.onsubmit = (e)=> {
     e.preventDefault();
 }
