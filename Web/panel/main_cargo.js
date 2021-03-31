@@ -47,7 +47,7 @@ const listarCargo = async ()=> {
     const query = await firebase.firestore().collection('cargo').get();
     tablaCargo.clear().draw();
     query.docs.forEach((doc)=>{
-        if(doc.data().estado_cargo === 1){
+        if(doc.data().estado_cargo === 1 && doc.data().nombre_cargo != "Ninguno"){
             tablaCargo.row.add([
                 doc.data().nombre_cargo,
             ]).draw(true);
@@ -66,9 +66,11 @@ const crearCargo = async ()=> {
     } else {
         const query = await firebase.firestore().collection("cargo").get();
         let cargoEncontrado = false;
+        let cargoDesactivado = false;
+        let cargoAactivar = "";
 
         query.docs.forEach((doc)=>{
-            if(doc.data().nombre_cargo == txtNombreCargo.value.trim()){
+            if(doc.data().nombre_cargo == txtNombreCargo.value.trim() && doc.data().estado_cargo === 1){
                 cargoEncontrado = true;
                 Swal.fire({
                     icon: "error",
@@ -77,10 +79,13 @@ const crearCargo = async ()=> {
                     confirmButtonText: "Entendido"
                 });
                 return;
+            } else if (doc.data().nombre_cargo == txtNombreCargo.value.trim() && doc.data().estado_cargo === 0){
+                cargoDesactivado = true;
+                cargoAactivar = doc.id;
             }
         });
     
-        if(cargoEncontrado === false){
+        if(cargoEncontrado === false && cargoDesactivado === false){
             firebase.firestore().collection('cargo').add({
                 nombre_cargo: txtNombreCargo.value.trim(),
                 estado_cargo: 1,
@@ -96,6 +101,20 @@ const crearCargo = async ()=> {
                     txtNombreCargo.value = "";
                 }
             })
+        } else if (cargoEncontrado === false && cargoDesactivado === true){
+            let cargoSeleccionado = await firebase.firestore().collection("cargo").doc(cargoAactivar);
+            Swal.fire({
+                icon: "success",
+                title: "Registro creado satisfactoriamente",
+                text: "El registro fue creado de manera satisfactoria",
+                confirmButtonText: "Entendido",
+            }).then((result)=>{
+                txtNombreCargo.value = "";
+                listarCargo();
+            })
+            cargoSeleccionado.update({
+                estado_cargo: 1,
+            });
         }
     }
 }

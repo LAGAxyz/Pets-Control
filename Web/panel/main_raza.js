@@ -99,9 +99,11 @@ const crearRaza = async ()=> {
     } else {
         const query = await firebase.firestore().collection("raza").get();
         let razaEncontrada = false;
+        let razaDesactivada = false;
+        let razaAactivar = "";
 
         query.docs.forEach((doc)=>{
-            if(doc.data().nombre_raza == txtNombreRaza.value.trim()){
+            if(doc.data().nombre_raza == txtNombreRaza.value.trim() && doc.data().estado_raza === 1){
                 razaEncontrada = true;
                 Swal.fire({
                     icon: "error",
@@ -110,10 +112,13 @@ const crearRaza = async ()=> {
                     confirmButtonText: "Entendido"
                 });
                 return;
+            } else if (doc.data().nombre_raza == txtNombreRaza.value.trim() && doc.data().estado_raza === 0){
+                razaDesactivada = true;
+                razaAactivar = doc.id;
             }
         });
-    
-        if(razaEncontrada === false){
+
+        if(razaEncontrada === false && razaDesactivada === false){
             firebase.firestore().collection('raza').add({
                 nombre_raza: txtNombreRaza.value.trim(),
                 especie: cboEspecieRaza.value,
@@ -130,6 +135,23 @@ const crearRaza = async ()=> {
                     llenarComboEspecie();
                     txtNombreRaza.value = "";
                 }
+            })
+        } else if (razaEncontrada === false && razaDesactivada === true){
+            let razaSeleccionada = await firebase.firestore().collection("raza").doc(razaAactivar);
+            Swal.fire({
+                icon: "success",
+                title: "Registro creado satisfactoriamente",
+                text: "El registro fue creado de manera satisfactoria",
+                confirmButtonText: "Entendido",
+            }).then((result)=>{
+                if(result.isConfirmed){
+                    listarRaza();
+                    llenarComboEspecie();
+                    txtNombreRaza.value = "";
+                }
+            })
+            razaSeleccionada.update({
+                estado_raza: 1,
             })
         }
     }

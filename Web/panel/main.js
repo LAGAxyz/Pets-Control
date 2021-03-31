@@ -60,13 +60,15 @@ const asignarPerfil = async (user)=> {
 
     query.docs.forEach((doc)=>{
         if(doc.data().id_usuario === user.uid){
-            if(doc.data().tipo_usu === 1){
+            if(doc.data().tipo_usu == 1){
                 document.body.style.display = "none";
                 location.href = "../.";
-            } else if(doc.data().tipo_usu === 2){
+            } else if(doc.data().tipo_usu == 2){
                 lstAdministradores.parentElement.removeChild(lstAdministradores);
                 lstTrabajadores.parentElement.removeChild(lstTrabajadores);
                 opcCargos.parentElement.removeChild(opcCargos);
+                // cboTipoUsuario.parentElement.removeChild(cboTipoUsuario);
+                cboTipoUsuario.style.display = "none";
             } else if(doc.data().tipo_usu === 3){}
             return;
         }
@@ -80,8 +82,8 @@ const ocultarContenido = ()=> {
     formRazas.style.display = "none";
     tableRazas.style.display = "none";
 
-    // formUsuarios.style.display = "none";
-    // tableUsuarios.style.display = "none";
+    formUsuarios.style.display = "none";
+    tableUsuarios.style.display = "none";
 
     contenido.style.display = "block";
 }

@@ -63,7 +63,7 @@ const llenarComboCargo = async ()=> {
     })
 }
 
-const iniciarCombos = async ()=> {
+const iniciarCombos = ()=> {
     cboGeneroUsuario.innerHTML = `  <option value="0" id="sinGenero">Seleccionar Género</option>
 									<option value="Masculino" id="Masculino">Masculino</option>
 									<option value="Femenino" id="Femenino">Femenino</option>`;
@@ -74,7 +74,7 @@ const iniciarCombos = async ()=> {
                                         <option value="Casado" id="Casado">Casado</option>
                                         <option value="Divorciado" id="Divorciado">Divorciado</option>`;
     
-    cboTipoUsuario.innerHTML = `    <option value="0">Seleccionar Tipo</option>
+    cboTipoUsuario.innerHTML = `    <option value="0" id="sinTipo">Seleccionar Tipo</option>
                                     <option value="1" id="1">Cliente</option>
                                     <option value="2" id="2">Trabajador</option>
                                     <option value="3" id="3">Administrador</option>`;
@@ -238,13 +238,11 @@ const eliminarUsuario = async ()=> {
                     txtDniUsuario.value = "";
                     txtNombreUsuario.value = "";
                     txtApellidoUsuario.value = "";
-                    cboGeneroUsuario.value = 0;
-                    cboEstadoCivilUsuario.value = 0;
-                    cboCargoUsuario.value = 0;
                     txtCorreoUsuario.value = "";
                     txtTelefonoUsuario.value = "";
                     txtDireccionUsuario.value = "";
-                    cboTipoUsuario.value = 0;
+                    llenarComboCargo();
+                    iniciarCombos();
                 }
             })
             return usuarioSeleccionado.update({
@@ -278,17 +276,13 @@ btnEditarUsuario.onclick = async ()=> {
         }).then((result)=>{
             if(result.isConfirmed){
                 listarUsuario();
-                llenarComboCargo();
                 txtDniUsuario.value = "";
                 txtNombreUsuario.value = "";
                 txtApellidoUsuario.value = "";
-                // cboGeneroUsuario.value = 0;
-                // cboEstadoCivilUsuario.value = 0;
-                // cboCargoUsuario.value = 0;
                 txtCorreoUsuario.value = "";
                 txtTelefonoUsuario.value = "";
                 txtDireccionUsuario.value = "";
-                // cboTipoUsuario.value = 0;
+                llenarComboCargo();
                 iniciarCombos();
             }
         })
@@ -313,13 +307,9 @@ btnCancelarUsuario.onclick = ()=> {
     txtDniUsuario.value = "";
     txtNombreUsuario.value = "";
     txtApellidoUsuario.value = "";
-    // cboGeneroUsuario.value = 0;
-    // cboEstadoCivilUsuario.value = 0;
-    // cboCargoUsuario.value = 0;
     txtCorreoUsuario.value = "";
     txtTelefonoUsuario.value = "";
     txtDireccionUsuario.value = "";
-    // cboTipoUsuario.value = 0;
     llenarComboCargo();
     iniciarCombos();
 }
