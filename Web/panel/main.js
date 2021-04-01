@@ -1,4 +1,6 @@
 
+const APIkey = "885d75c9ab6c537a20db76ed0e6daf0ba674ddd554972e2829fbdc46c4f83d96";
+
 const userPhoto = document.getElementById("userPhoto");
 const userName = document.getElementById("userName");
 
@@ -80,7 +82,7 @@ const ocultarContenido = ()=> {
 
     formComidas.style.display = "none";
     tableComidas.style.display = "none";
-    
+
     formMarcas.style.display = "none";
     tableMarcas.style.display = "none";
 

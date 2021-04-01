@@ -320,3 +320,21 @@ btnCancelarUsuario.onclick = ()=> {
 frmUsuario.onsubmit = (e)=> {
     e.preventDefault();
 }
+
+txtDniUsuario.onkeyup = ()=>{
+    if(txtDniUsuario.value.trim().length == 8){
+        fetch(`https://apiperu.dev/api/dni/${txtDniUsuario.value.trim()}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer 885d75c9ab6c537a20db76ed0e6daf0ba674ddd554972e2829fbdc46c4f83d96',
+            },
+        }).then(response=> response.json()).then(datos=>{
+            txtNombreUsuario.value = datos.data.nombres;
+            txtApellidoUsuario.value = datos.data.apellido_paterno + " " + datos.data.apellido_materno;
+        })
+    }
+    if(txtDniUsuario.value.trim().length > 8){
+        txtDniUsuario.value = txtDniUsuario.value.trim().substr(0,8);
+    }
+}
