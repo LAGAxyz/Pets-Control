@@ -83,10 +83,10 @@
 							<span class="align-middle">Alimentos</span>
 						</a>
 					</li>
-					<li class="sidebar-item" id="opcHistoriasClinicas">
+					<li class="sidebar-item" id="opcMarcas">
 						<a class="sidebar-link">
 							<i class="align-middle" data-feather="clipboard"></i>
-							<span class="align-middle">Historias clínicas</span>
+							<span class="align-middle">Marcas</span>
 						</a>
 					</li>
 					<li class="sidebar-item" id="opcHistorialVacunas">
@@ -156,7 +156,7 @@
 										<select class="form-select" id="cboCargoUsuario"></select>
 									</div>
 									<div class="form-group col-md-8 col-sm-8 col-8 p-1">
-										<input type="text" class="form-control" placeholder="Ingresar Correo" id="txtCorreoUsuario">
+										<input type="text" class="form-control" placeholder="Ingresar Correo" id="txtCorreoUsuario" disabled readonly>
 									</div>
 									<div class="form-group col-md-4 col-sm-4 col-4 p-1">
 										<input type="text" class="form-control" placeholder="Ingresar Teléfono" id="txtTelefonoUsuario">
@@ -243,6 +243,52 @@
 				</div>
 				<!-- Contenido Cargo -->
 
+				<!-- Contenido Vacuna -->
+				<div class="row" id="formVacunas">
+					<div class="col-12">
+						<div class="card shadow mt-3 bg-dark">
+							<div class="card-body">
+								<form class="row" id="frmVacuna">
+									<div class="form-group col-md-6 col-sm-6 p-1">
+										<input type="text" class="form-control" placeholder="Ingresar Vacuna" id="txtNombreVacuna">
+									</div>
+									<div class="form-group col-md-6 col-sm-6 p-1">
+										<input type="number" class="form-control" placeholder="Ingresar Duración" min="0" max="99" step="1" id="txtDuracionVacuna">
+									</div>
+									<div class="form-group col-md-12 col-sm-12 p-1">
+										<input type="text" class="form-control" placeholder="Ingresar Descripción" id="txtDescripcionVacuna">
+									</div>
+									<div class="form-group col-md-6 col-sm-6 col-6 p-1">
+										<button class="btn btn-block btn-primary" type="button" id="btnCrearActualizarVacuna">Crear</button>
+									</div>
+									<div class="form-group col-md-6 col-sm-6 col-6 p-1">
+										<button class="btn btn-block btn-danger" type="button" id="btnCancelarVacuna">Cancelar</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row mt-2" id="tableVacunas">
+					<div class="col-12">
+						<div class="card shadow">
+							<div class="card-body table-responsive">
+								<table class="table table-hover" style="width:100%" id="myTableVacunas">
+									<thead>
+										<tr>
+											<th>Vacuna</th>
+											<th>Duración</th>
+											<th>Descripción</th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Contenido Vacuna -->
+
 				<!-- Contenido Raza -->
 				<div class="row" id="formRazas">
 					<div class="col-12">
@@ -285,7 +331,7 @@
 				</div>
 				<!-- Contenido Raza -->
 
-				<!-- Contenido Comida y Marca (Alimentos) -->
+				<!-- Contenido Comida -->
 				<div class="row" id="formComidas">
 					<div class="col-12">
 						<div class="card shadow mt-3 bg-dark">
@@ -340,6 +386,9 @@
 						</div>
 					</div>
 				</div>
+				<!-- Contenido Comida -->
+
+				<!-- Contenido Marca -->
 				<div class="row" id="formMarcas">
 					<div class="col-12">
 						<div class="card shadow mt-3 bg-dark">
@@ -375,7 +424,7 @@
 						</div>
 					</div>
 				</div>
-				<!-- Contenido Comida y Marca (Alimentos) -->
+				<!-- Contenido Marca -->
 			</main>
 			<footer class="footer">
 				<div class="container-fluid">
@@ -406,9 +455,6 @@
 	<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
-	<!--  -->
-	<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
-    <!--  -->
 
     <script>
         var firebaseConfig = {
@@ -434,8 +480,11 @@
 	<script src="./data-table.js"></script>
 	<script src="./main.js"></script>
 	<script src="./main_usuario.js"></script>
+	<!-- <script src="./main_usuario.js"></script> -->
 	<script src="./main_cargo.js"></script>
+	<script src="./main_vacuna.js"></script>
 	<script src="./main_raza.js"></script>
-	<script src="./main_alimento.js"></script>
+	<script src="./main_comida.js"></script>
+	<script src="./main_marca.js"></script>
 </body>
 </html>

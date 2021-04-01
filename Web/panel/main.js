@@ -18,7 +18,7 @@ const opcCargos = document.getElementById("opcCargos");
 const opcVacunas = document.getElementById("opcVacunas");
 const opcRazas = document.getElementById("opcRazas");
 const opcAlimentos = document.getElementById("opcAlimentos");
-const opcHistoriasClinicas = document.getElementById("opcHistoriasClinicas");
+const opcMarcas = document.getElementById("opcMarcas");
 const opcHistorialVacunas = document.getElementById("opcHistorialVacunas");
 const opcMascotasAdopcion = document.getElementById("opcMascotasAdopcion");
 
@@ -57,7 +57,7 @@ const asignarPerfil = async (user)=> {
                 lstAdministradores.parentElement.removeChild(lstAdministradores);
                 lstTrabajadores.parentElement.removeChild(lstTrabajadores);
                 opcCargos.parentElement.removeChild(opcCargos);
-                // cboTipoUsuario.parentElement.removeChild(cboTipoUsuario);
+                opcMarcas.parentElement.removeChild(opcMarcas);
                 cboTipoUsuario.style.display = "none";
             } else if(doc.data().tipo_usu === 3){}
             return;
@@ -66,17 +66,21 @@ const asignarPerfil = async (user)=> {
 };
 
 const ocultarContenido = ()=> {
+    formUsuarios.style.display = "none";
+    tableUsuarios.style.display = "none";
+
     formCargos.style.display = "none";
     tableCargos.style.display = "none";
+
+    formVacunas.style.display = "none";
+    tableVacunas.style.display = "none";
 
     formRazas.style.display = "none";
     tableRazas.style.display = "none";
 
-    formUsuarios.style.display = "none";
-    tableUsuarios.style.display = "none";
-
     formComidas.style.display = "none";
     tableComidas.style.display = "none";
+    
     formMarcas.style.display = "none";
     tableMarcas.style.display = "none";
 
