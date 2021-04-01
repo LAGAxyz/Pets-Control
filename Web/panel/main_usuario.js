@@ -225,6 +225,7 @@ const eliminarUsuario = async ()=> {
         showDenyButton: true,
         confirmButtonText: 'Volver',
         denyButtonText: 'Eliminar',
+        allowOutsideClick: false,
     }).then((result) => {
         if (result.isDenied) {
             Swal.fire({
@@ -263,7 +264,8 @@ btnEditarUsuario.onclick = async ()=> {
             icon: "error",
             title: "Campos incompletos",
             text: "Debe completar los campos",
-            confirmButtonText: "Entendido"
+            confirmButtonText: "Entendido",
+            allowOutsideClick: false,
         });
     } else {
         let usuarioSeleccionado = await firebase.firestore().collection("usuario").doc(idFilaUsuario);
@@ -272,7 +274,8 @@ btnEditarUsuario.onclick = async ()=> {
             icon: "success",
             title: "Registro actualizado satisfactoriamente",
             text: "El registro fue actualizado de manera satisfactoria",
-            confirmButtonText: "Entendido"
+            confirmButtonText: "Entendido",
+            allowOutsideClick: false,
         }).then((result)=>{
             if(result.isConfirmed){
                 listarUsuario();

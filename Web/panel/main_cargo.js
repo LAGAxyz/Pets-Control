@@ -1,6 +1,6 @@
 
 const formCargos = document.getElementById("formCargos");
-const frmCargo = document.getElementById("frmcargo");
+const frmCargo = document.getElementById("frmCargo");
 const txtNombreCargo = document.getElementById("txtNombreCargo");
 const btnCrearActualizarCargo = document.getElementById("btnCrearActualizarCargo");
 const btnCancelarCargo = document.getElementById("btnCancelarCargo");
@@ -61,7 +61,8 @@ const crearCargo = async ()=> {
             icon: "error",
             title: "Campos incompletos",
             text: "Debe completar los campos",
-            confirmButtonText: "Entendido"
+            confirmButtonText: "Entendido",
+            allowOutsideClick: false,
         });
     } else {
         const query = await firebase.firestore().collection("cargo").get();
@@ -76,7 +77,8 @@ const crearCargo = async ()=> {
                     icon: "error",
                     title: "Registro ya existente",
                     text: "El registro que trata de ingresar ya existe en la base de datos",
-                    confirmButtonText: "Entendido"
+                    confirmButtonText: "Entendido",
+                    allowOutsideClick: false,
                 });
                 return;
             } else if (doc.data().nombre_cargo == txtNombreCargo.value.trim() && doc.data().estado_cargo === 0){
@@ -95,6 +97,7 @@ const crearCargo = async ()=> {
                 title: "Registro creado satisfactoriamente",
                 text: "El registro fue creado de manera satisfactoria",
                 confirmButtonText: "Entendido",
+                allowOutsideClick: false,
             }).then((result)=>{
                 if(result.isConfirmed){
                     listarCargo();
@@ -108,9 +111,12 @@ const crearCargo = async ()=> {
                 title: "Registro creado satisfactoriamente",
                 text: "El registro fue creado de manera satisfactoria",
                 confirmButtonText: "Entendido",
+                allowOutsideClick: false,
             }).then((result)=>{
-                txtNombreCargo.value = "";
-                listarCargo();
+                if(result.isConfirmed){
+                    txtNombreCargo.value = "";
+                    listarCargo();
+                }
             })
             cargoSeleccionado.update({
                 estado_cargo: 1,
@@ -125,7 +131,8 @@ const editarCargo = async ()=> {
             icon: "error",
             title: "Campos incompletos",
             text: "Debe completar los campos",
-            confirmButtonText: "Entendido"
+            confirmButtonText: "Entendido",
+            allowOutsideClick: false,
         });
     } else {
         let cargoSeleccionado = await firebase.firestore().collection("cargo").doc(idFilaCargo);
@@ -134,7 +141,8 @@ const editarCargo = async ()=> {
             icon: "success",
             title: "Registro actualizado satisfactoriamente",
             text: "El registro fue actualizado de manera satisfactoria",
-            confirmButtonText: "Entendido"
+            confirmButtonText: "Entendido",
+            allowOutsideClick: false,
         }).then((result)=>{
             if(result.isConfirmed){
                 listarCargo();
@@ -157,6 +165,7 @@ const eliminarCargo = async ()=> {
         showDenyButton: true,
         confirmButtonText: 'Volver',
         denyButtonText: 'Eliminar',
+        allowOutsideClick: false,
     }).then((result) => {
         if (result.isDenied) {
             Swal.fire({
@@ -164,6 +173,7 @@ const eliminarCargo = async ()=> {
                 title: "Registro eliminado satisfactoriamente",
                 text: "El registro fue eliminado de manera satisfactoria",
                 confirmButtonText: "Entendido",
+                allowOutsideClick: false,
             }).then((result)=>{
                 if(result.isConfirmed){
                     listarCargo();

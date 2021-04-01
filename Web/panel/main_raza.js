@@ -94,7 +94,8 @@ const crearRaza = async ()=> {
             icon: "error",
             title: "Campos incompletos",
             text: "Debe completar los campos",
-            confirmButtonText: "Entendido"
+            confirmButtonText: "Entendido",
+            allowOutsideClick: false,
         });
     } else {
         const query = await firebase.firestore().collection("raza").get();
@@ -109,7 +110,8 @@ const crearRaza = async ()=> {
                     icon: "error",
                     title: "Registro ya existente",
                     text: "El registro que trata de ingresar ya existe en la base de datos",
-                    confirmButtonText: "Entendido"
+                    confirmButtonText: "Entendido",
+                    allowOutsideClick: false,
                 });
                 return;
             } else if (doc.data().nombre_raza == txtNombreRaza.value.trim() && doc.data().estado_raza === 0){
@@ -129,6 +131,7 @@ const crearRaza = async ()=> {
                 title: "Registro creado satisfactoriamente",
                 text: "El registro fue creado de manera satisfactoria",
                 confirmButtonText: "Entendido",
+                allowOutsideClick: false,
             }).then((result)=>{
                 if(result.isConfirmed){
                     listarRaza();
@@ -143,6 +146,7 @@ const crearRaza = async ()=> {
                 title: "Registro creado satisfactoriamente",
                 text: "El registro fue creado de manera satisfactoria",
                 confirmButtonText: "Entendido",
+                allowOutsideClick: false,
             }).then((result)=>{
                 if(result.isConfirmed){
                     listarRaza();
@@ -163,7 +167,8 @@ const editarRaza = async ()=> {
             icon: "error",
             title: "Campos incompletos",
             text: "Debe completar los campos",
-            confirmButtonText: "Entendido"
+            confirmButtonText: "Entendido",
+            allowOutsideClick: false,
         });
     } else {
         let razaSeleccionada = await firebase.firestore().collection("raza").doc(idFilaRaza);
@@ -172,7 +177,8 @@ const editarRaza = async ()=> {
             icon: "success",
             title: "Registro actualizado satisfactoriamente",
             text: "El registro fue actualizado de manera satisfactoria",
-            confirmButtonText: "Entendido"
+            confirmButtonText: "Entendido",
+            allowOutsideClick: false,
         }).then((result)=>{
             if(result.isConfirmed){
                 listarRaza();
@@ -197,6 +203,7 @@ const eliminarRaza = async ()=> {
         showDenyButton: true,
         confirmButtonText: 'Volver',
         denyButtonText: 'Eliminar',
+        allowOutsideClick: false,
     }).then((result) => {
         if (result.isDenied) {
             Swal.fire({

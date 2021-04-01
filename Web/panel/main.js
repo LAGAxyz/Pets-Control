@@ -5,9 +5,6 @@ const userName = document.getElementById("userName");
 const opcPerfil1 = document.getElementById("opcPerfil1");
 const opcPerfil2 = document.getElementById("opcPerfil2");
 
-const opcConfiguracion1 = document.getElementById("opcConfiguracion1");
-const opcConfiguracion2 = document.getElementById("opcConfiguracion2");
-
 const btnSalir = document.getElementById("btnSalir");
 
 const lstClientes = document.getElementById("lstClientes");
@@ -46,13 +43,6 @@ const mostrarPerfil = ()=> {
 opcPerfil1.onclick = ()=> {mostrarPerfil();};
 opcPerfil2.onclick = ()=> {mostrarPerfil();};
 
-const mostrarConfiguracion = ()=> {
-    // Código para mostrar las opciones de configuración del usuario activo
-};
-
-opcConfiguracion1.onclick = ()=> {mostrarConfiguracion();};
-opcConfiguracion2.onclick = ()=> {mostrarConfiguracion();};
-
 btnSalir.onclick = ()=> {firebase.auth().signOut();};
 
 const asignarPerfil = async (user)=> {
@@ -84,6 +74,11 @@ const ocultarContenido = ()=> {
 
     formUsuarios.style.display = "none";
     tableUsuarios.style.display = "none";
+
+    formComidas.style.display = "none";
+    tableComidas.style.display = "none";
+    formMarcas.style.display = "none";
+    tableMarcas.style.display = "none";
 
     contenido.style.display = "block";
 }

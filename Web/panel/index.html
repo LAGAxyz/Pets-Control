@@ -26,12 +26,6 @@
 							<span class="align-middle">Perfil</span>
 						</a>
 					</li>
-					<li class="sidebar-item">
-						<a class="sidebar-link" id="opcConfiguracion1">
-							<i class="align-middle" data-feather="settings"></i>
-							<span class="align-middle">Configuración</span>
-						</a>
-					</li>
 					<li class="sidebar-header">Páginas</li>
 					<li class="sidebar-item">
 						<a data-target="#ui" data-toggle="collapse" class="sidebar-link collapsed">
@@ -129,9 +123,6 @@
 								<a class="dropdown-item" id="opcPerfil2">
 									<i class="align-middle mr-1" data-feather="user"></i> Perfil
 								</a>
-								<a class="dropdown-item" id="opcConfiguracion2">
-									<i class="align-middle mr-1" data-feather="settings"></i> Configuración
-								</a>
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" id="btnSalir">Salir</a>
 							</div>
@@ -219,7 +210,7 @@
 					<div class="col-12">
 						<div class="card shadow mt-3 bg-dark">
 							<div class="card-body">
-								<form class="row" id="frmcargo">
+								<form class="row" id="frmCargo">
 									<div class="form-group col-md-4 col-sm-4 p-1">
 										<input type="text" class="form-control" placeholder="Ingresar Cargo" id="txtNombreCargo">
 									</div>
@@ -244,8 +235,7 @@
 											<th>Cargo</th>
 										</tr>
 									</thead>
-									<tbody>
-									</tbody>
+									<tbody></tbody>
 								</table>
 							</div>
 						</div>
@@ -287,14 +277,105 @@
 											<th>Especie</th>
 										</tr>
 									</thead>
-									<tbody>
-									</tbody>
+									<tbody></tbody>
 								</table>
 							</div>
 						</div>
 					</div>
 				</div>
 				<!-- Contenido Raza -->
+
+				<!-- Contenido Comida y Marca (Alimentos) -->
+				<div class="row" id="formComidas">
+					<div class="col-12">
+						<div class="card shadow mt-3 bg-dark">
+							<div class="card-body">
+								<form class="row" id="frmComida">
+									<div class="form-group col-md-12 col-sm-12 col-12 p-1">
+										<input type="text" class="form-control" placeholder="Ingresar Descripción" id="txtNombreComida">
+									</div>
+									<!-- <div class="form-group col-md-12 col-sm-12 col-12 p-1">
+  										<input type="file" class="form-control" id="imgComida" accept="image/x-png, image/jpeg">
+									</div> -->
+									<div class="form-group col-md-6 col-sm-6 col-6 p-1">
+										<input type="number" class="form-control" placeholder="Ingresar Cantidad" min="0" max="50" step="1" id="txtStockComida">
+									</div>
+									<div class="form-group col-md-6 col-sm-6 col-6 p-1">
+										<select class="form-select" id="cboMarcaComida"></select>
+									</div>
+									<div class="form-group col-md-6 col-sm-6 col-6 p-1">
+										<input type="number" class="form-control" placeholder="Ingresar Precio" min="0" max="500" step="0.01" id="txtPrecioComida">
+									</div>
+									<div class="form-group col-md-6 col-sm-6 col-6 p-1">
+										<input type="number" class="form-control" placeholder="Ingresar Descuento" min="0" max="500" step="0.01" id="txtDescuentoComida">
+									</div>
+									<div class="form-group col-md-6 col-sm-6 col-6 p-1">
+										<button class="btn btn-block btn-primary" type="button" id="btnCrearActualizarComida">Crear</button>
+									</div>
+									<div class="form-group col-md-6 col-sm-6 col-6 p-1">
+										<button class="btn btn-block btn-danger" type="button" id="btnCancelarComida">Cancelar</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row mt-2" id="tableComidas">
+					<div class="col-12">
+						<div class="card shadow">
+							<div class="card-body table-responsive">
+								<table class="table table-hover" style="width:100%" id="myTableComidas">
+									<thead>
+										<tr>
+											<th>Descripción</th>
+											<th>Cantidad</th>
+											<th>Marca</th>
+											<th>Precio</th>
+											<th>Descuento</th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row" id="formMarcas">
+					<div class="col-12">
+						<div class="card shadow mt-3 bg-dark">
+							<div class="card-body">
+								<form class="row" id="frmMarca">
+									<div class="form-group col-md-4 col-sm-4 p-1">
+										<input type="text" class="form-control" placeholder="Ingresar Marca" id="txtNombreMarca">
+									</div>
+									<div class="form-group col-md-4 col-sm-4 col-6 p-1">
+										<button class="btn btn-block btn-primary" type="button" id="btnCrearActualizarMarca">Crear</button>
+									</div>
+									<div class="form-group col-md-4 col-sm-4 col-6 p-1">
+										<button class="btn btn-block btn-danger" type="button" id="btnCancelarMarca">Cancelar</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row mt-2" id="tableMarcas">
+					<div class="col-12">
+						<div class="card shadow">
+							<div class="card-body table-responsive">
+								<table class="table table-hover" style="width:100%" id="myTableMarcas">
+									<thead>
+										<tr>
+											<th>Marca</th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Contenido Comida y Marca (Alimentos) -->
 			</main>
 			<footer class="footer">
 				<div class="container-fluid">
@@ -325,7 +406,10 @@
 	<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
-    
+	<!--  -->
+	<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+    <!--  -->
+
     <script>
         var firebaseConfig = {
             apiKey: "AIzaSyAjuPOXu1P52gm-ggd_EJZnfpDwDY9EnOU",
@@ -352,5 +436,6 @@
 	<script src="./main_usuario.js"></script>
 	<script src="./main_cargo.js"></script>
 	<script src="./main_raza.js"></script>
+	<script src="./main_alimento.js"></script>
 </body>
 </html>
