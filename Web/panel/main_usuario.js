@@ -52,7 +52,7 @@ const llenarComboCargo = async ()=> {
     cboCargoUsuario.innerHTML = `<option value="0" id="optCeroCargo">Seleccionar Cargo</option>`;
 
     query.docs.forEach((doc)=>{
-        if(doc.data().estado_cargo === 1){
+        if(doc.data().estado_cargo == 1){
             let option = document.createElement("option");
             option.text = doc.data().nombre_cargo;
             option.value = doc.id;
@@ -146,10 +146,10 @@ $('#myTableUsuarios tbody').on('dblclick', 'tr', async function () {
 const listarUsuario = async ()=> {
     const query = await firebase.firestore().collection('usuario').get();
     tablaUsuario.clear().draw();
-
-    if(opcMarcadaUsuario === "lstClientes"){
+    if(opcMarcadaUsuario == "lstClientes"){
         query.docs.forEach(async(doc)=>{
-            if(doc.data().estado === 1 && doc.data().tipo_usu == 1){
+            if(doc.data().estado == 1 && doc.data().tipo_usu == 1){
+                console.log("llega")
                 const query = await firebase.firestore().collection('cargo').get();
                 query.docs.forEach((miCargo)=>{
                     if(miCargo.id === doc.data().cargo){
@@ -170,9 +170,9 @@ const listarUsuario = async ()=> {
         })
     }
 
-    if(opcMarcadaUsuario === "lstTrabajadores"){
+    if(opcMarcadaUsuario == "lstTrabajadores"){
         query.docs.forEach(async(doc)=>{
-            if(doc.data().estado === 1 && doc.data().tipo_usu == 2){
+            if(doc.data().estado == 1 && doc.data().tipo_usu == 2){
                 const query = await firebase.firestore().collection('cargo').get();
                 query.docs.forEach((miCargo)=>{
                     if(miCargo.id === doc.data().cargo){
@@ -193,9 +193,9 @@ const listarUsuario = async ()=> {
         })
     }
 
-    if(opcMarcadaUsuario === "lstAdministradores"){
+    if(opcMarcadaUsuario == "lstAdministradores"){
         query.docs.forEach(async(doc)=>{
-            if(doc.data().estado === 1 && doc.data().tipo_usu == 3){
+            if(doc.data().estado == 1 && doc.data().tipo_usu == 3){
                 const query = await firebase.firestore().collection('cargo').get();
                 query.docs.forEach((miCargo)=>{
                     if(miCargo.id === doc.data().cargo){
@@ -300,7 +300,7 @@ btnEditarUsuario.onclick = async ()=> {
             correo_usu: txtCorreoUsuario.value.trim(),
             telefono_usu: txtTelefonoUsuario.value.trim(),
             direccion_usu: txtDireccionUsuario.value.trim(),
-            tipo_usu: cboTipoUsuario.value,
+            tipo_usu: +cboTipoUsuario.value,
         });
     }
 }

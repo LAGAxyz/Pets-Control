@@ -61,7 +61,7 @@ const asignarPerfil = async (user)=> {
                 opcCargos.parentElement.removeChild(opcCargos);
                 opcMarcas.parentElement.removeChild(opcMarcas);
                 cboTipoUsuario.style.display = "none";
-            } else if(doc.data().tipo_usu === 3){}
+            } else if(doc.data().tipo_usu == 3){}
             return;
         }
     })
@@ -71,8 +71,8 @@ const ocultarContenido = ()=> {
     formUsuarios.style.display = "none";
     tableUsuarios.style.display = "none";
 
-    // formMascotas.style.display = "none";
-    // tableMascotas.style.display = "none";
+    formMascotas.style.display = "none";
+    tableMascotas.style.display = "none";
 
     formCargos.style.display = "none";
     tableCargos.style.display = "none";
