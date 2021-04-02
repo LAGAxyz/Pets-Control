@@ -48,7 +48,7 @@ const llenarComboEspecieMascota = async ()=> {
     cboEspecieMascota.innerHTML = `<option value="0" id="optCeroEspecieMascota">Seleccionar Especie</option>`;
 
     query.docs.forEach((doc)=>{
-        if(doc.data().estado_especie === 1){
+        if(doc.data().estado_especie == 1){
             let option = document.createElement("option");
             option.text = doc.data().nombre_especie;
             option.value = doc.id;
@@ -64,7 +64,7 @@ cboEspecieMascota.onchange = async ()=>{
     cboRazaMascota.innerHTML = `<option value="0" id="optCeroRazaMascota">Seleccionar Raza</option>`;
 
     query.docs.forEach((doc)=>{
-        if(cboEspecieMascota.value == doc.data().especie && doc.data().estado_raza === 1){
+        if(cboEspecieMascota.value == doc.data().especie && doc.data().estado_raza == 1){
             let option = document.createElement("option");
                 option.text = doc.data().nombre_raza;
                 option.value = doc.id;

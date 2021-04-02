@@ -23,7 +23,7 @@ const llenarComboEspecieRaza = async ()=> {
     cboEspecieRaza.innerHTML = `<option value="0" id="optCeroEspecie">Seleccionar Especie</option>`;
 
     query.docs.forEach((doc)=>{
-        if(doc.data().estado_especie === 1){
+        if(doc.data().estado_especie == 1){
             let option = document.createElement("option");
             option.text = doc.data().nombre_especie;
             option.value = doc.id;
@@ -46,7 +46,7 @@ $('#myTableRazas tbody').on('click', 'tr', async function () {
 
     const query = await firebase.firestore().collection('raza').get();
     query.docs.forEach((doc)=>{
-        if(doc.data().nombre_raza === data[0]){
+        if(doc.data().nombre_raza == data[0]){
             idFilaRaza = doc.id;
             txtNombreRaza.value = data[0];
             deseleccionarComboEspecie(doc.data().especie);
@@ -62,7 +62,7 @@ $('#myTableRazas tbody').on('dblclick', 'tr', async function () {
 
     const query = await firebase.firestore().collection('raza').get();
     query.docs.forEach((doc)=>{
-        if(doc.data().nombre_raza === data[0]){
+        if(doc.data().nombre_raza == data[0]){
             idFilaRaza = doc.id;
             eliminarRaza();
             return;
@@ -74,10 +74,10 @@ const listarRaza = async ()=> {
     const query = await firebase.firestore().collection('raza').get();
     tablaRaza.clear().draw();
     query.docs.forEach(async(doc)=>{
-        if(doc.data().estado_raza === 1){
+        if(doc.data().estado_raza == 1){
             const query = await firebase.firestore().collection('especie').get();
             query.docs.forEach((miEspecie)=>{
-                if(miEspecie.id === doc.data().especie){
+                if(miEspecie.id == doc.data().especie){
                     tablaRaza.row.add([
                         doc.data().nombre_raza,
                         miEspecie.data().nombre_especie,
@@ -89,7 +89,7 @@ const listarRaza = async ()=> {
 }
 
 const crearRaza = async ()=> {
-    if(txtNombreRaza.value.trim() === "" || cboEspecieRaza.value === "0"){
+    if(txtNombreRaza.value.trim() == "" || cboEspecieRaza.value == "0"){
         Swal.fire({
             icon: "error",
             title: "Campos incompletos",
@@ -104,7 +104,7 @@ const crearRaza = async ()=> {
         let razaAactivar = "";
 
         query.docs.forEach((doc)=>{
-            if(doc.data().nombre_raza == txtNombreRaza.value.trim() && doc.data().estado_raza === 1){
+            if(doc.data().nombre_raza == txtNombreRaza.value.trim() && doc.data().estado_raza == 1){
                 razaEncontrada = true;
                 Swal.fire({
                     icon: "error",
@@ -114,13 +114,13 @@ const crearRaza = async ()=> {
                     allowOutsideClick: false,
                 });
                 return;
-            } else if (doc.data().nombre_raza == txtNombreRaza.value.trim() && doc.data().estado_raza === 0){
+            } else if (doc.data().nombre_raza == txtNombreRaza.value.trim() && doc.data().estado_raza == 0){
                 razaDesactivada = true;
                 razaAactivar = doc.id;
             }
         });
 
-        if(razaEncontrada === false && razaDesactivada === false){
+        if(razaEncontrada == false && razaDesactivada == false){
             firebase.firestore().collection('raza').add({
                 nombre_raza: txtNombreRaza.value.trim(),
                 especie: cboEspecieRaza.value,
@@ -139,7 +139,7 @@ const crearRaza = async ()=> {
                     txtNombreRaza.value = "";
                 }
             })
-        } else if (razaEncontrada === false && razaDesactivada === true){
+        } else if (razaEncontrada == false && razaDesactivada == true){
             let razaSeleccionada = await firebase.firestore().collection("raza").doc(razaAactivar);
             Swal.fire({
                 icon: "success",
@@ -162,7 +162,7 @@ const crearRaza = async ()=> {
 }
 
 const editarRaza = async ()=> {
-    if(txtNombreRaza.value.trim() === "" || cboEspecieRaza.value === "0"){
+    if(txtNombreRaza.value.trim() == "" || cboEspecieRaza.value == "0"){
         Swal.fire({
             icon: "error",
             title: "Campos incompletos",
@@ -227,9 +227,9 @@ const eliminarRaza = async ()=> {
 }
 
 btnCrearActualizarRaza.onclick = ()=> {
-    if(btnCrearActualizarRaza.innerText === "Crear"){
+    if(btnCrearActualizarRaza.innerText == "Crear"){
         crearRaza();
-    } else if(btnCrearActualizarRaza.innerText === "Editar"){
+    } else if(btnCrearActualizarRaza.innerText == "Editar"){
         editarRaza();
     }
 }

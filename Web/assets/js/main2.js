@@ -26,8 +26,8 @@ const asignarPerfil = async (user)=>{
     const query = await firebase.firestore().collection("usuario").get();
 
     query.docs.forEach((doc)=>{
-        if(doc.data().id_usuario === user.uid){
-            if(doc.data().tipo_usu === 1){
+        if(doc.data().id_usuario == user.uid){
+            if(doc.data().tipo_usu == 1){
                 // redirigir al portal del cliente
                 console.log("ir al portal del cliente");
                 // redirigir al portal del cliente

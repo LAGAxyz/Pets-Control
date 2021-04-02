@@ -27,7 +27,7 @@ $('#myTableVacunas tbody').on('click', 'tr', async function () {
 
     const query = await firebase.firestore().collection('vacuna').get();
     query.docs.forEach((doc)=>{
-        if(doc.data().nombre_vacuna === data[0]){
+        if(doc.data().nombre_vacuna == data[0]){
             idFilaVacuna = doc.id;
             return;
         }
@@ -39,7 +39,7 @@ $('#myTableVacunas tbody').on('dblclick', 'tr', async function () {
 
     const query = await firebase.firestore().collection('vacuna').get();
     query.docs.forEach((doc)=>{
-        if(doc.data().nombre_vacuna === data[0]){
+        if(doc.data().nombre_vacuna == data[0]){
             idFilaVacuna = doc.id;
             eliminarVacuna();
             return;
@@ -51,7 +51,7 @@ const listarVacuna = async ()=> {
     const query = await firebase.firestore().collection('vacuna').get();
     tablaVacuna.clear().draw();
     query.docs.forEach((doc)=>{
-        if(doc.data().estado_vacuna === 1){
+        if(doc.data().estado_vacuna == 1){
             tablaVacuna.row.add([
                 doc.data().nombre_vacuna,
                 doc.data().duracion_vacuna,
@@ -62,8 +62,8 @@ const listarVacuna = async ()=> {
 }
 
 const crearVacuna = async ()=> {
-    if(txtNombreVacuna.value.trim() === "" || txtDuracionVacuna.value <= 0 ||
-        txtDescripcionVacuna.value.trim() === ""){
+    if(txtNombreVacuna.value.trim() == "" || txtDuracionVacuna.value <= 0 ||
+        txtDescripcionVacuna.value.trim() == ""){
         Swal.fire({
             icon: "error",
             title: "Campos incompletos",
@@ -78,7 +78,7 @@ const crearVacuna = async ()=> {
         let vacunaAactivar = "";
 
         query.docs.forEach((doc)=>{
-            if(doc.data().nombre_vacuna == txtNombreVacuna.value.trim() && doc.data().estado_vacuna === 1){
+            if(doc.data().nombre_vacuna == txtNombreVacuna.value.trim() && doc.data().estado_vacuna == 1){
                 vacunaEncontrada = true;
                 Swal.fire({
                     icon: "error",
@@ -88,13 +88,13 @@ const crearVacuna = async ()=> {
                     allowOutsideClick: false,
                 });
                 return;
-            } else if (doc.data().nombre_vacuna == txtNombreVacuna.value.trim() && doc.data().estado_vacuna === 0){
+            } else if (doc.data().nombre_vacuna == txtNombreVacuna.value.trim() && doc.data().estado_vacuna == 0){
                 vacunaDesactivada = true;
                 vacunaAactivar = doc.id;
             }
         });
     
-        if(vacunaEncontrada === false && vacunaDesactivada === false){
+        if(vacunaEncontrada == false && vacunaDesactivada == false){
             firebase.firestore().collection('vacuna').add({
                 nombre_vacuna: txtNombreVacuna.value.trim(),
                 duracion_vacuna: txtDuracionVacuna.value,
@@ -115,7 +115,7 @@ const crearVacuna = async ()=> {
                     txtDescripcionVacuna.value = "";
                 }
             })
-        } else if (vacunaEncontrada === false && vacunaDesactivada === true){
+        } else if (vacunaEncontrada == false && vacunaDesactivada == true){
             let vacunaSeleccionada = await firebase.firestore().collection("vacuna").doc(vacunaAactivar);
             Swal.fire({
                 icon: "success",
@@ -133,7 +133,7 @@ const crearVacuna = async ()=> {
             })
             vacunaSeleccionada.update({
                 estado_vacuna: 1,
-                duracion_vacuna: txtDuracionVacuna.value,
+                duracion_vacuna: +txtDuracionVacuna.value,
                 descripcion_vacuna: txtDescripcionVacuna.value.trim(),
             });
         }
@@ -141,8 +141,8 @@ const crearVacuna = async ()=> {
 }
 
 const editarVacuna = async ()=> {
-    if(txtNombreVacuna.value.trim() === "" || txtDuracionVacuna.value <= 0 ||
-        txtDescripcionVacuna.value.trim() === ""){
+    if(txtNombreVacuna.value.trim() == "" || txtDuracionVacuna.value <= 0 ||
+        txtDescripcionVacuna.value.trim() == ""){
         Swal.fire({
             icon: "error",
             title: "Campos incompletos",
@@ -171,7 +171,7 @@ const editarVacuna = async ()=> {
 
         vacunaSeleccionada.update({
             nombre_vacuna: txtNombreVacuna.value.trim(),
-            duracion_vacuna: txtDuracionVacuna.value,
+            duracion_vacuna: +txtDuracionVacuna.value,
             descripcion_vacuna: txtDescripcionVacuna.value.trim(),
         });
     }

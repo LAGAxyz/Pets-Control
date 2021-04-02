@@ -113,7 +113,7 @@ $('#myTableUsuarios tbody').on('click', 'tr', async function () {
 
     const query = await firebase.firestore().collection('usuario').get();
     query.docs.forEach((doc)=>{
-        if(doc.data().dni_usuario === data[0] && doc.data().correo_usu === data[6]){
+        if(doc.data().dni_usuario == data[0] && doc.data().correo_usu == data[6]){
             idFilaUsuario = doc.id;
             doc.data().dni_usuario == "null" ? txtDniUsuario.value = "" : txtDniUsuario.value = data[0];
             doc.data().nombre_usu == "null" ? txtNombreUsuario.value = "" : txtNombreUsuario.value = data[1];
@@ -135,7 +135,7 @@ $('#myTableUsuarios tbody').on('dblclick', 'tr', async function () {
 
     const query = await firebase.firestore().collection('usuario').get();
     query.docs.forEach((doc)=>{
-        if(doc.data().dni_usuario === data[0] && doc.data().correo_usu === data[6]){
+        if(doc.data().dni_usuario == data[0] && doc.data().correo_usu == data[6]){
             idFilaUsuario = doc.id;
             eliminarUsuario();
             return;
@@ -146,13 +146,14 @@ $('#myTableUsuarios tbody').on('dblclick', 'tr', async function () {
 const listarUsuario = async ()=> {
     const query = await firebase.firestore().collection('usuario').get();
     tablaUsuario.clear().draw();
+
     if(opcMarcadaUsuario == "lstClientes"){
         query.docs.forEach(async(doc)=>{
             if(doc.data().estado == 1 && doc.data().tipo_usu == 1){
                 console.log("llega")
                 const query = await firebase.firestore().collection('cargo').get();
                 query.docs.forEach((miCargo)=>{
-                    if(miCargo.id === doc.data().cargo){
+                    if(miCargo.id == doc.data().cargo){
                         tablaUsuario.row.add([
                             doc.data().dni_usuario,
                             doc.data().nombre_usu,
@@ -175,7 +176,7 @@ const listarUsuario = async ()=> {
             if(doc.data().estado == 1 && doc.data().tipo_usu == 2){
                 const query = await firebase.firestore().collection('cargo').get();
                 query.docs.forEach((miCargo)=>{
-                    if(miCargo.id === doc.data().cargo){
+                    if(miCargo.id == doc.data().cargo){
                         tablaUsuario.row.add([
                             doc.data().dni_usuario,
                             doc.data().nombre_usu,
@@ -198,7 +199,7 @@ const listarUsuario = async ()=> {
             if(doc.data().estado == 1 && doc.data().tipo_usu == 3){
                 const query = await firebase.firestore().collection('cargo').get();
                 query.docs.forEach((miCargo)=>{
-                    if(miCargo.id === doc.data().cargo){
+                    if(miCargo.id == doc.data().cargo){
                         tablaUsuario.row.add([
                             doc.data().dni_usuario,
                             doc.data().nombre_usu,
@@ -254,11 +255,11 @@ const eliminarUsuario = async ()=> {
 }
 
 btnEditarUsuario.onclick = async ()=> {
-    if(txtDniUsuario.value.trim() === "" || txtDniUsuario.value.trim().length != 8 ||
-        txtNombreUsuario.value.trim() === "" || txtApellidoUsuario.value.trim() === "" ||
+    if(txtDniUsuario.value.trim() == "" || txtDniUsuario.value.trim().length != 8 ||
+        txtNombreUsuario.value.trim() == "" || txtApellidoUsuario.value.trim() == "" ||
         cboGeneroUsuario.value == 0 || cboEstadoCivilUsuario.value == 0 || cboCargoUsuario.value == 0 ||
-        txtCorreoUsuario.value.trim() === "" || txtTelefonoUsuario.value.trim() === "" ||
-        txtDireccionUsuario.value.trim() === "" || cboTipoUsuario.value == 0){
+        txtCorreoUsuario.value.trim() == "" || txtTelefonoUsuario.value.trim() == "" ||
+        txtDireccionUsuario.value.trim() == "" || cboTipoUsuario.value == 0){
 
         Swal.fire({
             icon: "error",

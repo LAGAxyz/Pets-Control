@@ -27,7 +27,7 @@ const llenarComboMarca = async ()=> {
     cboMarcaComida.innerHTML = `<option value="0" id="optCeroMarca">Seleccionar Marca</option>`;
 
     query.docs.forEach((doc)=>{
-        if(doc.data().estado_marca === 1){
+        if(doc.data().estado_marca == 1){
             let option = document.createElement("option");
             option.text = doc.data().nombre_marca;
             option.value = doc.id;
@@ -50,7 +50,7 @@ $('#myTableComidas tbody').on('click', 'tr', async function () {
 
     const query = await firebase.firestore().collection('comida').get();
     query.docs.forEach((doc)=>{
-        if(doc.data().descripcion_com === data[0]){
+        if(doc.data().descripcion_com == data[0]){
             idFilaComida = doc.id;
             txtNombreComida.value = data[0];
             txtStockComida.value = data[1];
@@ -69,7 +69,7 @@ $('#myTableComidas tbody').on('dblclick', 'tr', async function () {
 
     const query = await firebase.firestore().collection('comida').get();
     query.docs.forEach((doc)=>{
-        if(doc.data().descripcion_com === data[0]){
+        if(doc.data().descripcion_com == data[0]){
             idFilaComida = doc.id;
             eliminarComida();
             return;
@@ -81,10 +81,10 @@ const listarComida = async ()=> {
     const query = await firebase.firestore().collection('comida').get();
     tablaComida.clear().draw();
     query.docs.forEach(async(doc)=>{
-        if(doc.data().estado_com === 1){
+        if(doc.data().estado_com == 1){
             const query = await firebase.firestore().collection('marca').get();
             query.docs.forEach((miMarca)=>{
-                if(miMarca.id === doc.data().marca){
+                if(miMarca.id == doc.data().marca){
                     tablaComida.row.add([
                         doc.data().descripcion_com,
                         doc.data().stock_com,
@@ -99,7 +99,7 @@ const listarComida = async ()=> {
 }
 
 const crearComida = async ()=> {
-    if(txtNombreComida.value.trim() === "" ||
+    if(txtNombreComida.value.trim() == "" ||
         txtStockComida.value == "" || txtStockComida.value <= 0 ||
         cboMarcaComida.value == 0 ||
         txtPrecioComida.value == "" || txtPrecioComida.value <= 0 ||
@@ -118,7 +118,7 @@ const crearComida = async ()=> {
         let comidaAactivar = "";
 
         query.docs.forEach((doc)=>{
-            if(doc.data().descripcion_com == txtNombreComida.value.trim() && doc.data().estado_com === 1){
+            if(doc.data().descripcion_com == txtNombreComida.value.trim() && doc.data().estado_com == 1){
                 comidaEncontrada = true;
                 Swal.fire({
                     icon: "error",
@@ -128,13 +128,13 @@ const crearComida = async ()=> {
                     allowOutsideClick: false,
                 });
                 return;
-            } else if (doc.data().descripcion_com == txtNombreComida.value.trim() && doc.data().estado_com === 0){
+            } else if (doc.data().descripcion_com == txtNombreComida.value.trim() && doc.data().estado_com == 0){
                 comidaDesactivada = true;
                 comidaAactivar = doc.id;
             }
         });
     
-        if(comidaEncontrada === false && comidaDesactivada === false){
+        if(comidaEncontrada == false && comidaDesactivada == false){
             firebase.firestore().collection('comida').add({
                 descripcion_com: txtNombreComida.value.trim(),
                 stock_com: txtStockComida.value,
@@ -159,7 +159,7 @@ const crearComida = async ()=> {
                     llenarComboMarca();
                 }
             })
-        } else if (comidaEncontrada === false && comidaDesactivada === true){
+        } else if (comidaEncontrada == false && comidaDesactivada == true){
             let comidaSeleccionada = await firebase.firestore().collection("comida").doc(comidaAactivar);
             Swal.fire({
                 icon: "success",
@@ -179,17 +179,17 @@ const crearComida = async ()=> {
             })
             comidaSeleccionada.update({
                 estado_com: 1,
-                stock_com: txtStockComida.value,
+                stock_com: +txtStockComida.value,
                 marca: cboMarcaComida.value,
-                precio_com: txtPrecioComida.value,
-                descuento_com: txtDescuentoComida.value,
+                precio_com: +txtPrecioComida.value,
+                descuento_com: +txtDescuentoComida.value,
             });
         }
     }
 }
 
 const editarComida = async ()=> {
-    if(txtNombreComida.value.trim() === "" ||
+    if(txtNombreComida.value.trim() == "" ||
         txtStockComida.value == "" || txtStockComida.value <= 0 ||
         cboMarcaComida.value == 0 ||
         txtPrecioComida.value == "" || txtPrecioComida.value <= 0 ||
@@ -224,10 +224,10 @@ const editarComida = async ()=> {
 
         comidaSeleccionada.update({
             descripcion_com: txtNombreComida.value.trim(),
-            stock_com: txtStockComida.value,
+            stock_com: +txtStockComida.value,
             marca: cboMarcaComida.value,
-            precio_com: txtPrecioComida.value,
-            descuento_com: txtDescuentoComida.value,
+            precio_com: +txtPrecioComida.value,
+            descuento_com: +txtDescuentoComida.value,
         });
     }
 }
@@ -268,9 +268,9 @@ const eliminarComida = async ()=> {
 }
 
 btnCrearActualizarComida.onclick = ()=> {
-    if(btnCrearActualizarComida.innerText === "Crear"){
+    if(btnCrearActualizarComida.innerText == "Crear"){
         crearComida();
-    } else if(btnCrearActualizarComida.innerText === "Editar"){
+    } else if(btnCrearActualizarComida.innerText == "Editar"){
         editarComida();
     }
 }

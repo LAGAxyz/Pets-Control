@@ -23,7 +23,7 @@ $('#myTableCargos tbody').on('click', 'tr', async function () {
 
     const query = await firebase.firestore().collection('cargo').get();
     query.docs.forEach((doc)=>{
-        if(doc.data().nombre_cargo === data[0]){
+        if(doc.data().nombre_cargo == data[0]){
             idFilaCargo = doc.id;
             return;
         }
@@ -35,7 +35,7 @@ $('#myTableCargos tbody').on('dblclick', 'tr', async function () {
 
     const query = await firebase.firestore().collection('cargo').get();
     query.docs.forEach((doc)=>{
-        if(doc.data().nombre_cargo === data[0]){
+        if(doc.data().nombre_cargo == data[0]){
             idFilaCargo = doc.id;
             eliminarCargo();
             return;
@@ -47,7 +47,7 @@ const listarCargo = async ()=> {
     const query = await firebase.firestore().collection('cargo').get();
     tablaCargo.clear().draw();
     query.docs.forEach((doc)=>{
-        if(doc.data().estado_cargo === 1 && doc.data().nombre_cargo != "Ninguno"){
+        if(doc.data().estado_cargo == 1 && doc.data().nombre_cargo != "Ninguno"){
             tablaCargo.row.add([
                 doc.data().nombre_cargo,
             ]).draw(true);
@@ -56,7 +56,7 @@ const listarCargo = async ()=> {
 }
 
 const crearCargo = async ()=> {
-    if(txtNombreCargo.value.trim() === ""){
+    if(txtNombreCargo.value.trim() == ""){
         Swal.fire({
             icon: "error",
             title: "Campos incompletos",
@@ -71,7 +71,7 @@ const crearCargo = async ()=> {
         let cargoAactivar = "";
 
         query.docs.forEach((doc)=>{
-            if(doc.data().nombre_cargo == txtNombreCargo.value.trim() && doc.data().estado_cargo === 1){
+            if(doc.data().nombre_cargo == txtNombreCargo.value.trim() && doc.data().estado_cargo == 1){
                 cargoEncontrado = true;
                 Swal.fire({
                     icon: "error",
@@ -81,13 +81,13 @@ const crearCargo = async ()=> {
                     allowOutsideClick: false,
                 });
                 return;
-            } else if (doc.data().nombre_cargo == txtNombreCargo.value.trim() && doc.data().estado_cargo === 0){
+            } else if (doc.data().nombre_cargo == txtNombreCargo.value.trim() && doc.data().estado_cargo == 0){
                 cargoDesactivado = true;
                 cargoAactivar = doc.id;
             }
         });
     
-        if(cargoEncontrado === false && cargoDesactivado === false){
+        if(cargoEncontrado == false && cargoDesactivado == false){
             firebase.firestore().collection('cargo').add({
                 nombre_cargo: txtNombreCargo.value.trim(),
                 estado_cargo: 1,
@@ -104,7 +104,7 @@ const crearCargo = async ()=> {
                     txtNombreCargo.value = "";
                 }
             })
-        } else if (cargoEncontrado === false && cargoDesactivado === true){
+        } else if (cargoEncontrado == false && cargoDesactivado == true){
             let cargoSeleccionado = await firebase.firestore().collection("cargo").doc(cargoAactivar);
             Swal.fire({
                 icon: "success",
@@ -126,7 +126,7 @@ const crearCargo = async ()=> {
 }
 
 const editarCargo = async ()=> {
-    if(txtNombreCargo.value.trim() === ""){
+    if(txtNombreCargo.value.trim() == ""){
         Swal.fire({
             icon: "error",
             title: "Campos incompletos",
@@ -189,9 +189,9 @@ const eliminarCargo = async ()=> {
 }
 
 btnCrearActualizarCargo.onclick = ()=> {
-    if(btnCrearActualizarCargo.innerText === "Crear"){
+    if(btnCrearActualizarCargo.innerText == "Crear"){
         crearCargo();
-    } else if(btnCrearActualizarCargo.innerText === "Editar"){
+    } else if(btnCrearActualizarCargo.innerText == "Editar"){
         editarCargo();
     }
 }

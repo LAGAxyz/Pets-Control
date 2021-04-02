@@ -47,7 +47,7 @@ const listarMarca = async ()=> {
     const query = await firebase.firestore().collection('marca').get();
     tablaMarca.clear().draw();
     query.docs.forEach((doc)=>{
-        if(doc.data().estado_marca === 1){
+        if(doc.data().estado_marca == 1){
             tablaMarca.row.add([
                 doc.data().nombre_marca,
             ]).draw(true);
@@ -56,7 +56,7 @@ const listarMarca = async ()=> {
 }
 
 const crearMarca = async ()=> {
-    if(txtNombreMarca.value.trim() === ""){
+    if(txtNombreMarca.value.trim() == ""){
         Swal.fire({
             icon: "error",
             title: "Campos incompletos",
@@ -71,7 +71,7 @@ const crearMarca = async ()=> {
         let marcaAactivar = "";
 
         query.docs.forEach((doc)=>{
-            if(doc.data().nombre_marca == txtNombreMarca.value.trim() && doc.data().estado_marca === 1){
+            if(doc.data().nombre_marca == txtNombreMarca.value.trim() && doc.data().estado_marca == 1){
                 marcaEncontrada = true;
                 Swal.fire({
                     icon: "error",
@@ -81,13 +81,13 @@ const crearMarca = async ()=> {
                     allowOutsideClick: false,
                 });
                 return;
-            } else if (doc.data().nombre_marca == txtNombreMarca.value.trim() && doc.data().estado_marca === 0){
+            } else if (doc.data().nombre_marca == txtNombreMarca.value.trim() && doc.data().estado_marca == 0){
                 marcaDesactivada = true;
                 marcaAactivar = doc.id;
             }
         });
     
-        if(marcaEncontrada === false && marcaDesactivada === false){
+        if(marcaEncontrada == false && marcaDesactivada == false){
             firebase.firestore().collection('marca').add({
                 nombre_marca: txtNombreMarca.value.trim(),
                 estado_marca: 1,
@@ -104,7 +104,7 @@ const crearMarca = async ()=> {
                     txtNombreMarca.value = "";
                 }
             })
-        } else if (marcaEncontrada === false && marcaDesactivada === true){
+        } else if (marcaEncontrada == false && marcaDesactivada == true){
             let marcaSeleccionada = await firebase.firestore().collection("marca").doc(marcaAactivar);
             Swal.fire({
                 icon: "success",
@@ -126,7 +126,7 @@ const crearMarca = async ()=> {
 }
 
 const editarMarca = async ()=> {
-    if(txtNombreMarca.value.trim() === ""){
+    if(txtNombreMarca.value.trim() == ""){
         Swal.fire({
             icon: "error",
             title: "Campos incompletos",
@@ -189,9 +189,9 @@ const eliminarMarca = async ()=> {
 }
 
 btnCrearActualizarMarca.onclick = ()=> {
-    if(btnCrearActualizarMarca.innerText === "Crear"){
+    if(btnCrearActualizarMarca.innerText == "Crear"){
         crearMarca();
-    } else if(btnCrearActualizarMarca.innerText === "Editar"){
+    } else if(btnCrearActualizarMarca.innerText == "Editar"){
         editarMarca();
     }
 }
