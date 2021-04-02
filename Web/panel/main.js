@@ -4,8 +4,8 @@ const APIkey = "885d75c9ab6c537a20db76ed0e6daf0ba674ddd554972e2829fbdc46c4f83d96
 const userPhoto = document.getElementById("userPhoto");
 const userName = document.getElementById("userName");
 
-const opcPerfil1 = document.getElementById("opcPerfil1");
-const opcPerfil2 = document.getElementById("opcPerfil2");
+// const opcPerfil1 = document.getElementById("opcPerfil1");
+// const opcPerfil2 = document.getElementById("opcPerfil2");
 
 const btnSalir = document.getElementById("btnSalir");
 
@@ -22,7 +22,7 @@ const opcRazas = document.getElementById("opcRazas");
 const opcAlimentos = document.getElementById("opcAlimentos");
 const opcMarcas = document.getElementById("opcMarcas");
 const opcHistorialVacunas = document.getElementById("opcHistorialVacunas");
-const opcMascotasAdopcion = document.getElementById("opcMascotasAdopcion");
+// const opcMascotasAdopcion = document.getElementById("opcMascotasAdopcion");
 
 const contenido = document.getElementById("contenido");
 
@@ -38,12 +38,12 @@ firebase.auth().onAuthStateChanged(user=>{
     }
 });
 
-const mostrarPerfil = ()=> {
+// const mostrarPerfil = ()=> {
     // Código para mostrar las opciones del perfil - sus datos y la edición de estos
-};
+// };
 
-opcPerfil1.onclick = ()=> {mostrarPerfil();};
-opcPerfil2.onclick = ()=> {mostrarPerfil();};
+// opcPerfil1.onclick = ()=> {mostrarPerfil();};
+// opcPerfil2.onclick = ()=> {mostrarPerfil();};
 
 btnSalir.onclick = ()=> {firebase.auth().signOut();};
 
@@ -70,6 +70,9 @@ const asignarPerfil = async (user)=> {
 const ocultarContenido = ()=> {
     formUsuarios.style.display = "none";
     tableUsuarios.style.display = "none";
+
+    // formMascotas.style.display = "none";
+    // tableMascotas.style.display = "none";
 
     formCargos.style.display = "none";
     tableCargos.style.display = "none";

@@ -19,13 +19,13 @@
 					<span class="align-middle">Panel Administrativo</span>
 				</a>
 				<ul class="sidebar-nav">
-					<li class="sidebar-header">Usuario</li>
-					<li class="sidebar-item">
+					<!-- <li class="sidebar-header">Usuario</li> -->
+					<!-- <li class="sidebar-item">
 						<a class="sidebar-link" id="opcPerfil1">
 							<i class="align-middle" data-feather="user"></i>
 							<span class="align-middle">Perfil</span>
 						</a>
-					</li>
+					</li> -->
 					<li class="sidebar-header">Páginas</li>
 					<li class="sidebar-item">
 						<a data-target="#ui" data-toggle="collapse" class="sidebar-link collapsed">
@@ -95,12 +95,12 @@
 							<span class="align-middle">Historial de vacunas</span>
 						</a>
 					</li>
-					<li class="sidebar-item" id="opcMascotasAdopcion">
+					<!-- <li class="sidebar-item" id="opcMascotasAdopcion">
 						<a class="sidebar-link">
 							<i class="align-middle" data-feather="twitter"></i>
 							<span class="align-middle">Mascotas en adopción</span>
 						</a>
-					</li>
+					</li> -->
 				</ul>
 			</div>
 		</nav>
@@ -120,9 +120,9 @@
 								<span class="text-dark" id="userName">Nombre Completo del Usuario</span>
 							</a>
 							<div class="dropdown-menu dropdown-menu-right">
-								<a class="dropdown-item" id="opcPerfil2">
+								<!-- <a class="dropdown-item" id="opcPerfil2">
 									<i class="align-middle mr-1" data-feather="user"></i> Perfil
-								</a>
+								</a> -->
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" id="btnSalir">Salir</a>
 							</div>
@@ -204,7 +204,81 @@
 					</div>
 				</div>
 				<!-- Contenido Usuarios -->
-				
+
+				<!-- Contenido Mascotas -->
+				<div class="row" id="formMascotas">
+					<div class="col-12">
+						<div class="card shadow mt-3 bg-dark">
+							<div class="card-body">
+								<form class="row" id="frmMascota">
+									<div class="form-group col-md-4 col-sm-4 col-4 p-1">
+										<input type="text" class="form-control" placeholder="Ingresar Nombre" id="txtNombreMascota">
+									</div>
+									<div class="form-group col-md-4 col-sm-4 col-4 p-1">
+										<input type="number" class="form-control" placeholder="Ingresar Peso" min="0" max="500" step="0.01" id="txtPesoMascota">
+									</div>
+									<div class="form-group col-md-4 col-sm-4 col-4 p-1">
+										<input type="number" class="form-control" placeholder="Ingresar Talla" min="0" max="500" step="0.01" id="txtTallaMascota">
+									</div>
+									<div class="form-group col-md-12 col-sm-12 col-12 p-1">
+										<input type="text" class="form-control" placeholder="Ingresar Presentación" id="txtPresentacionMascota">
+									</div>
+									<div class="form-group col-md-4 col-sm-4 col-4 p-1">
+										<select class="form-select" id="cboGeneroMascota"></select>
+									</div>
+									<div class="form-group col-md-4 col-sm-4 col-4 p-1">
+										<select class="form-select" id="cboEspecieMascota"></select>
+									</div>
+									<div class="form-group col-md-4 col-sm-4 col-4 p-1">
+										<select class="form-select" id="cboRazaMascota"></select>
+									</div>
+									<div class="form-group col-md-4 col-sm-4 col-4 p-1">
+										<input type="text" class="form-control" placeholder="Ingresar Usuario" id="txtNombreUsuarioMascota" disabled readonly>
+									</div>
+									<div class="form-group col-md-4 col-sm-4 col-4 p-1">
+										<input type="text" class="form-control" placeholder="Ingresar DNI" id="txtDniUsuarioMascota">
+									</div>
+									<div class="form-group col-md-4 col-sm-4 col-4 p-1">
+										<select class="form-select" id="cboCondicionMascota"></select>
+									</div>
+									<div class="form-group col-md-6 col-sm-6 col-6 p-1">
+										<button class="btn btn-block btn-primary" type="button" id="btnCrearActualizarMascota">Editar</button>
+									</div>
+									<div class="form-group col-md-6 col-sm-6 col-6 p-1">
+										<button class="btn btn-block btn-danger" type="button" id="btnCancelarMascota">Cancelar</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row mt-2" id="tableMascotas">
+					<div class="col-12">
+						<div class="card shadow">
+							<div class="card-body table-responsive">
+								<table class="table table-hover" style="width:100%" id="myTableMascotas">
+									<thead>
+										<tr>
+											<th>Mascota</th>
+											<th>Género</th>
+											<th>Peso</th>
+											<th>Talla</th>
+											<th>Especie</th>
+											<th>Raza</th>
+											<th>Usuario</th>
+											<th>Condición</th>
+											<th>Presentación</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Contenido Mascotas -->
+
 				<!-- Contenido Cargo -->
 				<div class="row" id="formCargos">
 					<div class="col-12">
@@ -480,11 +554,11 @@
 	<script src="./data-table.js"></script>
 	<script src="./main.js"></script>
 	<script src="./main_usuario.js"></script>
-	<!-- <script src="./main_usuario.js"></script> -->
+	<script src="./main_mascota.js"></script>
 	<script src="./main_cargo.js"></script>
 	<script src="./main_vacuna.js"></script>
 	<script src="./main_raza.js"></script>
-	<script src="./main_comida.js"></script>
+	<script src="./main_alimento.js"></script>
 	<script src="./main_marca.js"></script>
 </body>
 </html>
