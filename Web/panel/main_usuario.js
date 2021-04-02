@@ -20,31 +20,31 @@ const tableUsuarios = document.getElementById("tableUsuarios");
 let tablaUsuario = $('#myTableUsuarios').DataTable();
 
 let idFilaUsuario = "";
-let opcMarcada = "";
+let opcMarcadaUsuario = "";
 
-const inicializar = ()=> {
+const inicializarUsuarios = ()=> {
     ocultarContenido();
     formUsuarios.style.display = "block";
     tableUsuarios.style.display = "block";
     listarUsuario();
     llenarComboCargo();
-    iniciarCombos();
+    iniciarCombosUsuario();
     btnCancelarUsuario.click();
 }
 
 lstClientes.onclick = ()=> {
-    inicializar();
-    opcMarcada = "lstClientes";
+    inicializarUsuarios();
+    opcMarcadaUsuario = "lstClientes";
 }
 
 lstTrabajadores.onclick = ()=> {
-    inicializar();
-    opcMarcada = "lstTrabajadores";
+    inicializarUsuarios();
+    opcMarcadaUsuario = "lstTrabajadores";
 }
 
 lstAdministradores.onclick = ()=> {
-    inicializar();
-    opcMarcada = "lstAdministradores";
+    inicializarUsuarios();
+    opcMarcadaUsuario = "lstAdministradores";
 }
 
 const llenarComboCargo = async ()=> {
@@ -63,7 +63,7 @@ const llenarComboCargo = async ()=> {
     })
 }
 
-const iniciarCombos = ()=> {
+const iniciarCombosUsuario = ()=> {
     cboGeneroUsuario.innerHTML = `  <option value="0" id="sinGenero">Seleccionar Género</option>
 									<option value="Masculino" id="Masculino">Masculino</option>
 									<option value="Femenino" id="Femenino">Femenino</option>`;
@@ -147,7 +147,7 @@ const listarUsuario = async ()=> {
     const query = await firebase.firestore().collection('usuario').get();
     tablaUsuario.clear().draw();
 
-    if(opcMarcada === "lstClientes"){
+    if(opcMarcadaUsuario === "lstClientes"){
         query.docs.forEach(async(doc)=>{
             if(doc.data().estado === 1 && doc.data().tipo_usu == 1){
                 const query = await firebase.firestore().collection('cargo').get();
@@ -170,7 +170,7 @@ const listarUsuario = async ()=> {
         })
     }
 
-    if(opcMarcada === "lstTrabajadores"){
+    if(opcMarcadaUsuario === "lstTrabajadores"){
         query.docs.forEach(async(doc)=>{
             if(doc.data().estado === 1 && doc.data().tipo_usu == 2){
                 const query = await firebase.firestore().collection('cargo').get();
@@ -193,7 +193,7 @@ const listarUsuario = async ()=> {
         })
     }
 
-    if(opcMarcada === "lstAdministradores"){
+    if(opcMarcadaUsuario === "lstAdministradores"){
         query.docs.forEach(async(doc)=>{
             if(doc.data().estado === 1 && doc.data().tipo_usu == 3){
                 const query = await firebase.firestore().collection('cargo').get();
@@ -243,7 +243,7 @@ const eliminarUsuario = async ()=> {
                     txtTelefonoUsuario.value = "";
                     txtDireccionUsuario.value = "";
                     llenarComboCargo();
-                    iniciarCombos();
+                    iniciarCombosUsuario();
                 }
             })
             return usuarioSeleccionado.update({
@@ -286,7 +286,7 @@ btnEditarUsuario.onclick = async ()=> {
                 txtTelefonoUsuario.value = "";
                 txtDireccionUsuario.value = "";
                 llenarComboCargo();
-                iniciarCombos();
+                iniciarCombosUsuario();
             }
         })
 
@@ -314,7 +314,7 @@ btnCancelarUsuario.onclick = ()=> {
     txtTelefonoUsuario.value = "";
     txtDireccionUsuario.value = "";
     llenarComboCargo();
-    iniciarCombos();
+    iniciarCombosUsuario();
 }
 
 frmUsuario.onsubmit = (e)=> {

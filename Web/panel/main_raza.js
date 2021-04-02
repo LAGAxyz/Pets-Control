@@ -14,11 +14,11 @@ opcRazas.onclick = ()=> {
     formRazas.style.display = "block";
     tableRazas.style.display = "block";
     listarRaza();
-    llenarComboEspecie();
+    llenarComboEspecieRaza();
     btnCancelarRaza.click();
 }
 
-const llenarComboEspecie = async ()=> {
+const llenarComboEspecieRaza = async ()=> {
     const query = await firebase.firestore().collection('especie').get();
     cboEspecieRaza.innerHTML = `<option value="0" id="optCeroEspecie">Seleccionar Especie</option>`;
 
@@ -135,7 +135,7 @@ const crearRaza = async ()=> {
             }).then((result)=>{
                 if(result.isConfirmed){
                     listarRaza();
-                    llenarComboEspecie();
+                    llenarComboEspecieRaza();
                     txtNombreRaza.value = "";
                 }
             })
@@ -150,7 +150,7 @@ const crearRaza = async ()=> {
             }).then((result)=>{
                 if(result.isConfirmed){
                     listarRaza();
-                    llenarComboEspecie();
+                    llenarComboEspecieRaza();
                     txtNombreRaza.value = "";
                 }
             })
@@ -182,7 +182,7 @@ const editarRaza = async ()=> {
         }).then((result)=>{
             if(result.isConfirmed){
                 listarRaza();
-                llenarComboEspecie();
+                llenarComboEspecieRaza();
                 txtNombreRaza.value = "";
                 btnCrearActualizarRaza.innerText = "Crear";
             }
