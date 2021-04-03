@@ -150,7 +150,6 @@ const listarUsuario = async ()=> {
     if(opcMarcadaUsuario == "lstClientes"){
         query.docs.forEach(async(doc)=>{
             if(doc.data().estado == 1 && doc.data().tipo_usu == 1){
-                console.log("llega")
                 const query = await firebase.firestore().collection('cargo').get();
                 query.docs.forEach((miCargo)=>{
                     if(miCargo.id == doc.data().cargo){

@@ -252,6 +252,6 @@ const redirigir = ()=>{
 firebase.auth().onAuthStateChanged(user => {
     if (user) {
         registrarUsuarioDB(user);
-        setTimeout("redirigir()", 4000);
+        setTimeout("redirigir()", 3000);
     }
 });

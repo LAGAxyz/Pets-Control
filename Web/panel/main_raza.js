@@ -156,6 +156,7 @@ const crearRaza = async ()=> {
             })
             razaSeleccionada.update({
                 estado_raza: 1,
+                especie: cboEspecieRaza.value,
             })
         }
     }

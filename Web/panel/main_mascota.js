@@ -26,11 +26,11 @@ const inicializarMascotas = ()=> {
     ocultarContenido();
     formMascotas.style.display = "block";
     tableMascotas.style.display = "block";
-    // listarMascota();
+    listarMascota();
     iniciarCombosMascota();
     llenarComboEspecieMascota();
     llenarComboRazaMascota();
-    // btnCancelarMascota.click();
+    btnCancelarMascota.click();
 }
 
 lstPerros.onclick = ()=> {
@@ -50,13 +50,15 @@ const llenarComboEspecieMascota = async ()=> {
     query.docs.forEach((doc)=>{
         if(doc.data().estado_especie == 1){
             let option = document.createElement("option");
-            option.text = doc.data().nombre_especie;
-            option.value = doc.id;
-            option.id = doc.id;
-
+                option.text = doc.data().nombre_especie;
+                option.value = doc.id;
+                option.id = doc.id;
             cboEspecieMascota.appendChild(option);
         }
     })
+
+    cboRazaMascota.setAttribute("disabled", true);
+    cboRazaMascota.setAttribute("readonly", true);
 }
 
 cboEspecieMascota.onchange = async ()=>{
@@ -72,10 +74,24 @@ cboEspecieMascota.onchange = async ()=>{
             cboRazaMascota.appendChild(option);
         }
     })
+
+    cboRazaMascota.removeAttribute("disabled");
+    cboRazaMascota.removeAttribute("readonly");
 }
 
 const llenarComboRazaMascota = async ()=> {
+    const query = await firebase.firestore().collection('raza').get();
     cboRazaMascota.innerHTML = `<option value="0" id="optCeroRazaMascota">Seleccionar Raza</option>`;
+
+    query.docs.forEach((doc)=>{
+        if(doc.data().estado_raza == 1){
+            let option = document.createElement("option");
+                option.text = doc.data().nombre_raza;
+                option.value = doc.id;
+                option.id = doc.id;
+            cboRazaMascota.appendChild(option);
+        }
+    })
 }
 
 const iniciarCombosMascota = ()=> {
@@ -84,8 +100,8 @@ const iniciarCombosMascota = ()=> {
 									<option value="Hembra" id="Hembra">Hembra</option>`;
     
     cboCondicionMascota.innerHTML = `   <option value="0" id="sinCondicionMascota">Seleccionar Condición</option>
-                                        <option value="conHogar">Con Hogar</option>
-                                        <option value="enAdopcion">En Adopción</option>`;
+                                        <option value="Con Hogar" id="conHogar">Con Hogar</option>
+                                        <option value="En Adopción" id="enAdopcion">En Adopción</option>`;
 }
 
 const deseleccionarComboGeneroMascota = (option)=> {
@@ -109,125 +125,135 @@ const deseleccionarComboRazaMascota = (option)=> {
     document.getElementById(option).setAttribute("selected", "selected");
 }
 
-const deseleccionarComboCondicionMascota= (option)=> {
+const deseleccionarComboCondicionMascota = (option)=> {
     for(let i=0; i<cboCondicionMascota.children.length; i++){
         cboCondicionMascota.children[i].removeAttribute("selected");
     }
     document.getElementById(option).setAttribute("selected", "selected");
 }
 
-/*
-$('#myTableUsuarios tbody').on('click', 'tr', async function () {
-    var data = tablaUsuario.row(this).data();
+$('#myTableMascotas tbody').on('click', 'tr', async function () {
+    var data = tablaMascota.row(this).data();
+    llenarComboEspecieMascota();
+    llenarComboRazaMascota();
+    const query = await firebase.firestore().collection('mascota').get();
+    query.docs.forEach(async(doc)=>{
+        if(doc.data().nombre_mas == data[0] && doc.data().usuario == data[6]){
+            idFilaMascota = doc.id;
+            txtNombreMascota.value = data[0];
+            deseleccionarComboGeneroMascota(data[1]);
+            txtPesoMascota.value = data[2];
+            txtTallaMascota.value = data[3];
+            deseleccionarComboEspecieMascota(doc.data().especie);
+            deseleccionarComboRazaMascota(doc.data().raza);
+            txtDniUsuarioMascota.value = data[6];
+            data[7] == "Con Hogar" ? deseleccionarComboCondicionMascota("conHogar") : deseleccionarComboCondicionMascota("enAdopcion");
+            txtPresentacionMascota.value = data[8];
 
-    const query = await firebase.firestore().collection('usuario').get();
-    query.docs.forEach((doc)=>{
-        if(doc.data().dni_usuario === data[0] && doc.data().correo_usu === data[6]){
-            idFilaUsuario = doc.id;
-            doc.data().dni_usuario == "null" ? txtDniUsuario.value = "" : txtDniUsuario.value = data[0];
-            doc.data().nombre_usu == "null" ? txtNombreUsuario.value = "" : txtNombreUsuario.value = data[1];
-            doc.data().apellido_usu == "null" ? txtApellidoUsuario.value = "" : txtApellidoUsuario.value = data[2];
-            doc.data().genero_usu == "null" ? deseleccionarComboGenero("sinGenero") : deseleccionarComboGenero(doc.data().genero_usu);
-            doc.data().estado_civil_usu == "null" ? deseleccionarComboEstadoCivil("sinEstadoCivil") : deseleccionarComboEstadoCivil(doc.data().estado_civil_usu);
-            doc.data().cargo == "1fpCiOen3xQSt6aRu2ee" ? deseleccionarComboCargo("optCeroCargo") : deseleccionarComboCargo(doc.data().cargo);
-            doc.data().correo_usu == null ? txtCorreoUsuario.value = "" : txtCorreoUsuario.value = data[6];
-            doc.data().telefono_usu == "null" ? txtTelefonoUsuario.value = "" : txtTelefonoUsuario.value = data[7];
-            doc.data().direccion_usu == "null" ? txtDireccionUsuario.value = "" : txtDireccionUsuario.value = data[8];
-            doc.data().tipo_usu == "null" ? deseleccionarComboTipo("sinTipoUsuario") : deseleccionarComboTipo(doc.data().tipo_usu);
+            const consultarUsu = await firebase.firestore().collection('usuario').get();
+            consultarUsu.docs.forEach((miUsu)=>{
+                if(miUsu.data().dni_usuario == doc.data().usuario){
+                    txtNombreUsuarioMascota.value = miUsu.data().nombre_usu + " " + miUsu.data().apellido_usu;
+                }
+            })
             return;
         }
     })
-});
+    btnCrearActualizarMascota.innerText = "Editar";
+})
 
-$('#myTableUsuarios tbody').on('dblclick', 'tr', async function () {
-    var data = tablaUsuario.row(this).data();
+const listarMascota = async ()=> {
+    const query = await firebase.firestore().collection('mascota').get();
+    tablaMascota.clear().draw();
+    let razaMascota = "";
+    let usuarioMascota = "";
 
-    const query = await firebase.firestore().collection('usuario').get();
-    query.docs.forEach((doc)=>{
-        if(doc.data().dni_usuario === data[0] && doc.data().correo_usu === data[6]){
-            idFilaUsuario = doc.id;
-            eliminarUsuario();
-            return;
-        }
-    })
-});
-
-const listarUsuario = async ()=> {
-    const query = await firebase.firestore().collection('usuario').get();
-    tablaUsuario.clear().draw();
-
-    if(opcMarcada === "lstClientes"){
+    if(opcMarcadaMascota == "lstPerros"){
         query.docs.forEach(async(doc)=>{
-            if(doc.data().estado === 1 && doc.data().tipo_usu == 1){
-                const query = await firebase.firestore().collection('cargo').get();
-                query.docs.forEach((miCargo)=>{
-                    if(miCargo.id === doc.data().cargo){
-                        tablaUsuario.row.add([
-                            doc.data().dni_usuario,
-                            doc.data().nombre_usu,
-                            doc.data().apellido_usu,
-                            doc.data().genero_usu,
-                            doc.data().estado_civil_usu,
-                            miCargo.data().nombre_cargo,
-                            doc.data().correo_usu,
-                            doc.data().telefono_usu,
-                            doc.data().direccion_usu,
-                        ]).draw(true);
+            if(doc.data().estado_mas == 1 && doc.data().especie == "VO3zLzr8Mq5ZRoft61yj"){
+                const consultarRaza = await firebase.firestore().collection('raza').get();
+                const consultarUsuario = await firebase.firestore().collection('usuario').get();
+
+                consultarRaza.docs.forEach(miConsultaRaza=>{
+                    if(miConsultaRaza.id == doc.data().raza){
+                        razaMascota = miConsultaRaza.data().nombre_raza;
+                        return;
                     }
                 })
+                
+                consultarUsuario.docs.forEach(miConsultaUsuario=>{
+                    if(miConsultaUsuario.data().dni_usuario == doc.data().usuario){
+                        usuarioMascota = miConsultaUsuario.data().dni_usuario;
+                        return;
+                    }
+                })
+
+                tablaMascota.row.add([
+                    doc.data().nombre_mas,
+                    doc.data().genero_mas,
+                    doc.data().peso_mas,
+                    doc.data().talla_mas,
+                    "Canino",
+                    razaMascota,
+                    usuarioMascota,
+                    doc.data().condicion,
+                    doc.data().presentacion_mas,
+                ]).draw(true);
             }
         })
     }
 
-    if(opcMarcada === "lstTrabajadores"){
+    if(opcMarcadaMascota == "lstGatos"){
         query.docs.forEach(async(doc)=>{
-            if(doc.data().estado === 1 && doc.data().tipo_usu == 2){
-                const query = await firebase.firestore().collection('cargo').get();
-                query.docs.forEach((miCargo)=>{
-                    if(miCargo.id === doc.data().cargo){
-                        tablaUsuario.row.add([
-                            doc.data().dni_usuario,
-                            doc.data().nombre_usu,
-                            doc.data().apellido_usu,
-                            doc.data().genero_usu,
-                            doc.data().estado_civil_usu,
-                            miCargo.data().nombre_cargo,
-                            doc.data().correo_usu,
-                            doc.data().telefono_usu,
-                            doc.data().direccion_usu,
-                        ]).draw(true);
+            if(doc.data().estado_mas == 1 && doc.data().especie == "fisx4nGvOGfYVhTquyZE"){
+                const consultarRaza = await firebase.firestore().collection('raza').get();
+                const consultarUsuario = await firebase.firestore().collection('usuario').get();
+                
+                consultarRaza.docs.forEach(miConsultaRaza=>{
+                    if(miConsultaRaza.id == doc.data().raza){
+                        razaMascota = miConsultaRaza.data().nombre_raza;
+                        return;
                     }
                 })
-            }
-        })
-    }
 
-    if(opcMarcada === "lstAdministradores"){
-        query.docs.forEach(async(doc)=>{
-            if(doc.data().estado === 1 && doc.data().tipo_usu == 3){
-                const query = await firebase.firestore().collection('cargo').get();
-                query.docs.forEach((miCargo)=>{
-                    if(miCargo.id === doc.data().cargo){
-                        tablaUsuario.row.add([
-                            doc.data().dni_usuario,
-                            doc.data().nombre_usu,
-                            doc.data().apellido_usu,
-                            doc.data().genero_usu,
-                            doc.data().estado_civil_usu,
-                            miCargo.data().nombre_cargo,
-                            doc.data().correo_usu,
-                            doc.data().telefono_usu,
-                            doc.data().direccion_usu,
-                        ]).draw(true);
+                consultarUsuario.docs.forEach(miConsultaUsuario=>{
+                    if(miConsultaUsuario.data().dni_usuario == doc.data().usuario){
+                        usuarioMascota = miConsultaUsuario.data().dni_usuario;
+                        return;
                     }
                 })
+
+                tablaMascota.row.add([
+                    doc.data().nombre_mas,
+                    doc.data().genero_mas,
+                    doc.data().peso_mas,
+                    doc.data().talla_mas,
+                    "Felino",
+                    razaMascota,
+                    usuarioMascota,
+                    doc.data().condicion,
+                    doc.data().presentacion_mas,
+                ]).draw(true);
             }
         })
     }
 }
 
-const eliminarUsuario = async ()=> {
-    let usuarioSeleccionado = await firebase.firestore().collection("usuario").doc(idFilaUsuario);
+$('#myTableMascotas tbody').on('dblclick', 'tr', async function () {
+    var data = tablaMascota.row(this).data();
+
+    const query = await firebase.firestore().collection('mascota').get();
+    query.docs.forEach((doc)=>{
+        if(doc.data().nombre_mas == data[0] && doc.data().usuario == data[6]){
+            idFilaMascota = doc.id;
+            eliminarMascota();
+            return;
+        }
+    })
+})
+
+const eliminarMascota = async ()=> {
+    let mascotaSeleccionada = await firebase.firestore().collection("mascota").doc(idFilaMascota);
 
     Swal.fire({
         title: '¿Desea eliminar el registro?',
@@ -244,30 +270,69 @@ const eliminarUsuario = async ()=> {
                 confirmButtonText: "Entendido",
             }).then((result)=>{
                 if(result.isConfirmed){
-                    listarUsuario();
-                    txtDniUsuario.value = "";
-                    txtNombreUsuario.value = "";
-                    txtApellidoUsuario.value = "";
-                    txtCorreoUsuario.value = "";
-                    txtTelefonoUsuario.value = "";
-                    txtDireccionUsuario.value = "";
-                    llenarComboCargo();
-                    iniciarCombos();
+                    listarMascota();
+                    txtNombreMascota.value = "";
+                    txtPesoMascota.value = "";
+                    txtTallaMascota.value = "";
+                    txtPresentacionMascota.value = "";
+                    txtNombreUsuarioMascota.value = "";
+                    txtDniUsuarioMascota.value = "";
+                    llenarComboEspecieMascota();
+                    llenarComboRazaMascota();
+                    iniciarCombosMascota();
                 }
             })
-            return usuarioSeleccionado.update({
-                estado: 0,
+            return mascotaSeleccionada.update({
+                estado_mas: 0,
             })
         }
     })
 }
 
-btnEditarUsuario.onclick = async ()=> {
-    if(txtDniUsuario.value.trim() === "" || txtDniUsuario.value.trim().length != 8 ||
-        txtNombreUsuario.value.trim() === "" || txtApellidoUsuario.value.trim() === "" ||
-        cboGeneroUsuario.value == 0 || cboEstadoCivilUsuario.value == 0 || cboCargoUsuario.value == 0 ||
-        txtCorreoUsuario.value.trim() === "" || txtTelefonoUsuario.value.trim() === "" ||
-        txtDireccionUsuario.value.trim() === "" || cboTipoUsuario.value == 0){
+btnCancelarMascota.onclick = ()=> {
+    txtNombreMascota.value = "";
+    txtPesoMascota.value = "";
+    txtTallaMascota.value = "";
+    txtPresentacionMascota.value = "";
+    txtNombreUsuarioMascota.value = "";
+    txtDniUsuarioMascota.value = "";
+    llenarComboEspecieMascota();
+    llenarComboRazaMascota();
+    iniciarCombosMascota();
+    btnCrearActualizarMascota.innerText = "Crear";
+}
+
+frmMascota.onsubmit = (e)=> {
+    e.preventDefault();
+}
+
+txtDniUsuarioMascota.onkeyup = async ()=>{
+    if(txtDniUsuarioMascota.value.trim().length == 8){
+        const consultarUsu = await firebase.firestore().collection('usuario').get();
+        consultarUsu.docs.forEach((miUsu)=>{
+            if(miUsu.data().dni_usuario == txtDniUsuarioMascota.value.trim()){
+                txtNombreUsuarioMascota.value = miUsu.data().nombre_usu + " " + miUsu.data().apellido_usu;
+            }
+        })
+    }
+
+    if(txtDniUsuario.value.trim().length > 8){
+        txtDniUsuario.value = txtDniUsuario.value.trim().substr(0,8);
+    }
+}
+
+btnCrearActualizarMascota.onclick = ()=> {
+    if(btnCrearActualizarMascota.innerText == "Crear"){
+        crearMascota();
+    } else if(btnCrearActualizarMascota.innerText == "Editar"){
+        editarMascota();
+    }
+}
+
+const crearMascota = async ()=> {
+    if(txtNombreMascota.value.trim() == "" || txtPesoMascota.value <= 0 || txtTallaMascota.value <= 0 ||
+        txtPresentacionMascota.value.trim() == "" || cboGeneroMascota.value == 0 || cboEspecieMascota.value == 0 ||
+        cboRazaMascota.value == 0 || txtDniUsuarioMascota.value.trim() == "" || cboCondicionMascota.value == 0){
 
         Swal.fire({
             icon: "error",
@@ -277,7 +342,113 @@ btnEditarUsuario.onclick = async ()=> {
             allowOutsideClick: false,
         });
     } else {
-        let usuarioSeleccionado = await firebase.firestore().collection("usuario").doc(idFilaUsuario);
+        const query = await firebase.firestore().collection("mascota").get();
+        let mascotaEncontrada = false;
+        let mascotaDesactivada = false;
+        let mascotaAactivar = "";
+
+        query.docs.forEach((doc)=>{
+            if(doc.data().nombre_mas == txtNombreMascota.value.trim() && doc.data().estado_mas == 1 &&
+                doc.data().usuario == txtDniUsuarioMascota.value.trim()){
+                mascotaEncontrada = true;
+                Swal.fire({
+                    icon: "error",
+                    title: "Registro ya existente",
+                    text: "El registro que trata de ingresar ya existe en la base de datos",
+                    confirmButtonText: "Entendido",
+                    allowOutsideClick: false,
+                });
+                return;
+            } else if (doc.data().nombre_mas == txtNombreMascota.value.trim() && doc.data().estado_mas == 0 &&
+                doc.data().usuario == txtDniUsuarioMascota.value.trim()){
+                mascotaDesactivada = true;
+                mascotaAactivar = doc.id;
+            }
+        });
+    
+        if(mascotaEncontrada == false && mascotaDesactivada == false){
+            firebase.firestore().collection('mascota').add({
+                nombre_mas: txtNombreMascota.value.trim(),
+                peso_mas: txtPesoMascota.value,
+                talla_mas: txtTallaMascota.value,
+                presentacion_mas: txtPresentacionMascota.value.trim(),
+                genero_mas: cboGeneroMascota.value,
+                especie: cboEspecieMascota.value,
+                raza: cboRazaMascota.value,
+                usuario: txtDniUsuarioMascota.value,
+                condicion: cboCondicionMascota.value,
+                estado_mas: 1,
+            })
+            Swal.fire({
+                icon: "success",
+                title: "Registro creado satisfactoriamente",
+                text: "El registro fue creado de manera satisfactoria",
+                confirmButtonText: "Entendido",
+                allowOutsideClick: false,
+            }).then((result)=>{
+                if(result.isConfirmed){
+                    listarMascota();
+                    txtNombreMascota.value = "";
+                    txtPesoMascota.value = "";
+                    txtTallaMascota.value = "";
+                    txtPresentacionMascota.value = "";
+                    txtNombreUsuarioMascota.value = "";
+                    txtDniUsuarioMascota.value = "";
+                    llenarComboEspecieMascota();
+                    llenarComboRazaMascota();
+                    iniciarCombosMascota();
+                }
+            })
+        } else if (mascotaEncontrada == false && mascotaDesactivada == true){
+            let mascotaSeleccionada = await firebase.firestore().collection("mascota").doc(mascotaAactivar);
+            Swal.fire({
+                icon: "success",
+                title: "Registro creado satisfactoriamente",
+                text: "El registro fue creado de manera satisfactoria",
+                confirmButtonText: "Entendido",
+                allowOutsideClick: false,
+            }).then((result)=>{
+                if(result.isConfirmed){
+                    listarMascota();
+                    txtNombreMascota.value = "";
+                    txtPesoMascota.value = "";
+                    txtTallaMascota.value = "";
+                    txtPresentacionMascota.value = "";
+                    txtNombreUsuarioMascota.value = "";
+                    txtDniUsuarioMascota.value = "";
+                    llenarComboEspecieMascota();
+                    llenarComboRazaMascota();
+                    iniciarCombosMascota();
+                }
+            })
+            mascotaSeleccionada.update({
+                estado_mas: 1,
+                peso_mas: txtPesoMascota.value,
+                talla_mas: txtTallaMascota.value,
+                presentacion_mas: txtPresentacionMascota.value.trim(),
+                genero_mas: cboGeneroMascota.value,
+                especie: cboEspecieMascota.value,
+                raza: cboRazaMascota.value,
+                condicion: cboCondicionMascota.value,
+            });
+        }
+    }
+}
+
+const editarMascota = async ()=> {
+    if(txtNombreMascota.value.trim() == "" || txtPesoMascota.value <= 0 || txtTallaMascota.value <= 0 ||
+        txtPresentacionMascota.value.trim() == "" || cboGeneroMascota.value == 0 || cboEspecieMascota.value == 0 ||
+        cboRazaMascota.value == 0 || txtDniUsuarioMascota.value.trim() == "" || cboCondicionMascota.value == 0){
+
+        Swal.fire({
+            icon: "error",
+            title: "Campos incompletos",
+            text: "Debe completar los campos",
+            confirmButtonText: "Entendido",
+            allowOutsideClick: false,
+        });
+    } else {
+        let mascotaSeleccionada = await firebase.firestore().collection("mascota").doc(idFilaMascota);
 
         Swal.fire({
             icon: "success",
@@ -287,64 +458,30 @@ btnEditarUsuario.onclick = async ()=> {
             allowOutsideClick: false,
         }).then((result)=>{
             if(result.isConfirmed){
-                listarUsuario();
-                txtDniUsuario.value = "";
-                txtNombreUsuario.value = "";
-                txtApellidoUsuario.value = "";
-                txtCorreoUsuario.value = "";
-                txtTelefonoUsuario.value = "";
-                txtDireccionUsuario.value = "";
-                llenarComboCargo();
-                iniciarCombos();
+                listarMascota();
+                txtNombreMascota.value = "";
+                txtPesoMascota.value = "";
+                txtTallaMascota.value = "";
+                txtPresentacionMascota.value = "";
+                txtNombreUsuarioMascota.value = "";
+                txtDniUsuarioMascota.value = "";
+                llenarComboEspecieMascota();
+                llenarComboRazaMascota();
+                iniciarCombosMascota();
             }
         })
 
-        usuarioSeleccionado.update({
-            dni_usuario: txtDniUsuario.value.trim(),
-            nombre_usu: txtNombreUsuario.value.trim(),
-            apellido_usu: txtApellidoUsuario.value.trim(),
-            genero_usu: cboGeneroUsuario.value,
-            estado_civil_usu: cboEstadoCivilUsuario.value,
-            cargo: cboCargoUsuario.value,
-            correo_usu: txtCorreoUsuario.value.trim(),
-            telefono_usu: txtTelefonoUsuario.value.trim(),
-            direccion_usu: txtDireccionUsuario.value.trim(),
-            tipo_usu: cboTipoUsuario.value,
+        mascotaSeleccionada.update({
+            nombre_mas: txtNombreMascota.value.trim(),
+            peso_mas: txtPesoMascota.value,
+            talla_mas: txtTallaMascota.value,
+            presentacion_mas: txtPresentacionMascota.value.trim(),
+            genero_mas: cboGeneroMascota.value,
+            especie: cboEspecieMascota.value,
+            raza: cboRazaMascota.value,
+            usuario: txtDniUsuarioMascota.value,
+            condicion: cboCondicionMascota.value,
+            estado_mas: 1,
         });
     }
 }
-
-btnCancelarUsuario.onclick = ()=> {
-    idFilaUsuario = "";
-    txtDniUsuario.value = "";
-    txtNombreUsuario.value = "";
-    txtApellidoUsuario.value = "";
-    txtCorreoUsuario.value = "";
-    txtTelefonoUsuario.value = "";
-    txtDireccionUsuario.value = "";
-    llenarComboCargo();
-    iniciarCombos();
-}
-
-frmUsuario.onsubmit = (e)=> {
-    e.preventDefault();
-}
-
-txtDniUsuario.onkeyup = ()=>{
-    if(txtDniUsuario.value.trim().length == 8){
-        fetch(`https://apiperu.dev/api/dni/${txtDniUsuario.value.trim()}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer 885d75c9ab6c537a20db76ed0e6daf0ba674ddd554972e2829fbdc46c4f83d96',
-            },
-        }).then(response=> response.json()).then(datos=>{
-            txtNombreUsuario.value = datos.data.nombres;
-            txtApellidoUsuario.value = datos.data.apellido_paterno + " " + datos.data.apellido_materno;
-        })
-    }
-    if(txtDniUsuario.value.trim().length > 8){
-        txtDniUsuario.value = txtDniUsuario.value.trim().substr(0,8);
-    }
-}
-*/
