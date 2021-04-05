@@ -65,16 +65,16 @@
 							<span class="align-middle">Cargos</span>
 						</a>
 					</li>
-					<li class="sidebar-item" id="opcVacunas">
-						<a class="sidebar-link">
-							<i class="align-middle" data-feather="thermometer"></i>
-							<span class="align-middle">Vacunas</span>
-						</a>
-					</li>
 					<li class="sidebar-item" id="opcRazas">
 						<a class="sidebar-link">
 							<i class="align-middle" data-feather="gitlab"></i>
 							<span class="align-middle">Razas</span>
+						</a>
+					</li>
+					<li class="sidebar-item" id="opcMarcas">
+						<a class="sidebar-link">
+							<i class="align-middle" data-feather="clipboard"></i>
+							<span class="align-middle">Marcas</span>
 						</a>
 					</li>
 					<li class="sidebar-item" id="opcAlimentos">
@@ -83,10 +83,10 @@
 							<span class="align-middle">Alimentos</span>
 						</a>
 					</li>
-					<li class="sidebar-item" id="opcMarcas">
+					<li class="sidebar-item" id="opcVacunas">
 						<a class="sidebar-link">
-							<i class="align-middle" data-feather="clipboard"></i>
-							<span class="align-middle">Marcas</span>
+							<i class="align-middle" data-feather="thermometer"></i>
+							<span class="align-middle">Vacunas</span>
 						</a>
 					</li>
 					<li class="sidebar-item" id="opcHistorialVacunas">
@@ -317,52 +317,6 @@
 				</div>
 				<!-- Contenido Cargo -->
 
-				<!-- Contenido Vacuna -->
-				<div class="row" id="formVacunas">
-					<div class="col-12">
-						<div class="card shadow mt-3 bg-dark">
-							<div class="card-body">
-								<form class="row" id="frmVacuna">
-									<div class="form-group col-md-6 col-sm-6 p-1">
-										<input type="text" class="form-control" placeholder="Ingresar Vacuna" id="txtNombreVacuna">
-									</div>
-									<div class="form-group col-md-6 col-sm-6 p-1">
-										<input type="number" class="form-control" placeholder="Ingresar Duración" min="0" max="99" step="1" id="txtDuracionVacuna">
-									</div>
-									<div class="form-group col-md-12 col-sm-12 p-1">
-										<input type="text" class="form-control" placeholder="Ingresar Descripción" id="txtDescripcionVacuna">
-									</div>
-									<div class="form-group col-md-6 col-sm-6 col-6 p-1">
-										<button class="btn btn-block btn-primary" type="button" id="btnCrearActualizarVacuna">Crear</button>
-									</div>
-									<div class="form-group col-md-6 col-sm-6 col-6 p-1">
-										<button class="btn btn-block btn-danger" type="button" id="btnCancelarVacuna">Cancelar</button>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row mt-2" id="tableVacunas">
-					<div class="col-12">
-						<div class="card shadow">
-							<div class="card-body table-responsive">
-								<table class="table table-hover" style="width:100%" id="myTableVacunas">
-									<thead>
-										<tr>
-											<th>Vacuna</th>
-											<th>Duración</th>
-											<th>Descripción</th>
-										</tr>
-									</thead>
-									<tbody></tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- Contenido Vacuna -->
-
 				<!-- Contenido Raza -->
 				<div class="row" id="formRazas">
 					<div class="col-12">
@@ -404,6 +358,44 @@
 					</div>
 				</div>
 				<!-- Contenido Raza -->
+
+				<!-- Contenido Marca -->
+				<div class="row" id="formMarcas">
+					<div class="col-12">
+						<div class="card shadow mt-3 bg-dark">
+							<div class="card-body">
+								<form class="row" id="frmMarca">
+									<div class="form-group col-md-4 col-sm-4 p-1">
+										<input type="text" class="form-control" placeholder="Ingresar Marca" id="txtNombreMarca">
+									</div>
+									<div class="form-group col-md-4 col-sm-4 col-6 p-1">
+										<button class="btn btn-block btn-primary" type="button" id="btnCrearActualizarMarca">Crear</button>
+									</div>
+									<div class="form-group col-md-4 col-sm-4 col-6 p-1">
+										<button class="btn btn-block btn-danger" type="button" id="btnCancelarMarca">Cancelar</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row mt-2" id="tableMarcas">
+					<div class="col-12">
+						<div class="card shadow">
+							<div class="card-body table-responsive">
+								<table class="table table-hover" style="width:100%" id="myTableMarcas">
+									<thead>
+										<tr>
+											<th>Marca</th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Contenido Marca -->
 
 				<!-- Contenido Comida -->
 				<div class="row" id="formComidas">
@@ -461,35 +453,43 @@
 					</div>
 				</div>
 				<!-- Contenido Comida -->
-
-				<!-- Contenido Marca -->
-				<div class="row" id="formMarcas">
+				
+				<!-- Contenido Vacuna -->
+				<div class="row" id="formVacunas">
 					<div class="col-12">
 						<div class="card shadow mt-3 bg-dark">
 							<div class="card-body">
-								<form class="row" id="frmMarca">
-									<div class="form-group col-md-4 col-sm-4 p-1">
-										<input type="text" class="form-control" placeholder="Ingresar Marca" id="txtNombreMarca">
+								<form class="row" id="frmVacuna">
+									<div class="form-group col-md-6 col-sm-6 p-1">
+										<input type="text" class="form-control" placeholder="Ingresar Vacuna" id="txtNombreVacuna">
 									</div>
-									<div class="form-group col-md-4 col-sm-4 col-6 p-1">
-										<button class="btn btn-block btn-primary" type="button" id="btnCrearActualizarMarca">Crear</button>
+									<div class="form-group col-md-6 col-sm-6 p-1">
+										<input type="number" class="form-control" placeholder="Ingresar Duración" min="0" max="99" step="1" id="txtDuracionVacuna">
 									</div>
-									<div class="form-group col-md-4 col-sm-4 col-6 p-1">
-										<button class="btn btn-block btn-danger" type="button" id="btnCancelarMarca">Cancelar</button>
+									<div class="form-group col-md-12 col-sm-12 p-1">
+										<input type="text" class="form-control" placeholder="Ingresar Descripción" id="txtDescripcionVacuna">
+									</div>
+									<div class="form-group col-md-6 col-sm-6 col-6 p-1">
+										<button class="btn btn-block btn-primary" type="button" id="btnCrearActualizarVacuna">Crear</button>
+									</div>
+									<div class="form-group col-md-6 col-sm-6 col-6 p-1">
+										<button class="btn btn-block btn-danger" type="button" id="btnCancelarVacuna">Cancelar</button>
 									</div>
 								</form>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="row mt-2" id="tableMarcas">
+				<div class="row mt-2" id="tableVacunas">
 					<div class="col-12">
 						<div class="card shadow">
 							<div class="card-body table-responsive">
-								<table class="table table-hover" style="width:100%" id="myTableMarcas">
+								<table class="table table-hover" style="width:100%" id="myTableVacunas">
 									<thead>
 										<tr>
-											<th>Marca</th>
+											<th>Vacuna</th>
+											<th>Duración</th>
+											<th>Descripción</th>
 										</tr>
 									</thead>
 									<tbody></tbody>
@@ -498,7 +498,7 @@
 						</div>
 					</div>
 				</div>
-				<!-- Contenido Marca -->
+				<!-- Contenido Vacuna -->
 			</main>
 			<footer class="footer">
 				<div class="container-fluid">
