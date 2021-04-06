@@ -3,10 +3,9 @@ const formComidas = document.getElementById("formComidas");
 const frmComida = document.getElementById("frmComida");
 const txtNombreComida = document.getElementById("txtNombreComida");
 // const imgComida = document.getElementById("imgComida");
-const txtStockComida = document.getElementById("txtStockComida");
 const cboMarcaComida = document.getElementById("cboMarcaComida");
 const txtPrecioComida = document.getElementById("txtPrecioComida");
-const txtDescuentoComida = document.getElementById("txtDescuentoComida");
+const cboEspecieComida = document.getElementById("cboEspecieComida");
 const btnCrearActualizarComida = document.getElementById("btnCrearActualizarComida");
 const btnCancelarComida = document.getElementById("btnCancelarComida");
 const tableComidas = document.getElementById("tableComidas");
@@ -18,8 +17,25 @@ opcAlimentos.onclick = ()=> {
     formComidas.style.display = "block";
     tableComidas.style.display = "block";
     llenarComboMarca();
+    llenarComboEspecieComida();
     listarComida();
     btnCancelarComida.click();
+}
+
+const llenarComboEspecieComida = async ()=> {
+    const query = await firebase.firestore().collection('especie').get();
+    cboEspecieComida.innerHTML = `<option value="0" id="optCeroEspecieComida">Seleccionar Especie</option>`;
+
+    query.docs.forEach((doc)=>{
+        if(doc.data().estado_especie == 1){
+            let option = document.createElement("option");
+            option.text = doc.data().nombre_especie;
+            option.value = doc.id;
+            option.id = doc.id;
+
+            cboEspecieComida.appendChild(option);
+        }
+    })
 }
 
 const llenarComboMarca = async ()=> {
@@ -45,6 +61,13 @@ const deseleccionarComboMarca = (option)=> {
     document.getElementById(option).setAttribute("selected", "selected");
 }
 
+const deseleccionarComboEspecieComida = (option)=> {
+    for(let i=0; i<cboEspecieComida.children.length; i++){
+        cboEspecieComida.children[i].removeAttribute("selected");
+    }
+    document.getElementById(option).setAttribute("selected", "selected");
+}
+
 $('#myTableComidas tbody').on('click', 'tr', async function () {
     var data = tablaComida.row(this).data();
 
@@ -53,10 +76,9 @@ $('#myTableComidas tbody').on('click', 'tr', async function () {
         if(doc.data().descripcion_com == data[0]){
             idFilaComida = doc.id;
             txtNombreComida.value = data[0];
-            txtStockComida.value = data[1];
             deseleccionarComboMarca(doc.data().marca);
-            txtPrecioComida.value = data[3];
-            txtDescuentoComida.value = data[4];
+            txtPrecioComida.value = data[2];
+            deseleccionarComboEspecieComida(doc.data().especie);
             return;
         }
     })
@@ -82,28 +104,39 @@ const listarComida = async ()=> {
     tablaComida.clear().draw();
     query.docs.forEach(async(doc)=>{
         if(doc.data().estado_com == 1){
-            const query = await firebase.firestore().collection('marca').get();
-            query.docs.forEach((miMarca)=>{
+            const traerMarcas = await firebase.firestore().collection('marca').get();
+            const traerEspecies = await firebase.firestore().collection('especie').get();
+
+            let marcaX = "";
+            let especieX = "";
+
+            traerMarcas.docs.forEach((miMarca)=>{
                 if(miMarca.id == doc.data().marca){
-                    tablaComida.row.add([
-                        doc.data().descripcion_com,
-                        doc.data().stock_com,
-                        miMarca.data().nombre_marca,
-                        doc.data().precio_com,
-                        doc.data().descuento_com,
-                    ]).draw(true)
+                    marcaX = miMarca.data().nombre_marca;
                 }
             })
+
+            traerEspecies.docs.forEach((miEspecie)=>{
+                if(miEspecie.id == doc.data().especie){
+                    especieX = miEspecie.data().nombre_especie;
+                }
+            })
+
+            tablaComida.row.add([
+                doc.data().descripcion_com,
+                marcaX,
+                doc.data().precio_com,
+                especieX,
+            ]).draw(true)
         }
     })
 }
 
 const crearComida = async ()=> {
     if(txtNombreComida.value.trim() == "" ||
-        txtStockComida.value == "" || txtStockComida.value <= 0 ||
         cboMarcaComida.value == 0 ||
         txtPrecioComida.value == "" || txtPrecioComida.value <= 0 ||
-        txtDescuentoComida.value == "" || txtDescuentoComida.value < 0){
+        cboEspecieComida.value == 0){
         Swal.fire({
             icon: "error",
             title: "Campos incompletos",
@@ -137,9 +170,8 @@ const crearComida = async ()=> {
         if(comidaEncontrada == false && comidaDesactivada == false){
             firebase.firestore().collection('comida').add({
                 descripcion_com: txtNombreComida.value.trim(),
-                stock_com: txtStockComida.value,
                 precio_com: txtPrecioComida.value,
-                descuento_com: txtDescuentoComida.value,
+                especie: cboEspecieComida.value,
                 marca: cboMarcaComida.value,
                 estado_com: 1,
             })
@@ -153,10 +185,9 @@ const crearComida = async ()=> {
                 if(result.isConfirmed){
                     listarComida();
                     txtNombreComida.value = "";
-                    txtStockComida.value = "";
                     txtPrecioComida.value = "";
-                    txtDescuentoComida.value = "";
                     llenarComboMarca();
+                    llenarComboEspecieComida();
                 }
             })
         } else if (comidaEncontrada == false && comidaDesactivada == true){
@@ -171,18 +202,16 @@ const crearComida = async ()=> {
                 if(result.isConfirmed){
                     listarComida();
                     txtNombreComida.value = "";
-                    txtStockComida.value = "";
                     txtPrecioComida.value = "";
-                    txtDescuentoComida.value = "";
                     llenarComboMarca();
+                    llenarComboEspecieComida();
                 }
             })
             comidaSeleccionada.update({
                 estado_com: 1,
-                stock_com: +txtStockComida.value,
                 marca: cboMarcaComida.value,
                 precio_com: +txtPrecioComida.value,
-                descuento_com: +txtDescuentoComida.value,
+                especie: cboEspecieComida.value,
             });
         }
     }
@@ -190,10 +219,9 @@ const crearComida = async ()=> {
 
 const editarComida = async ()=> {
     if(txtNombreComida.value.trim() == "" ||
-        txtStockComida.value == "" || txtStockComida.value <= 0 ||
         cboMarcaComida.value == 0 ||
         txtPrecioComida.value == "" || txtPrecioComida.value <= 0 ||
-        txtDescuentoComida.value == "" || txtDescuentoComida.value < 0){
+        cboEspecieComida.value == 0){
         Swal.fire({
             icon: "error",
             title: "Campos incompletos",
@@ -214,20 +242,18 @@ const editarComida = async ()=> {
             if(result.isConfirmed){
                 listarComida();
                 txtNombreComida.value = "";
-                txtStockComida.value = "";
                 txtPrecioComida.value = "";
-                txtDescuentoComida.value = "";
                 llenarComboMarca();
+                llenarComboEspecieComida();
                 btnCrearActualizarComida.innerText = "Crear";
             }
         })
 
         comidaSeleccionada.update({
             descripcion_com: txtNombreComida.value.trim(),
-            stock_com: +txtStockComida.value,
             marca: cboMarcaComida.value,
             precio_com: +txtPrecioComida.value,
-            descuento_com: +txtDescuentoComida.value,
+            especie: cboEspecieComida.value,
         });
     }
 }
@@ -253,10 +279,9 @@ const eliminarComida = async ()=> {
                 if(result.isConfirmed){
                     listarComida();
                     txtNombreComida.value = "";
-                    txtStockComida.value = "";
                     txtPrecioComida.value = "";
-                    txtDescuentoComida.value = "";
                     llenarComboMarca();
+                    llenarComboEspecieComida();
                     btnCrearActualizarComida.innerText = "Crear";
                 }
             })
@@ -278,10 +303,9 @@ btnCrearActualizarComida.onclick = ()=> {
 btnCancelarComida.onclick = ()=> {
     idFilaComida = "";
     txtNombreComida.value = "";
-    txtStockComida.value = "";
     cboMarcaComida.value = 0;
     txtPrecioComida.value = "";
-    txtDescuentoComida.value = "";
+    cboEspecieComida.value = 0;
     btnCrearActualizarComida.innerText = "Crear";
 }
 
