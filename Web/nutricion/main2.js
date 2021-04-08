@@ -43,3 +43,42 @@ btnSalir.onclick = ()=>{
     firebase.auth().signOut();
     location.reload();
 };
+
+const btnVerPerros = document.getElementById("btnVerPerros");
+const btnVerGatos = document.getElementById("btnVerGatos");
+
+btnVerPerros.onclick = ()=> {
+    btnVerPerros.classList.remove("btn-outline-success");
+    btnVerPerros.classList.add("btn-success");
+    btnVerGatos.classList.remove("btn-success");
+    btnVerGatos.classList.add("btn-outline-success");
+
+    let gatos = document.getElementsByClassName("gatoCard");
+    let perros = document.getElementsByClassName("perroCard");
+
+    for(let i=0; i<gatos.length; i++){
+        gatos[i].style.display = "none";
+    }
+
+    for(let i=0; i<perros.length; i++){
+        perros[i].style.display = "block";
+    }
+}
+
+btnVerGatos.onclick = ()=> {
+    btnVerGatos.classList.remove("btn-outline-success");
+    btnVerGatos.classList.add("btn-success");
+    btnVerPerros.classList.remove("btn-success");
+    btnVerPerros.classList.add("btn-outline-success");
+
+    let gatos = document.getElementsByClassName("gatoCard");
+    let perros = document.getElementsByClassName("perroCard");
+
+    for(let i=0; i<gatos.length; i++){
+        gatos[i].style.display = "block";
+    }
+
+    for(let i=0; i<perros.length; i++){
+        perros[i].style.display = "none";
+    }
+}
