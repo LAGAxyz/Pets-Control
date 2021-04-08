@@ -28,9 +28,7 @@ const asignarPerfil = async (user)=>{
     query.docs.forEach((doc)=>{
         if(doc.data().id_usuario == user.uid){
             if(doc.data().tipo_usu == 1){
-                // redirigir al portal del cliente
-                console.log("ir al portal del cliente");
-                // redirigir al portal del cliente
+                linkPerfil.parentElement.removeChild(linkPerfil);
             } else if(doc.data().tipo_usu == 2){
                 linkPerfil.setAttribute("href", "../panel/");
             } else if(doc.data().tipo_usu == 3){
