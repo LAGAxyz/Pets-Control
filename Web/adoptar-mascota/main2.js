@@ -118,6 +118,8 @@ const mostrarData = async ()=>{
                     descripcion.innerText = doc.data().presentacion_mas;
                     vinculo.innerText = "Contactar al dueño"
                     vinculo.href = `https://wa.me/51${tel_usu}`;
+                    vinculo.rel = "nofollow";
+                    vinculo.target = "_blank";
                 
                     body.appendChild(titulo);
                     body.appendChild(hr);
@@ -164,6 +166,8 @@ const mostrarData = async ()=>{
                     descripcion.innerText = doc.data().presentacion_mas;
                     vinculo.innerText = "Contactar al dueño"
                     vinculo.href = `https://wa.me/51${tel_usu}`;
+                    vinculo.rel = "nofollow";
+                    vinculo.target = "_blank";
                 
                     body.appendChild(titulo);
                     body.appendChild(hr);
@@ -213,6 +217,8 @@ const mostrarData = async ()=>{
                     descripcion.innerText = doc.data().presentacion_mas;
                     vinculo.innerText = "Contactar al dueño"
                     vinculo.href = `https://wa.me/51${tel_usu}`;
+                    vinculo.rel = "nofollow";
+                    vinculo.target = "_blank";
                 
                     body.appendChild(titulo);
                     body.appendChild(hr);
