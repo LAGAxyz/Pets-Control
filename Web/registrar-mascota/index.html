@@ -109,6 +109,97 @@
     </header>
     <!-- Header end -->
     
+    <main class="content bg-light" id="contenedor">
+        <div class="container p-0">
+            <h1 class="h3 text-center p-4">REGISTRAR MASCOTA</h1>
+            <div class="row">
+                <div class="col-md-12 col-xl-10">
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="account" role="tabpanel">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">Información de la mascota</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form>
+                                        <div class="row">
+                                            <div class="col-md-4 mb-3">
+                                                <div class="text-center">
+                                                    <img alt="Foto de la mascota" src="https://via.placeholder.com/128x128?text=Seleccione+Especie" class="rounded-circle img-responsive mt-2" width="128" height="128" />
+                                                    <!-- <div class="mt-2">
+                                                        <span class="btn btn-primary"><i class="fa fa-arrow-up"></i> Upload</span>
+                                                    </div> -->
+                                                    <!-- <small>Para un mejor resultado, utiliza una imagen de 128px por 128px en formato .jpg</small> -->
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="row">
+                                                    <div class="mb-3 col-12">
+                                                        <label class="form-label" for="txtInputMascotaNombre">Nombre de la mascota</label>
+                                                        <input type="text" class="form-control" id="txtInputMascotaNombre" placeholder="Ingresar Nombre">
+                                                    </div>
+                                                    <div class="mb-3 col-6">
+                                                        <label class="form-label" for="txtInputMascotaPeso">Peso de la mascota</label>
+                                                        <input type="number" class="form-control mb-2" id="txtInputMascotaPeso" placeholder="Ingresar Peso" min="1" max="500" step="0.01">
+                                                    </div>
+                                                    <div class="mb-3 col-6">
+                                                        <label class="form-label" for="txtInputMascotaTalla">Talla de la mascota</label>
+                                                        <input type="text" class="form-control mb-2" id="txtInputMascotaTalla" placeholder="Ingresar Talla" min="0" max="500" step="0.01">
+                                                    </div>
+                                                    <div class="mb-3 col-12">
+                                                        <label class="form-label" for="txtInputMascotaPresentacion">Presentación de la mascota</label>
+                                                        <input type="text" class="form-control mb-2" id="txtInputMascotaPresentacion" placeholder="Ingresar Presentación">
+                                                    </div>
+                                                    <div class="mb-3 col-6">
+                                                        <label class="form-label" for="cboSelectMascotaEspecie">Seleccionar Especie</label>
+                                                        <select class="form-select form-control" id="cboSelectMascotaEspecie">
+                                                            <option value="0">Especie</option>
+                                                            <option value="">Canino</option>
+                                                            <option value="">Felino</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3 col-6">
+                                                        <label class="form-label" for="cboSelectMascotaRaza">Seleccionar Raza</label>
+                                                        <select class="form-select form-control" id="cboSelectMascotaRaza">
+                                                            <option value="0">Raza</option>
+                                                            <option value=""></option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3 col-6">
+                                                        <label class="form-label" for="cboSelectMascotaGenero">Seleccionar Género</label>
+                                                        <select class="form-select form-control" id="cboSelectMascotaGenero">
+                                                            <option value="0">Género</option>
+                                                            <option value="Macho">Macho</option>
+                                                            <option value="Hembra">Hembra</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3 col-6">
+                                                        <label class="form-label" for="cboSelectMascotaCondicion">Seleccionar Condición</label>
+                                                        <select class="form-select form-control" id="cboSelectMascotaCondicion">
+                                                            <option value="0">Condición</option>
+                                                            <option value="Con Hogar">Con Hogar</option>
+                                                            <option value="En Adopción">En Adopción</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3 col-6">
+                                                        <button type="button" class="btn btn-primary col-12">Registrar</button>
+                                                    </div>
+                                                    <div class="mb-3 col-6">
+                                                        <button type="button" class="btn btn-danger col-12">Cancelar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
     <!-- Footer start -->
     <footer class="footer">
         <div class="footer_top">

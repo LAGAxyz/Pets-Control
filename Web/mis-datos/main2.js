@@ -8,6 +8,8 @@ const btnSalir = document.getElementById("btnSalir");
 const contenedorM2 = document.getElementById("contenedorM2");
 const menu2 = document.getElementById("menu2");
 
+const contenedor = document.getElementById("contenedor");
+
 firebase.auth().onAuthStateChanged(user=>{
     if(user){
         user.photoURL ? userPhoto.src = user.photoURL : userPhoto.src = "../assets/img/icons/usuario-anonimo.png";
@@ -19,6 +21,12 @@ firebase.auth().onAuthStateChanged(user=>{
         userName.innerText = "Portal de clientes";
         userName.setAttribute("href", "../acceso/");
         contenedorM2.removeChild(menu2);
+        contenedor.innerHTML = `
+            <div class="alert alert-warning w-100 text-center" role="alert">
+                <h3 class="alert-heading">USUARIO DESCONOCIDO</h3>
+                <p class="mb-0">Respetamos la confidencialidad de datos de todos nuestros usuarios.</p>
+                <p>Para ver y editar tus datos, debes <a href="../acceso/" class="alert-link">Iniciar Sesión</a> en nuestra plataforma.</p>
+            </div>`
     }
 });
 
