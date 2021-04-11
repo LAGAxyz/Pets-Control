@@ -43,3 +43,19 @@ btnSalir.onclick = ()=>{
     firebase.auth().signOut();
     location.reload();
 };
+
+const servicioVacuna = document.getElementById("servicioVacuna");
+const servicioNutricion = document.getElementById("servicioNutricion");
+const servicioEspecialidades = document.getElementById("servicioEspecialidades");
+
+servicioVacuna.onclick = ()=> {
+    location.href = "./vacunas/";
+}
+
+servicioNutricion.onclick = ()=> {
+    location.href = "./nutricion";
+}
+
+servicioEspecialidades.onclick = ()=> {
+    location.href = "./especialidades";
+}

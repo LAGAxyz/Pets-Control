@@ -2645,3 +2645,9 @@ h6 {
 .mt-30 {
   margin-top: 30px;
 }
+
+#servicioVacuna,
+#servicioNutricion,
+#servicioEspecialidades {
+  cursor: pointer;
+}
