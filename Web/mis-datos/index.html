@@ -121,7 +121,7 @@
                                     <h5 class="card-title mb-0">Información Personal</h5>
                                 </div>
                                 <div class="card-body">
-                                    <form>
+                                    <form id="frmEditarDatos">
                                         <div class="row">
                                             <div class="col-md-4 mb-3">
                                                 <div class="text-center">
@@ -147,31 +147,38 @@
                                                     <div class="mb-3 col-6">
                                                         <label class="form-label" for="cboSelectUsuarioGenero">Seleccionar Género</label>
                                                         <select class="form-select form-control" id="cboSelectUsuarioGenero">
-                                                            <option value="0">Género</option>
-                                                            <option value="Masculino">Masculino</option>
-                                                            <option value="Femenino">Femenino</option>
+                                                            <option value="0" id="sinGenero">Género</option>
+                                                            <option value="Masculino" id="Masculino">Masculino</option>
+                                                            <option value="Femenino" id="Femenino">Femenino</option>
                                                         </select>
                                                     </div>
                                                     <div class="mb-3 col-6">
                                                         <label class="form-label" for="cboSelectUsuarioEstadoCivil">Seleccionar Estado Civil</label>
                                                         <select class="form-select form-control" id="cboSelectUsuarioEstadoCivil">
-                                                            <option value="0">Estado Civil</option>
-                                                            <option value="Viudo">Viudo</option>
-                                                            <option value="Soltero">Soltero</option>
-                                                            <option value="Casado">Casado</option>
-                                                            <option value="Divorciado">Divorciado</option>
+                                                            <option value="0" id="sinEstadoCivil">Estado Civil</option>
+                                                            <option value="Viudo" id="Viudo">Viudo</option>
+                                                            <option value="Soltero" id="Soltero">Soltero</option>
+                                                            <option value="Casado" id="Casado">Casado</option>
+                                                            <option value="Divorciado" id="Divorciado">Divorciado</option>
                                                         </select>
                                                     </div>
                                                     <div class="mb-3 col-12">
                                                         <label class="form-label" for="txtInputUsuarioCorreo">Correo Electrónico</label>
                                                         <input type="text" class="form-control" id="txtInputUsuarioCorreo" placeholder="Digite su correo electrónico" disabled readonly>
                                                     </div>
-                                                    <div class="mb-3 col-12">
+                                                    <div class="mb-3 col-6">
                                                         <label class="form-label" for="txtInputUsuarioDireccion">Dirección actual</label>
                                                         <input type="text" class="form-control" id="txtInputUsuarioDireccion" placeholder="Digite su dirección actual">
                                                     </div>
-                                                    <div class="mb-3 col-12">
-                                                        <button type="button" class="btn btn-primary col-12">Guardar Cambios</button>
+                                                    <div class="mb-3 col-6">
+                                                        <label class="form-label" for="txtInputUsuarioTelefono">Número de celular</label>
+                                                        <input type="text" class="form-control" id="txtInputUsuarioTelefono" placeholder="Digite su número de teléfono">
+                                                    </div>
+                                                    <div class="mb-3 col-6">
+                                                        <button type="button" class="btn btn-primary col-12" id="btnGuardar">Guardar Cambios</button>
+                                                    </div>
+                                                    <div class="mb-3 col-6">
+                                                        <button type="button" class="btn btn-danger col-12" id="btnCancelar">Cancelar Cambios</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -284,6 +291,8 @@
         firebase.initializeApp(firebaseConfig);
     </script>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    
     <script src="./jquery-1.12.4.js"></script>
     <script src="./jquery-slick-nav.js"></script>
     <script src="./main.js"></script>
