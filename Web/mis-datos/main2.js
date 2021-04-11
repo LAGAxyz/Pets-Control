@@ -66,7 +66,7 @@ const txtInputUsuarioTelefono = document.getElementById("txtInputUsuarioTelefono
 const btnGuardar = document.getElementById("btnGuardar");
 const btnCancelar = document.getElementById("btnCancelar");
 
-let usuarioActualID = firebase.auth().currentUser;
+let usuarioActualID = "";
 let usuarioActual = "";
 
 frmEditarDatos.onsubmit = (e)=> {

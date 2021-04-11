@@ -121,7 +121,7 @@
                                     <h5 class="card-title mb-0">Información de la mascota</h5>
                                 </div>
                                 <div class="card-body">
-                                    <form>
+                                    <form id="frmAgregarMascota">
                                         <div class="row">
                                             <div class="col-md-4 mb-3">
                                                 <div class="text-center">
@@ -144,7 +144,7 @@
                                                     </div>
                                                     <div class="mb-3 col-6">
                                                         <label class="form-label" for="txtInputMascotaTalla">Talla de la mascota</label>
-                                                        <input type="text" class="form-control mb-2" id="txtInputMascotaTalla" placeholder="Ingresar Talla" min="0" max="500" step="0.01">
+                                                        <input type="number" class="form-control mb-2" id="txtInputMascotaTalla" placeholder="Ingresar Talla" min="1" max="500" step="0.01">
                                                     </div>
                                                     <div class="mb-3 col-12">
                                                         <label class="form-label" for="txtInputMascotaPresentacion">Presentación de la mascota</label>
@@ -153,22 +153,21 @@
                                                     <div class="mb-3 col-6">
                                                         <label class="form-label" for="cboSelectMascotaEspecie">Seleccionar Especie</label>
                                                         <select class="form-select form-control" id="cboSelectMascotaEspecie">
-                                                            <option value="0">Especie</option>
-                                                            <option value="">Canino</option>
-                                                            <option value="">Felino</option>
+                                                            <option value="0" id="sinEspecie">Especie</option>
+                                                            <option value="VO3zLzr8Mq5ZRoft61yj" id="VO3zLzr8Mq5ZRoft61yj">Canino</option>
+                                                            <option value="fisx4nGvOGfYVhTquyZE" id="fisx4nGvOGfYVhTquyZE">Felino</option>
                                                         </select>
                                                     </div>
                                                     <div class="mb-3 col-6">
                                                         <label class="form-label" for="cboSelectMascotaRaza">Seleccionar Raza</label>
                                                         <select class="form-select form-control" id="cboSelectMascotaRaza">
-                                                            <option value="0">Raza</option>
-                                                            <option value=""></option>
+                                                            <option value="0" id="sinRaza">Raza</option>
                                                         </select>
                                                     </div>
                                                     <div class="mb-3 col-6">
                                                         <label class="form-label" for="cboSelectMascotaGenero">Seleccionar Género</label>
                                                         <select class="form-select form-control" id="cboSelectMascotaGenero">
-                                                            <option value="0">Género</option>
+                                                            <option value="0" id="sinGenero">Género</option>
                                                             <option value="Macho">Macho</option>
                                                             <option value="Hembra">Hembra</option>
                                                         </select>
@@ -176,16 +175,16 @@
                                                     <div class="mb-3 col-6">
                                                         <label class="form-label" for="cboSelectMascotaCondicion">Seleccionar Condición</label>
                                                         <select class="form-select form-control" id="cboSelectMascotaCondicion">
-                                                            <option value="0">Condición</option>
+                                                            <option value="0" id="sinCondicion">Condición</option>
                                                             <option value="Con Hogar">Con Hogar</option>
                                                             <option value="En Adopción">En Adopción</option>
                                                         </select>
                                                     </div>
                                                     <div class="mb-3 col-6">
-                                                        <button type="button" class="btn btn-primary col-12">Registrar</button>
+                                                        <button type="button" class="btn btn-primary col-12" id="btnGuardar">Registrar</button>
                                                     </div>
                                                     <div class="mb-3 col-6">
-                                                        <button type="button" class="btn btn-danger col-12">Cancelar</button>
+                                                        <button type="button" class="btn btn-danger col-12" id="btnCancelar">Cancelar</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -297,6 +296,8 @@
         };
         firebase.initializeApp(firebaseConfig);
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     <script src="./jquery-1.12.4.js"></script>
     <script src="./jquery-slick-nav.js"></script>
