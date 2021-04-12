@@ -81,7 +81,6 @@ btnVerGatos.onclick = ()=> {
 }
 
 const mostrarData = async ()=>{
-    const mascotasContenedor = document.getElementById("mascotasContenedor");
     mascotasContenedor.innerHTML = "";
     
     const query = await firebase.firestore().collection('mascota').get();

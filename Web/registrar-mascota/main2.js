@@ -65,6 +65,7 @@ const cboSelectMascotaGenero = document.getElementById("cboSelectMascotaGenero")
 const cboSelectMascotaCondicion = document.getElementById("cboSelectMascotaCondicion");
 const btnGuardar = document.getElementById("btnGuardar");
 const btnCancelar = document.getElementById("btnCancelar");
+const imgEspecie = document.getElementById("imgEspecie");
 
 let usuarioActualID = "";
 let usuarioActual = "";
@@ -84,6 +85,14 @@ cboSelectMascotaEspecie.onchange = async ()=>{
                 option.value = doc.id;
                 option.id = doc.id;
             cboSelectMascotaRaza.appendChild(option);
+        }
+        
+        if(cboSelectMascotaEspecie.value == "VO3zLzr8Mq5ZRoft61yj"){
+            imgEspecie.src = "../assets/img/dogs/dog.png"
+        } else if (cboSelectMascotaEspecie.value == "fisx4nGvOGfYVhTquyZE"){
+            imgEspecie.src = "../assets/img/cats/cat.png"
+        } else {
+            imgEspecie.src = "https://via.placeholder.com/128x128";
         }
     })
 }
