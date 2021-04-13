@@ -90,13 +90,16 @@ const mostrarData = async ()=>{
             titulo.innerText = doc.data().nombre_mas;
             descripcion.innerText = doc.data().presentacion_mas;
             btnEditar.innerText = "Editar"
+            btnEditar.type = "button"
+            btnEditar.setAttribute("data-bs-toggle", "modal")
+            btnEditar.setAttribute("data-bs-target", "#modalEliminar")
             btnEliminar.innerText = "Eliminar"
             btnVerVacunas.innerText = "Ver Vacunas"
 
-            btnEditar.onclick = ()=>{editarMascota();};
-            btnEliminar.onclick = ()=>{eliminarMascota();};
-            btnVerVacunas.onclick = ()=>{verVacunasMascota();};
-        
+            btnEditar.onclick = ()=>{editarMascota(doc);};
+            btnEliminar.onclick = ()=>{eliminarMascota(doc.id);};
+            btnVerVacunas.onclick = ()=>{verVacunasMascota(doc);};
+
             body.appendChild(titulo);
             body.appendChild(hr);
             body.appendChild(descripcion);
@@ -114,14 +117,177 @@ const mostrarData = async ()=>{
     })
 }
 
-const editarMascota = ()=> {
-    console.log("funcionando editar");
+const frmEditarMascota = document.getElementById("frmEditarMascota");
+const txtInputMascotaNombre = document.getElementById("txtInputMascotaNombre");
+const txtInputMascotaPeso = document.getElementById("txtInputMascotaPeso");
+const txtInputMascotaTalla = document.getElementById("txtInputMascotaTalla");
+const txtInputMascotaPresentacion = document.getElementById("txtInputMascotaPresentacion");
+const cboSelectMascotaEspecie = document.getElementById("cboSelectMascotaEspecie");
+const cboSelectMascotaRaza = document.getElementById("cboSelectMascotaRaza");
+const cboSelectMascotaGenero = document.getElementById("cboSelectMascotaGenero");
+const cboSelectMascotaCondicion = document.getElementById("cboSelectMascotaCondicion");
+const btnEditarMascota = document.getElementById("btnEditarMascota");
+
+let mascotaAeditar = "";
+
+btnEditarMascota.onclick = async ()=>{
+    if(txtInputMascotaNombre.value.trim() == "" ||
+        txtInputMascotaPeso.value <= 0 || txtInputMascotaTalla.value <= 0 ||
+        txtInputMascotaPresentacion.value.trim() == "" ||
+        cboSelectMascotaEspecie.value == 0 || cboSelectMascotaRaza.value == 0 ||
+        cboSelectMascotaGenero.value == 0 || cboSelectMascotaCondicion.value == 0){
+            Swal.fire({
+                icon: "error",
+                title: "Campos incompletos",
+                text: "Debe completar los campos",
+                confirmButtonText: "Entendido",
+                allowOutsideClick: false,
+            });
+    } else {
+        let mascotaSeleccionada = await firebase.firestore().collection("mascota").doc(mascotaAeditar);
+        Swal.fire({
+            icon: "success",
+            title: "Registro actualizado satisfactoriamente",
+            text: "El registro fue actualizado de manera satisfactoria",
+            confirmButtonText: "Entendido",
+            allowOutsideClick: false,
+        }).then((result)=>{
+            if(result.isConfirmed){
+                mostrarData();
+            }
+        })
+        mascotaSeleccionada.update({
+            nombre_mas: txtInputMascotaNombre.value.trim(),
+            peso_mas: txtInputMascotaPeso.value,
+            talla_mas: txtInputMascotaTalla.value,
+            presentacion_mas: txtInputMascotaPresentacion.value.trim(),
+            especie: cboSelectMascotaEspecie.value,
+            raza: cboSelectMascotaRaza.value,
+            genero_mas: cboSelectMascotaGenero.value,
+            condicion: cboSelectMascotaCondicion.value,
+        });
+    }
 }
 
-const eliminarMascota = ()=> {
-    console.log("funcionando eliminar");
+const editarMascota = async (mascota)=> {
+    const query = await firebase.firestore().collection("mascota").doc(mascota.id);
+    const consultarRaza = await firebase.firestore().collection("raza").get();
+    let nombreRaza = "";
+    consultarRaza.docs.forEach((doc)=>{
+        if(doc.id == mascota.data().raza){
+            nombreRaza = doc.data().nombre_raza;
+            return;
+        }
+    })
+    iniciarCombosMascota();
+    txtInputMascotaNombre.value = mascota.data().nombre_mas;
+    txtInputMascotaPeso.value = mascota.data().peso_mas;
+    txtInputMascotaTalla.value = mascota.data().talla_mas;
+    txtInputMascotaPresentacion.value = mascota.data().presentacion_mas;
+    deseleccionarComboEspecie(mascota.data().especie);
+    let option = document.createElement("option");
+        option.value = mascota.data().raza;
+        option.id = mascota.data().raza;
+        option.innerText = nombreRaza;
+        cboSelectMascotaRaza.appendChild(option);
+    deseleccionarComboRaza(mascota.data().raza);
+    deseleccionarComboGenero(mascota.data().genero_mas);
+    if(mascota.data().condicion == "Con Hogar"){
+        deseleccionarComboCondicion("conHogar");
+    } else if (mascota.data().condicion == "En Adopción") {
+        deseleccionarComboCondicion("enAdopcion");
+    }
+    mascotaAeditar = mascota.id;
 }
 
-const verVacunasMascota = ()=> {
+const eliminarMascota = async (mascota)=> {
+    let mascotaSeleccionada = await firebase.firestore().collection("mascota").doc(mascota);
+    Swal.fire({
+        title: '¿Desea eliminar el registro?',
+        showDenyButton: true,
+        confirmButtonText: 'Volver',
+        denyButtonText: 'Eliminar',
+        allowOutsideClick: false,
+    }).then((result)=>{
+        if(result.isDenied){
+            Swal.fire({
+                icon: "success",
+                title: "Registro eliminado satisfactoriamente",
+                text: "El registro fue eliminado de manera satisfactoria",
+                confirmButtonText: "Entendido",
+            }).then((result)=>{
+                if(result.isConfirmed){
+                    mostrarData();
+                }
+            })
+            return mascotaSeleccionada.update({
+                estado_mas: 0,
+            })
+        }
+    })
+}
+
+const verVacunasMascota = (mascota)=> {
     console.log("funcionando ver vacunas");
+}
+
+cboSelectMascotaEspecie.onchange = async ()=>{
+    cboSelectMascotaRaza.innerHTML = `<option value="0" id="sinRaza">Raza</option>`;
+    const query = await firebase.firestore().collection('raza').get();
+    query.docs.forEach((doc)=>{
+        if(cboSelectMascotaEspecie.value == doc.data().especie && doc.data().estado_raza == 1){
+            let option = document.createElement("option");
+                option.text = doc.data().nombre_raza;
+                option.value = doc.id;
+                option.id = doc.id;
+            cboSelectMascotaRaza.appendChild(option);
+        }
+    })
+}
+
+const deseleccionarComboEspecie = (option)=> {
+    for(let i=0; i<cboSelectMascotaEspecie.children.length; i++){
+        cboSelectMascotaEspecie.children[i].removeAttribute("selected");
+    }
+    document.getElementById(option).setAttribute("selected", "selected");
+}
+
+const deseleccionarComboRaza = (option)=> {
+    for(let i=0; i<cboSelectMascotaRaza.children.length; i++){
+        cboSelectMascotaRaza.children[i].removeAttribute("selected");
+    }
+    document.getElementById(option).setAttribute("selected", "selected");
+}
+
+const deseleccionarComboGenero = (option)=> {
+    for(let i=0; i<cboSelectMascotaGenero.children.length; i++){
+        cboSelectMascotaGenero.children[i].removeAttribute("selected");
+    }
+    document.getElementById(option).setAttribute("selected", "selected");
+}
+
+const deseleccionarComboCondicion = (option)=> {
+    for(let i=0; i<cboSelectMascotaCondicion.children.length; i++){
+        cboSelectMascotaCondicion.children[i].removeAttribute("selected");
+    }
+    document.getElementById(option).setAttribute("selected", "selected");
+}
+
+const iniciarCombosMascota = ()=> {
+    cboSelectMascotaEspecie.innerHTML = `
+                    <option value="0" id="sinEspecie">Especie</option>
+					<option value="VO3zLzr8Mq5ZRoft61yj" id="VO3zLzr8Mq5ZRoft61yj">Canino</option>
+					<option value="fisx4nGvOGfYVhTquyZE" id="fisx4nGvOGfYVhTquyZE">Felino</option>`;
+    
+    cboSelectMascotaRaza.innerHTML = `<option value="0" id="sinRaza">Raza</option>`;
+    
+    cboSelectMascotaGenero.innerHTML = `
+                    <option value="0" id="sinGenero">Género</option>
+					<option value="Macho" id="Macho">Macho</option>
+					<option value="Hembra" id="Hembra">Hembra</option>`;
+    
+    cboSelectMascotaCondicion.innerHTML = `
+                    <option value="0" id="sinCondicion">Condición</option>
+                    <option value="Con Hogar" id="conHogar">Con Hogar</option>
+                    <option value="En Adopción" id="enAdopcion">En Adopción</option>`;
 }
