@@ -2651,3 +2651,8 @@ h6 {
 #servicioEspecialidades {
   cursor: pointer;
 }
+
+.precio {
+  font-size: 25px;
+  font-weight: bold;
+}
