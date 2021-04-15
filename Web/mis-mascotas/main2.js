@@ -58,7 +58,23 @@ let usuarioActualID = "";
 let usuarioActualDNI = "";
 
 const mostrarData = async ()=>{
-    contenedorMisMascotas.innerHTML = "";
+    contenedorMisMascotas.innerHTML = `
+        <div class="col-lg-4 col-md-4 col-sm-6">
+            <div class="m-2">
+                <div class="card border-primary mb-3">
+                    <div class="card-body">
+                        <p class="card-text">Registra una nueva mascota para que puedas controlar sus datos y su control de vacunación.</p>
+                        <a href="../registrar-mascota/" class="btn btn-outline-primary w-100" rel="nofollow" target="_self">Registar Mascota</a>
+                    </div>
+                </div>
+                <div class="card border-success mt-3">
+                    <div class="card-body text-success">
+                        <p class="card-text">Puedes ser el dueño que una mascota necesita! busca y encuentra a tu mascota ideal.</p>
+                        <a href="../adoptar-mascota/" class="btn btn-success w-100" rel="nofollow" target="_self">Adoptar Mascota</a>
+                    </div>
+                </div>
+            </div>
+        </div>`;
     const query = await firebase.firestore().collection('mascota').get();
 
     query.docs.forEach(async(doc)=>{
@@ -154,6 +170,7 @@ btnEditarMascota.onclick = async ()=>{
         }).then((result)=>{
             if(result.isConfirmed){
                 mostrarData();
+                document.getElementById("btnCancelarCambios").click();
             }
         })
         mascotaSeleccionada.update({

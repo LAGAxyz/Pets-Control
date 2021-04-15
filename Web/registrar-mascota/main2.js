@@ -138,7 +138,8 @@ btnCancelar.onclick = ()=> {
 
 btnGuardar.onclick = async ()=> {
     if(txtInputMascotaNombre.value.trim() == "" ||
-        txtInputMascotaPeso.value.trim() == "" || txtInputMascotaTalla.value.trim() == "" ||
+        txtInputMascotaPeso.value <= 0 ||
+        txtInputMascotaTalla.value <= 0 ||
         txtInputMascotaPresentacion.value.trim() == "" ||
         cboSelectMascotaEspecie.value == 0 || cboSelectMascotaRaza.value == 0 ||
         cboSelectMascotaGenero.value == 0 || cboSelectMascotaCondicion.value == 0){
