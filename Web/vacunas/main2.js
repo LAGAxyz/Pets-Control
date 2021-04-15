@@ -20,6 +20,7 @@ firebase.auth().onAuthStateChanged(user=>{
         userName.setAttribute("href", "../acceso/");
         contenedorM2.removeChild(menu2);
     }
+    btnVerPerros.click();
 });
 
 const asignarPerfil = async (user)=>{
@@ -43,3 +44,26 @@ btnSalir.onclick = ()=>{
     firebase.auth().signOut();
     location.reload();
 };
+
+const btnVerPerros = document.getElementById("btnVerPerros");
+const btnVerGatos = document.getElementById("btnVerGatos");
+
+btnVerPerros.onclick = ()=> {
+    btnVerPerros.classList.remove("btn-outline-success");
+    btnVerPerros.classList.add("btn-success");
+    btnVerGatos.classList.remove("btn-success");
+    btnVerGatos.classList.add("btn-outline-success");
+
+    document.getElementById("contenedorGatos").style.display = "none";
+    document.getElementById("contenedorPerros").style.display = "block";
+}
+
+btnVerGatos.onclick = ()=> {
+    btnVerGatos.classList.remove("btn-outline-success");
+    btnVerGatos.classList.add("btn-success");
+    btnVerPerros.classList.remove("btn-success");
+    btnVerPerros.classList.add("btn-outline-success");
+
+    document.getElementById("contenedorGatos").style.display = "block";
+    document.getElementById("contenedorPerros").style.display = "none";
+}
