@@ -89,5 +89,8 @@ const ocultarContenido = ()=> {
     formMarcas.style.display = "none";
     tableMarcas.style.display = "none";
 
+    formHistorialVacunas.style.display = "none";
+    tableHistorialVacunas.style.display = "none";
+
     contenido.style.display = "block";
 }

@@ -493,6 +493,71 @@
 					</div>
 				</div>
 				<!-- Contenido Vacuna -->
+
+				<!-- Contenido Historial -->
+				<div class="row" id="formHistorialVacunas">
+					<div class="col-12">
+						<div class="card shadow mt-3 bg-dark">
+							<div class="card-body">
+								<form class="row" id="frmHistorialVacuna">
+									<div class="form-group col-md-4 col-sm-4 p-1">
+										<input type="text" class="form-control" placeholder="Ingresar DNI" id="txtDniHistorialVacuna">
+									</div>
+									<div class="form-group col-md-8 col-sm-8 p-1">
+										<input type="text" class="form-control" placeholder="Usuario" id="txtUsuarioHistorialVacuna" disabled readonly>
+									</div>
+									<div class="form-group col-md-4 col-sm-4 p-1">
+										<select class="form-select" id="cboMascotaHistorialVacuna"></select>
+									</div>
+									<div class="form-group col-md-4 col-sm-4 col-6 p-1">
+										<select class="form-select" id="cboEspecieHistorialVacuna" disabled></select>
+									</div>
+									<div class="form-group col-md-4 col-sm-4 col-6 p-1">
+										<select class="form-select" id="cboRazaHistorialVacuna" disabled></select>
+									</div>
+									<div class="form-group col-md-4 col-sm-4 p-1">
+										<select class="form-select" id="cboVacunaHistorialVacuna"></select>
+									</div>
+									<div class="form-group col-md-4 col-sm-4 col-6 p-1">
+										<input type="date" class="form-control" id="txtFechaHistorialVacuna">
+									</div>
+									<div class="form-group col-md-4 col-sm-4 col-6 p-1">
+										<input type="date" class="form-control" id="txtCaducidadHistorialVacuna">
+									</div>
+									<div class="form-group col-md-6 col-sm-6 col-6 p-1">
+										<button class="btn btn-block btn-primary" type="button" id="btnCrearActualizarHistorialVacuna">Crear</button>
+									</div>
+									<div class="form-group col-md-6 col-sm-6 col-6 p-1">
+										<button class="btn btn-block btn-danger" type="button" id="btnCancelarHistorialVacuna">Cancelar</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row mt-2" id="tableHistorialVacunas">
+					<div class="col-12">
+						<div class="card shadow">
+							<div class="card-body table-responsive">
+								<table class="table table-hover" style="width:100%" id="myTableHistorialVacunas">
+									<thead>
+										<tr>
+											<th>Mascota</th>
+											<th>Especie</th>
+											<th>Raza</th>
+											<th>Dueño</th>
+											<th>Vacuna</th>
+											<th>F. Vacuna</th>
+											<th>F. Caducidad</th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Contenido Historial -->
 			</main>
 			<footer class="footer">
 				<div class="container-fluid">
@@ -554,5 +619,6 @@
 	<script src="./main_raza.js"></script>
 	<script src="./main_alimento.js"></script>
 	<script src="./main_marca.js"></script>
+	<script src="./main_historial.js"></script>
 </body>
 </html>
