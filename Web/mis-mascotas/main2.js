@@ -70,7 +70,7 @@ const mostrarData = async ()=>{
                 <div class="card border-success mt-3">
                     <div class="card-body text-success">
                         <p class="card-text">Puedes ser el dueño que una mascota necesita! busca y encuentra a tu mascota ideal.</p>
-                        <a href="../adoptar-mascota/" class="btn btn-success w-100" rel="nofollow" target="_self">Adoptar Mascota</a>
+                        <a href="../adoptar-mascota/" class="btn btn-outline-success w-100" rel="nofollow" target="_self">Adoptar Mascota</a>
                     </div>
                 </div>
             </div>

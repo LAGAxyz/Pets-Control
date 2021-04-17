@@ -43,7 +43,7 @@ opcHistorialVacunas.onclick = ()=> {
     ocultarContenido();
     formHistorialVacunas.style.display = "block";
     tableHistorialVacunas.style.display = "block";
-    // listarHistorialVacuna();
+    listarHistorialVacuna();
     btnCancelarHistorialVacuna.click();
 }
 
@@ -102,9 +102,43 @@ const listarVacunas = async ()=> {
         }
     })
 }
-
 listarVacunas();
 
+const listarHistorialVacuna = async ()=> {
+    const query = await firebase.firestore().collection('historial').get();
+    const consultarMascotas = await firebase.firestore().collection('mascota').get();
+    const consultarUsuarios = await firebase.firestore().collection('usuario').get();
+
+    tablaHistorialVacuna.clear().draw();
+
+    query.docs.forEach((doc)=>{
+        if(doc.data().estado == 1){
+            // logica para tarer al dueño y la mascota
+            tablaHistorialVacuna.row.add([
+                "nada",
+                "nada",
+                "nada",
+                "nada",
+                "nada",
+                moment(doc.data().fecha_vacuna.toDate()).format("DD/MM/YYYY"),
+                moment(doc.data().fecha_caducidad.toDate()).format("DD/MM/YYYY"),
+            ]).draw(true);
+        }
+    })
+}
+
+
+
+
+
+
+/*
+console.log(moment("1997-01-31").format("DD-MM-YYYY"));
+btnCancelarHistorialVacuna.onclick = ()=>{
+    console.log("fecha?")
+    console.log(moment(txtFechaHistorialVacuna.value).format("DD-MM-YYYY"))
+}
+*/
 /*
 $('#myTableVacunas tbody').on('click', 'tr', async function () {
     var data = tablaVacuna.row(this).data();
@@ -135,19 +169,7 @@ $('#myTableVacunas tbody').on('dblclick', 'tr', async function () {
     })
 });
 
-const listarVacuna = async ()=> {
-    const query = await firebase.firestore().collection('vacuna').get();
-    tablaVacuna.clear().draw();
-    query.docs.forEach((doc)=>{
-        if(doc.data().estado_vacuna == 1){
-            tablaVacuna.row.add([
-                doc.data().nombre_vacuna,
-                doc.data().duracion_vacuna,
-                doc.data().descripcion_vacuna,
-            ]).draw(true);
-        }
-    })
-}
+
 
 const crearVacuna = async ()=> {
     if(txtNombreVacuna.value.trim() == "" || txtDuracionVacuna.value <= 0 ||
