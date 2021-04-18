@@ -10,6 +10,8 @@ const menu2 = document.getElementById("menu2");
 
 const contenedor = document.getElementById("contenedor");
 
+let tieneDNI = false;
+
 firebase.auth().onAuthStateChanged(user=>{
     if(user){
         user.photoURL ? userPhoto.src = user.photoURL : userPhoto.src = "../assets/img/icons/usuario-anonimo.png";
@@ -19,7 +21,7 @@ firebase.auth().onAuthStateChanged(user=>{
         asignarPerfil(user);
     } else {
         userPhoto.src = "../assets/img/icons/usuario-anonimo.png";
-        userName.innerText = "Portal de clientes";
+        userName.innerText = "Acceder";
         userName.setAttribute("href", "../acceso/");
         contenedorM2.removeChild(menu2);
         contenedor.innerHTML = `
@@ -33,7 +35,6 @@ firebase.auth().onAuthStateChanged(user=>{
 
 const asignarPerfil = async (user)=>{
     const query = await firebase.firestore().collection("usuario").get();
-
     query.docs.forEach((doc)=>{
         if(doc.data().id_usuario == user.uid){
             usuarioActual = doc.data().dni_usuario;
@@ -44,10 +45,23 @@ const asignarPerfil = async (user)=>{
             } else if(doc.data().tipo_usu == 3){
                 linkPerfil.setAttribute("href", "../panel/");
             }
+            doc.data().dni_usuario == "null" ? tieneDNI = false : tieneDNI = true;
+            validarDNI();
             return;
         }
     })
 };
+
+const validarDNI = ()=> {
+    if(tieneDNI == false){
+        contenedor.innerHTML = `
+            <div class="alert alert-warning w-100 text-center" role="alert">
+                <h3 class="alert-heading">DATOS INCOMPLETOS</h3>
+                <p class="mb-0">Para poder registrar a tus mascotas y acceder a más funcionalidades,</p>
+                <p>primero debes completar todos tus datos en <a href="../mis-datos/" class="alert-link">Mis datos</a></p>
+            </div>`
+    }
+}
 
 btnSalir.onclick = ()=>{
     firebase.auth().signOut();

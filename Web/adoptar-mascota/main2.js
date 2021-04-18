@@ -10,16 +10,17 @@ const menu2 = document.getElementById("menu2");
 
 const btnOpciones = document.getElementById("btnOpciones");
 
+let tieneDNI = false;
+
 firebase.auth().onAuthStateChanged(user=>{
     if(user){
         user.photoURL ? userPhoto.src = user.photoURL : userPhoto.src = "../assets/img/icons/usuario-anonimo.png";
         user.email ? userName.innerText = user.email : userName.innerText = user.displayName;
         userName.removeAttribute("href");
         asignarPerfil(user);
-        mostrarData();
     } else {
         userPhoto.src = "../assets/img/icons/usuario-anonimo.png";
-        userName.innerText = "Portal de clientes";
+        userName.innerText = "Acceder";
         userName.setAttribute("href", "../acceso/");
         contenedorM2.removeChild(menu2);
         btnOpciones.parentElement.removeChild(btnOpciones);
@@ -34,7 +35,6 @@ firebase.auth().onAuthStateChanged(user=>{
 
 const asignarPerfil = async (user)=>{
     const query = await firebase.firestore().collection("usuario").get();
-
     query.docs.forEach((doc)=>{
         if(doc.data().id_usuario == user.uid){
             if(doc.data().tipo_usu == 1){
@@ -44,10 +44,27 @@ const asignarPerfil = async (user)=>{
             } else if(doc.data().tipo_usu == 3){
                 linkPerfil.setAttribute("href", "../panel/");
             }
+            doc.data().dni_usuario == "null" ? tieneDNI = false : tieneDNI = true;
+            validarDNI();
             return;
         }
     })
 };
+
+const validarDNI = ()=> {
+    if(tieneDNI == false){
+        btnOpciones.style.display = "none";
+        mascotasContenedor.innerHTML = `
+            <div class="alert alert-warning w-100 text-center" role="alert">
+                <h3 class="alert-heading">DATOS INCOMPLETOS</h3>
+                <p class="mb-0">Para poder ver a todas las mascotas en adopción y acceder a más funcionalidades,</p>
+                <p>primero debes completar todos tus datos en <a href="../mis-datos/" class="alert-link">Mis datos</a></p>
+            </div>`
+    } else {
+        btnOpciones.style.display = "block";
+        mostrarData();
+    }
+}
 
 btnSalir.onclick = ()=>{
     firebase.auth().signOut();

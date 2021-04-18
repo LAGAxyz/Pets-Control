@@ -16,7 +16,7 @@ firebase.auth().onAuthStateChanged(user=>{
         asignarPerfil(user);
     } else {
         userPhoto.src = "../assets/img/icons/usuario-anonimo.png";
-        userName.innerText = "Portal de clientes";
+        userName.innerText = "Acceder";
         userName.setAttribute("href", "../acceso/");
         contenedorM2.removeChild(menu2);
     }
