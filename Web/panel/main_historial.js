@@ -45,6 +45,7 @@ opcHistorialVacunas.onclick = ()=> {
     tableHistorialVacunas.style.display = "block";
     listarHistorialVacuna();
     btnCancelarHistorialVacuna.click();
+    listarVacunas();
 }
 
 const traerMascotasUsuario = async ()=> {
@@ -101,18 +102,47 @@ const listarVacunas = async ()=> {
             cboVacunaHistorialVacuna.appendChild(option);
         }
     })
+    const hoy = moment().format("YYYY-MM-DD");
+    txtFechaHistorialVacuna.value = hoy;
 }
-listarVacunas();
+
+btnCrearActualizarHistorialVacuna.onclick = ()=> {
+    if(btnCrearActualizarHistorialVacuna.innerText === "Crear"){
+        crearHistorialVacuna();
+    } else if(btnCrearActualizarHistorialVacuna.innerText === "Editar"){
+        editarHistorialVacuna();
+    }
+}
+
+btnCancelarHistorialVacuna.onclick = ()=> {
+    idFilaHistorialVacuna = "";
+    txtDniHistorialVacuna.value = "";
+    txtUsuarioHistorialVacuna.value = "";
+    cboMascotaHistorialVacuna.innerHTML = "";
+    cboEspecieHistorialVacuna.innerHTML = "";
+    cboRazaHistorialVacuna.innerHTML = "";
+    listarVacunas();
+    txtCaducidadHistorialVacuna.value = "";
+    btnCrearActualizarHistorialVacuna.innerText = "Crear";
+}
+
+cboVacunaHistorialVacuna.onchange = async ()=> {
+    let vacunaSeleccionada = await firebase.firestore().collection("vacuna").doc(cboVacunaHistorialVacuna.value);
+    vacunaSeleccionada.get().then((doc)=>{
+        txtCaducidadHistorialVacuna.value = moment(txtFechaHistorialVacuna.value).add(doc.data().duracion_vacuna, "months").format("YYYY-MM-DD");
+    })
+}
 
 const listarHistorialVacuna = async ()=> {
-    const query = await firebase.firestore().collection('historial').get();
+    const consultarHistorial = await firebase.firestore().collection('historial').get();
     const consultarMascotas = await firebase.firestore().collection('mascota').get();
     const consultarUsuarios = await firebase.firestore().collection('usuario').get();
+    const consultarVacunas = await firebase.firestore().collection('vacuna').get();
 
     tablaHistorialVacuna.clear().draw();
 
-    query.docs.forEach((doc)=>{
-        if(doc.data().estado == 1){
+    consultarHistorial.docs.forEach((doc)=>{
+        if(doc.data().estado_hv == 1){
             // logica para tarer al dueño y la mascota
             tablaHistorialVacuna.row.add([
                 "nada",
@@ -132,13 +162,6 @@ const listarHistorialVacuna = async ()=> {
 
 
 
-/*
-console.log(moment("1997-01-31").format("DD-MM-YYYY"));
-btnCancelarHistorialVacuna.onclick = ()=>{
-    console.log("fecha?")
-    console.log(moment(txtFechaHistorialVacuna.value).format("DD-MM-YYYY"))
-}
-*/
 /*
 $('#myTableVacunas tbody').on('click', 'tr', async function () {
     var data = tablaVacuna.row(this).data();
@@ -168,8 +191,6 @@ $('#myTableVacunas tbody').on('dblclick', 'tr', async function () {
         }
     })
 });
-
-
 
 const crearVacuna = async ()=> {
     if(txtNombreVacuna.value.trim() == "" || txtDuracionVacuna.value <= 0 ||
@@ -318,21 +339,5 @@ const eliminarVacuna = async ()=> {
             })
         }
     })
-}
-
-btnCrearActualizarVacuna.onclick = ()=> {
-    if(btnCrearActualizarVacuna.innerText === "Crear"){
-        crearVacuna();
-    } else if(btnCrearActualizarVacuna.innerText === "Editar"){
-        editarVacuna();
-    }
-}
-
-btnCancelarVacuna.onclick = ()=> {
-    idFilaVacuna = "";
-    txtNombreVacuna.value = "";
-    txtDuracionVacuna.value = "";
-    txtDescripcionVacuna.value = "";
-    btnCrearActualizarVacuna.innerText = "Crear";
 }
 */
