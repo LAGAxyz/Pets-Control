@@ -16,6 +16,7 @@ opcRazas.onclick = ()=> {
     listarRaza();
     llenarComboEspecieRaza();
     btnCancelarRaza.click();
+    txtTitulo.innerText = "Razas";
 }
 
 const llenarComboEspecieRaza = async ()=> {

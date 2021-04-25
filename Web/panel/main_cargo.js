@@ -14,6 +14,7 @@ opcCargos.onclick = ()=> {
     tableCargos.style.display = "block";
     listarCargo();
     btnCancelarCargo.click();
+    txtTitulo.innerText = "Cargos";
 }
 
 $('#myTableCargos tbody').on('click', 'tr', async function () {

@@ -16,6 +16,7 @@ opcVacunas.onclick = ()=> {
     tableVacunas.style.display = "block";
     listarVacuna();
     btnCancelarVacuna.click();
+    txtTitulo.innerText = "Vacunas";
 }
 
 $('#myTableVacunas tbody').on('click', 'tr', async function () {

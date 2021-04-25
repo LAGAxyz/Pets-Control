@@ -143,7 +143,7 @@ const listarHistorialVacuna = async ()=> {
 
     consultarHistorial.docs.forEach((doc)=>{
         if(doc.data().estado_hv == 1){
-            // logica para tarer al dueño y la mascota
+            // logica para traer al dueño y la mascota y la vacuna en la lista del historial
             tablaHistorialVacuna.row.add([
                 "nada",
                 "nada",

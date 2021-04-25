@@ -24,6 +24,7 @@ const opcMarcas = document.getElementById("opcMarcas");
 const opcHistorialVacunas = document.getElementById("opcHistorialVacunas");
 // const opcMascotasAdopcion = document.getElementById("opcMascotasAdopcion");
 
+const txtTitulo = document.getElementById("txtTitulo");
 const contenido = document.getElementById("contenido");
 
 firebase.auth().onAuthStateChanged(user=>{

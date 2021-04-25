@@ -36,11 +36,13 @@ const inicializarMascotas = ()=> {
 lstPerros.onclick = ()=> {
     inicializarMascotas();
     opcMarcadaMascota = "lstPerros";
+    txtTitulo.innerText = "Perros";
 }
 
 lstGatos.onclick = ()=> {
     inicializarMascotas();
     opcMarcadaMascota = "lstGatos";
+    txtTitulo.innerText = "Gatos";
 }
 
 const llenarComboEspecieMascota = async ()=> {

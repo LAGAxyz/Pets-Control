@@ -35,16 +35,19 @@ const inicializarUsuarios = ()=> {
 lstClientes.onclick = ()=> {
     inicializarUsuarios();
     opcMarcadaUsuario = "lstClientes";
+    txtTitulo.innerText = "Clientes";
 }
 
 lstTrabajadores.onclick = ()=> {
     inicializarUsuarios();
     opcMarcadaUsuario = "lstTrabajadores";
+    txtTitulo.innerText = "Trabajadores";
 }
 
 lstAdministradores.onclick = ()=> {
     inicializarUsuarios();
     opcMarcadaUsuario = "lstAdministradores";
+    txtTitulo.innerText = "Administradores";
 }
 
 const llenarComboCargo = async ()=> {

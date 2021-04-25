@@ -14,6 +14,7 @@ opcMarcas.onclick = ()=> {
     tableMarcas.style.display = "block";
     listarMarca();
     btnCancelarMarca.click();
+    txtTitulo.innerText = "Marcas";
 }
 
 $('#myTableMarcas tbody').on('click', 'tr', async function () {

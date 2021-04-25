@@ -20,6 +20,7 @@ opcAlimentos.onclick = ()=> {
     llenarComboEspecieComida();
     listarComida();
     btnCancelarComida.click();
+    txtTitulo.innerText = "Alimentos";
 }
 
 const llenarComboEspecieComida = async ()=> {
