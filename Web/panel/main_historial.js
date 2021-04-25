@@ -15,6 +15,7 @@ const tableHistorialVacunas = document.getElementById("tableHistorialVacunas");
 
 let tablaHistorialVacuna = $('#myTableHistorialVacunas').DataTable();
 let idFilaHistorialVacuna = "";
+
 let usuarioActual = "";
 let mascotaActual = "";
 
@@ -45,12 +46,13 @@ opcHistorialVacunas.onclick = ()=> {
     tableHistorialVacunas.style.display = "block";
     listarHistorialVacuna();
     btnCancelarHistorialVacuna.click();
-    listarVacunas();
+    // listarVacunas();
+    txtTitulo.innerText = "Historial de vacunas"
 }
 
 const traerMascotasUsuario = async ()=> {
     const query = await firebase.firestore().collection('mascota').get();
-    cboMascotaHistorialVacuna.innerHTML = "";
+    cboMascotaHistorialVacuna.innerHTML = `<option value="0">Seleccionar mascota</option>`;
     query.docs.forEach((doc)=>{
         if(doc.data().usuario == usuarioActual.data().dni_usuario){
             let option = document.createElement("option");
@@ -135,142 +137,121 @@ cboVacunaHistorialVacuna.onchange = async ()=> {
 
 const listarHistorialVacuna = async ()=> {
     const consultarHistorial = await firebase.firestore().collection('historial').get();
-    const consultarMascotas = await firebase.firestore().collection('mascota').get();
-    const consultarUsuarios = await firebase.firestore().collection('usuario').get();
-    const consultarVacunas = await firebase.firestore().collection('vacuna').get();
+
+    let itemMascota = "";
+    let itemEspecie = "";
+    let itemRaza = "";
+    let itemUsuario = "";
+    let itemVacuna = "";
 
     tablaHistorialVacuna.clear().draw();
 
-    consultarHistorial.docs.forEach((doc)=>{
+    consultarHistorial.docs.forEach(async(doc)=>{
         if(doc.data().estado_hv == 1){
-            // logica para traer al dueño y la mascota y la vacuna en la lista del historial
+            const consultarMascotas = await firebase.firestore().collection('mascota').get();
+            const consultarRazas = await firebase.firestore().collection('raza').get();
+            const consultarVacunas = await firebase.firestore().collection('vacuna').get();
+
+            consultarMascotas.docs.forEach((miMascota)=>{
+                if(miMascota.id == doc.data().mascota){
+                    itemMascota = miMascota.data().nombre_mas;
+                    if(miMascota.data().especie == "VO3zLzr8Mq5ZRoft61yj"){itemEspecie = "Canino";}
+                    if(miMascota.data().especie == "fisx4nGvOGfYVhTquyZE"){itemEspecie = "Felino";}
+                    consultarRazas.docs.forEach((miRaza)=>{
+                        if(miRaza.id == miMascota.data().raza){
+                            itemRaza = miRaza.data().nombre_raza;
+                            return;
+                        }
+                    })
+                    itemUsuario = miMascota.data().usuario;
+                    return;
+                }
+            })
+
+            consultarVacunas.docs.forEach((miVacuna)=>{
+                if(miVacuna.id == doc.data().vacuna){
+                    itemVacuna = miVacuna.data().nombre_vacuna;
+                    return;
+                }
+            })
+
             tablaHistorialVacuna.row.add([
-                "nada",
-                "nada",
-                "nada",
-                "nada",
-                "nada",
-                moment(doc.data().fecha_vacuna.toDate()).format("DD/MM/YYYY"),
-                moment(doc.data().fecha_caducidad.toDate()).format("DD/MM/YYYY"),
+                itemMascota,
+                itemEspecie,
+                itemRaza,
+                itemUsuario,
+                itemVacuna,
+                moment(doc.data().fecha_vacuna).format("DD/MM/YYYY"),
+                moment(doc.data().fecha_caducidad).format("DD/MM/YYYY"),
             ]).draw(true);
         }
     })
 }
 
+// $('#myTableHistorialVacunas tbody').on('click', 'tr', async function () {
+//     var data = tablaHistorialVacuna.row(this).data();
+//     txtDniHistorialVacuna.value = data[3];
+//         const query = await firebase.firestore().collection('usuario').get();
+//         query.docs.forEach((doc)=>{
+//             if(doc.data().dni_usuario == txtDniHistorialVacuna.value.trim()){
+//                 txtUsuarioHistorialVacuna.value = doc.data().nombre_usu + " " + doc.data().apellido_usu;
+//                 return;
+//             }
+//         })
+//     cboMascotaHistorialVacuna.innerHTML = `<option value="${data[0]}">${data[0]}</option>`;
+//     cboEspecieHistorialVacuna.innerHTML = `<option value="${data[1]}">${data[1]}</option>`;
+//     cboRazaHistorialVacuna.innerHTML = `<option value="${data[2]}">${data[2]}</option>`;
+//     cboVacunaHistorialVacuna.innerHTML = `<option value="${data[4]}">${data[4]}</option>`;
+//     txtFechaHistorialVacuna.value = moment(data[5], "DD-MM-YYYY").format("YYYY-MM-DD");
+//     txtCaducidadHistorialVacuna.value = moment(data[6], "DD-MM-YYYY").format("YYYY-MM-DD");
+// })
 
+// $('#myTableHistorialVacunas tbody').on('dblclick', 'tr', async function () {
+//     var data = tablaHistorialVacuna.row(this).data();
+//     const query = await firebase.firestore().collection('historial').get();
+//     query.docs.forEach((doc)=>{
+//         if(doc.data(). == data[0]){
+//             idFilaVacuna = doc.id;
+//             eliminarVacuna();
+//             return;
+//         }
+//     })
+// })
 
-
-
-
-/*
-$('#myTableVacunas tbody').on('click', 'tr', async function () {
-    var data = tablaVacuna.row(this).data();
-    txtNombreVacuna.value = data[0];
-    txtDuracionVacuna.value = data[1];
-    txtDescripcionVacuna.value = data[2];
-    btnCrearActualizarVacuna.innerText = "Editar";
-
-    const query = await firebase.firestore().collection('vacuna').get();
-    query.docs.forEach((doc)=>{
-        if(doc.data().nombre_vacuna == data[0]){
-            idFilaVacuna = doc.id;
-            return;
-        }
-    })
-});
-
-$('#myTableVacunas tbody').on('dblclick', 'tr', async function () {
-    var data = tablaVacuna.row(this).data();
-
-    const query = await firebase.firestore().collection('vacuna').get();
-    query.docs.forEach((doc)=>{
-        if(doc.data().nombre_vacuna == data[0]){
-            idFilaVacuna = doc.id;
-            eliminarVacuna();
-            return;
-        }
-    })
-});
-
-const crearVacuna = async ()=> {
-    if(txtNombreVacuna.value.trim() == "" || txtDuracionVacuna.value <= 0 ||
-        txtDescripcionVacuna.value.trim() == ""){
+const crearHistorialVacuna = async ()=> {
+    if(txtDniHistorialVacuna.value.trim() == "" || txtUsuarioHistorialVacuna.value.trim() == "" ||
+        cboMascotaHistorialVacuna.value == 0 || cboVacunaHistorialVacuna.value == 0){
         Swal.fire({
             icon: "error",
             title: "Campos incompletos",
-            text: "Debe completar los campos",
+            text: "Debe completar los campos correctamente",
             confirmButtonText: "Entendido",
             allowOutsideClick: false,
         });
     } else {
-        const query = await firebase.firestore().collection("vacuna").get();
-        let vacunaEncontrada = false;
-        let vacunaDesactivada = false;
-        let vacunaAactivar = "";
-
-        query.docs.forEach((doc)=>{
-            if(doc.data().nombre_vacuna == txtNombreVacuna.value.trim() && doc.data().estado_vacuna == 1){
-                vacunaEncontrada = true;
-                Swal.fire({
-                    icon: "error",
-                    title: "Registro ya existente",
-                    text: "El registro que trata de ingresar ya existe en la base de datos",
-                    confirmButtonText: "Entendido",
-                    allowOutsideClick: false,
-                });
-                return;
-            } else if (doc.data().nombre_vacuna == txtNombreVacuna.value.trim() && doc.data().estado_vacuna == 0){
-                vacunaDesactivada = true;
-                vacunaAactivar = doc.id;
+        firebase.firestore().collection('historial').add({
+            estado_hv: 1,
+            mascota: cboMascotaHistorialVacuna.value,
+            vacuna: cboVacunaHistorialVacuna.value,
+            fecha_vacuna: txtFechaHistorialVacuna.value,
+            fecha_caducidad: txtCaducidadHistorialVacuna.value,
+        })
+        Swal.fire({
+            icon: "success",
+            title: "Registro creado satisfactoriamente",
+            text: "El registro fue creado de manera satisfactoria",
+            confirmButtonText: "Entendido",
+            allowOutsideClick: false,
+        }).then((result)=>{
+            if(result.isConfirmed){
+                btnCancelarHistorialVacuna.click();
+                listarHistorialVacuna();
             }
-        });
-    
-        if(vacunaEncontrada == false && vacunaDesactivada == false){
-            firebase.firestore().collection('vacuna').add({
-                nombre_vacuna: txtNombreVacuna.value.trim(),
-                duracion_vacuna: txtDuracionVacuna.value,
-                descripcion_vacuna: txtDescripcionVacuna.value.trim(),
-                estado_vacuna: 1,
-            })
-            Swal.fire({
-                icon: "success",
-                title: "Registro creado satisfactoriamente",
-                text: "El registro fue creado de manera satisfactoria",
-                confirmButtonText: "Entendido",
-                allowOutsideClick: false,
-            }).then((result)=>{
-                if(result.isConfirmed){
-                    listarVacuna();
-                    txtNombreVacuna.value = "";
-                    txtDuracionVacuna.value = "";
-                    txtDescripcionVacuna.value = "";
-                }
-            })
-        } else if (vacunaEncontrada == false && vacunaDesactivada == true){
-            let vacunaSeleccionada = await firebase.firestore().collection("vacuna").doc(vacunaAactivar);
-            Swal.fire({
-                icon: "success",
-                title: "Registro creado satisfactoriamente",
-                text: "El registro fue creado de manera satisfactoria",
-                confirmButtonText: "Entendido",
-                allowOutsideClick: false,
-            }).then((result)=>{
-                if(result.isConfirmed){
-                    listarVacuna();
-                    txtNombreVacuna.value = "";
-                    txtDuracionVacuna.value = "";
-                    txtDescripcionVacuna.value = "";
-                }
-            })
-            vacunaSeleccionada.update({
-                estado_vacuna: 1,
-                duracion_vacuna: +txtDuracionVacuna.value,
-                descripcion_vacuna: txtDescripcionVacuna.value.trim(),
-            });
-        }
+        })
     }
 }
 
+/*
 const editarVacuna = async ()=> {
     if(txtNombreVacuna.value.trim() == "" || txtDuracionVacuna.value <= 0 ||
         txtDescripcionVacuna.value.trim() == ""){

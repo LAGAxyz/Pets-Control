@@ -27,6 +27,8 @@ const opcHistorialVacunas = document.getElementById("opcHistorialVacunas");
 const txtTitulo = document.getElementById("txtTitulo");
 const contenido = document.getElementById("contenido");
 
+let usuarioActualDNI = "";
+
 firebase.auth().onAuthStateChanged(user=>{
     if(user){
         user.photoURL ? userPhoto.src = user.photoURL : userPhoto.src = "../assets/img/icons/usuario-anonimo.png";
@@ -50,9 +52,9 @@ btnSalir.onclick = ()=> {firebase.auth().signOut();};
 
 const asignarPerfil = async (user)=> {
     const query = await firebase.firestore().collection("usuario").get();
-
     query.docs.forEach((doc)=>{
         if(doc.data().id_usuario === user.uid){
+            usuarioActualDNI = doc.data().dni_usuario;
             if(doc.data().tipo_usu == 1){
                 document.body.style.display = "none";
                 location.href = "../.";
