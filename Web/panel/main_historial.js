@@ -34,6 +34,8 @@ txtDniHistorialVacuna.onkeyup = async ()=>{
                 return;
             }
         })
+        cboMascotaHistorialVacuna.removeAttribute("disabled");
+        cboVacunaHistorialVacuna.removeAttribute("disabled");
     }
     if(txtDniHistorialVacuna.value.trim().length > 8){
         txtDniHistorialVacuna.value = txtDniHistorialVacuna.value.trim().substr(0,8);
@@ -46,7 +48,7 @@ opcHistorialVacunas.onclick = ()=> {
     tableHistorialVacunas.style.display = "block";
     listarHistorialVacuna();
     btnCancelarHistorialVacuna.click();
-    // listarVacunas();
+    mostrarFechas();
     txtTitulo.innerText = "Historial de vacunas"
 }
 
@@ -104,6 +106,9 @@ const listarVacunas = async ()=> {
             cboVacunaHistorialVacuna.appendChild(option);
         }
     })
+}
+
+const mostrarFechas = ()=> {
     const hoy = moment().format("YYYY-MM-DD");
     txtFechaHistorialVacuna.value = hoy;
 }
@@ -124,6 +129,7 @@ btnCancelarHistorialVacuna.onclick = ()=> {
     cboEspecieHistorialVacuna.innerHTML = "";
     cboRazaHistorialVacuna.innerHTML = "";
     listarVacunas();
+    mostrarFechas();
     txtCaducidadHistorialVacuna.value = "";
     btnCrearActualizarHistorialVacuna.innerText = "Crear";
 }
@@ -188,35 +194,93 @@ const listarHistorialVacuna = async ()=> {
     })
 }
 
-// $('#myTableHistorialVacunas tbody').on('click', 'tr', async function () {
-//     var data = tablaHistorialVacuna.row(this).data();
-//     txtDniHistorialVacuna.value = data[3];
-//         const query = await firebase.firestore().collection('usuario').get();
-//         query.docs.forEach((doc)=>{
-//             if(doc.data().dni_usuario == txtDniHistorialVacuna.value.trim()){
-//                 txtUsuarioHistorialVacuna.value = doc.data().nombre_usu + " " + doc.data().apellido_usu;
-//                 return;
-//             }
-//         })
-//     cboMascotaHistorialVacuna.innerHTML = `<option value="${data[0]}">${data[0]}</option>`;
-//     cboEspecieHistorialVacuna.innerHTML = `<option value="${data[1]}">${data[1]}</option>`;
-//     cboRazaHistorialVacuna.innerHTML = `<option value="${data[2]}">${data[2]}</option>`;
-//     cboVacunaHistorialVacuna.innerHTML = `<option value="${data[4]}">${data[4]}</option>`;
-//     txtFechaHistorialVacuna.value = moment(data[5], "DD-MM-YYYY").format("YYYY-MM-DD");
-//     txtCaducidadHistorialVacuna.value = moment(data[6], "DD-MM-YYYY").format("YYYY-MM-DD");
-// })
+cboVacunaHistorialVacuna.onfocus = ()=> {
+    listarVacunas();
+}
 
-// $('#myTableHistorialVacunas tbody').on('dblclick', 'tr', async function () {
-//     var data = tablaHistorialVacuna.row(this).data();
-//     const query = await firebase.firestore().collection('historial').get();
-//     query.docs.forEach((doc)=>{
-//         if(doc.data(). == data[0]){
-//             idFilaVacuna = doc.id;
-//             eliminarVacuna();
-//             return;
-//         }
-//     })
-// })
+$('#myTableHistorialVacunas tbody').on('click', 'tr', async function () {
+    var data = tablaHistorialVacuna.row(this).data();
+    let condicionMascota = false;
+
+    txtDniHistorialVacuna.value = data[3];
+        const query = await firebase.firestore().collection('usuario').get();
+        query.docs.forEach((doc)=>{
+            if(doc.data().dni_usuario == txtDniHistorialVacuna.value.trim()){
+                txtUsuarioHistorialVacuna.value = doc.data().nombre_usu + " " + doc.data().apellido_usu;
+                return;
+            }
+        })
+    cboMascotaHistorialVacuna.innerHTML = `<option value="${data[0]}">${data[0]}</option>`;
+    cboEspecieHistorialVacuna.innerHTML = `<option value="${data[1]}">${data[1]}</option>`;
+    cboRazaHistorialVacuna.innerHTML = `<option value="noValue">${data[2]}</option>`;
+    cboVacunaHistorialVacuna.innerHTML = `<option value="noValue">${data[4]}</option>`;
+    txtFechaHistorialVacuna.value = moment(data[5], "DD-MM-YYYY").format("YYYY-MM-DD");
+    txtCaducidadHistorialVacuna.value = moment(data[6], "DD-MM-YYYY").format("YYYY-MM-DD");
+
+    const consultaHistorial = await firebase.firestore().collection('historial').get();
+    consultaHistorial.docs.forEach(async(doc)=>{
+        const consultaMascota = await firebase.firestore().collection('mascota').get();
+        consultaMascota.docs.forEach(async(miMascota)=>{
+            let especieM = data[1] == "Canino" ? "VO3zLzr8Mq5ZRoft61yj" : "fisx4nGvOGfYVhTquyZE";
+            if(data[0] == miMascota.data().nombre_mas && especieM == miMascota.data().especie){
+                const consultaRaza = await firebase.firestore().collection('raza').get();
+                consultaRaza.docs.forEach(async(miRaza)=>{
+                    if(data[2] == miRaza.data().nombre_raza && miRaza.id == miMascota.data().raza){
+                        const consultaUsuario = await firebase.firestore().collection('usuario').get();
+                        consultaUsuario.docs.forEach((miUsuario)=>{
+                            if(data[3] == miUsuario.data().dni_usuario && miUsuario.data().dni_usuario == miMascota.data().usuario){
+                                condicionMascota = true;
+                                idFilaHistorialVacuna = doc.id;
+                                return;
+                            }
+                            return;
+                        })
+                        return;
+                    }
+                    return;
+                })
+                return;
+                } else {condicionMascota = false}
+        })
+    })
+
+    cboMascotaHistorialVacuna.setAttribute("disabled", "true");
+    cboVacunaHistorialVacuna.setAttribute("disabled", "true");
+    btnCrearActualizarHistorialVacuna.innerText = "Editar";
+})
+
+$('#myTableHistorialVacunas tbody').on('dblclick', 'tr', async function () {
+    var data = tablaHistorialVacuna.row(this).data();
+    let condicionMascota = false;
+
+    const consultaHistorial = await firebase.firestore().collection('historial').get();
+    consultaHistorial.docs.forEach(async(doc)=>{
+        const consultaMascota = await firebase.firestore().collection('mascota').get();
+        consultaMascota.docs.forEach(async(miMascota)=>{
+            let especieM = data[1] == "Canino" ? "VO3zLzr8Mq5ZRoft61yj" : "fisx4nGvOGfYVhTquyZE";
+            if(data[0] == miMascota.data().nombre_mas && especieM == miMascota.data().especie){
+                const consultaRaza = await firebase.firestore().collection('raza').get();
+                consultaRaza.docs.forEach(async(miRaza)=>{
+                    if(data[2] == miRaza.data().nombre_raza && miRaza.id == miMascota.data().raza){
+                        const consultaUsuario = await firebase.firestore().collection('usuario').get();
+                        consultaUsuario.docs.forEach((miUsuario)=>{
+                            if(data[3] == miUsuario.data().dni_usuario && miUsuario.data().dni_usuario == miMascota.data().usuario){
+                                condicionMascota = true;
+                                idFilaHistorialVacuna = doc.id;
+                                eliminarHistorialVacuna();
+                                return;
+                            }
+                            return;
+                        })
+                        return;
+                    }
+                    return;
+                })
+                return;
+                } else {condicionMascota = false}
+        })
+    })
+})
 
 const crearHistorialVacuna = async ()=> {
     if(txtDniHistorialVacuna.value.trim() == "" || txtUsuarioHistorialVacuna.value.trim() == "" ||
@@ -245,52 +309,15 @@ const crearHistorialVacuna = async ()=> {
         }).then((result)=>{
             if(result.isConfirmed){
                 btnCancelarHistorialVacuna.click();
+                mostrarFechas();
                 listarHistorialVacuna();
             }
         })
     }
 }
 
-/*
-const editarVacuna = async ()=> {
-    if(txtNombreVacuna.value.trim() == "" || txtDuracionVacuna.value <= 0 ||
-        txtDescripcionVacuna.value.trim() == ""){
-        Swal.fire({
-            icon: "error",
-            title: "Campos incompletos",
-            text: "Debe completar los campos",
-            confirmButtonText: "Entendido",
-            allowOutsideClick: false,
-        });
-    } else {
-        let vacunaSeleccionada = await firebase.firestore().collection("vacuna").doc(idFilaVacuna);
-
-        Swal.fire({
-            icon: "success",
-            title: "Registro actualizado satisfactoriamente",
-            text: "El registro fue actualizado de manera satisfactoria",
-            confirmButtonText: "Entendido",
-            allowOutsideClick: false,
-        }).then((result)=>{
-            if(result.isConfirmed){
-                listarVacuna();
-                txtNombreVacuna.value = "";
-                txtDuracionVacuna.value = "";
-                txtDescripcionVacuna.value = "";
-                btnCrearActualizarVacuna.innerText = "Crear";
-            }
-        })
-
-        vacunaSeleccionada.update({
-            nombre_vacuna: txtNombreVacuna.value.trim(),
-            duracion_vacuna: +txtDuracionVacuna.value,
-            descripcion_vacuna: txtDescripcionVacuna.value.trim(),
-        });
-    }
-}
-
-const eliminarVacuna = async ()=> {
-    let vacunaSeleccionada = await firebase.firestore().collection("vacuna").doc(idFilaVacuna);
+const eliminarHistorialVacuna = async ()=> {
+    let historialVacunaSeleccionada = await firebase.firestore().collection("historial").doc(idFilaHistorialVacuna);
 
     Swal.fire({
         title: '¿Desea eliminar el registro?',
@@ -308,17 +335,73 @@ const eliminarVacuna = async ()=> {
                 allowOutsideClick: false,
             }).then((result)=>{
                 if(result.isConfirmed){
-                    listarVacuna();
-                    txtNombreVacuna.value = "";
-                    txtDuracionVacuna.value = "";
-                    txtDescripcionVacuna.value = "";
-                    btnCrearActualizarVacuna.innerText = "Crear";
+                    btnCancelarHistorialVacuna.click();
+                    mostrarFechas();
+                    listarHistorialVacuna();
                 }
             })
-            return vacunaSeleccionada.update({
-                estado_vacuna: 0,
+            return historialVacunaSeleccionada.update({
+                estado_hv: 0,
             })
         }
     })
 }
-*/
+
+const editarHistorialVacuna = async ()=> {
+    if(txtDniHistorialVacuna.value.trim() == "" || txtUsuarioHistorialVacuna.value.trim() == "" ||
+        cboMascotaHistorialVacuna.value == 0 || cboVacunaHistorialVacuna.value == 0){
+        Swal.fire({
+            icon: "error",
+            title: "Campos incompletos",
+            text: "Debe completar los campos correctamente",
+            confirmButtonText: "Entendido",
+            allowOutsideClick: false,
+        });
+    } else {
+        let historialVacunaSeleccionada = await firebase.firestore().collection("historial").doc(idFilaHistorialVacuna);
+
+        Swal.fire({
+            icon: "success",
+            title: "Registro actualizado satisfactoriamente",
+            text: "El registro fue actualizado de manera satisfactoria",
+            confirmButtonText: "Entendido",
+            allowOutsideClick: false,
+        }).then((result)=>{
+            if(result.isConfirmed){
+                btnCancelarHistorialVacuna.click();
+                mostrarFechas();
+                listarHistorialVacuna();
+            }
+        })
+
+        if(cboMascotaHistorialVacuna.value == "noValue" && cboVacunaHistorialVacuna.value == "noValue"){
+            historialVacunaSeleccionada.update({
+                // mascota: cboMascotaHistorialVacuna.value,
+                // vacuna: cboVacunaHistorialVacuna.value,
+                fecha_vacuna: txtFechaHistorialVacuna.value,
+                fecha_caducidad: txtCaducidadHistorialVacuna.value,
+            });
+        } else if(cboMascotaHistorialVacuna.value == "noValue"){
+            historialVacunaSeleccionada.update({
+                // mascota: cboMascotaHistorialVacuna.value,
+                vacuna: cboVacunaHistorialVacuna.value,
+                fecha_vacuna: txtFechaHistorialVacuna.value,
+                fecha_caducidad: txtCaducidadHistorialVacuna.value,
+            });
+        } else if(cboVacunaHistorialVacuna.value == "noValue") {
+            historialVacunaSeleccionada.update({
+                mascota: cboMascotaHistorialVacuna.value,
+                // vacuna: cboVacunaHistorialVacuna.value,
+                fecha_vacuna: txtFechaHistorialVacuna.value,
+                fecha_caducidad: txtCaducidadHistorialVacuna.value,
+            });
+        } else {
+            historialVacunaSeleccionada.update({
+                mascota: cboMascotaHistorialVacuna.value,
+                vacuna: cboVacunaHistorialVacuna.value,
+                fecha_vacuna: txtFechaHistorialVacuna.value,
+                fecha_caducidad: txtCaducidadHistorialVacuna.value,
+            });
+        }
+    }
+}
