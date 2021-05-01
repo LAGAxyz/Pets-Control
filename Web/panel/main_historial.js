@@ -117,7 +117,7 @@ btnCrearActualizarHistorialVacuna.onclick = ()=> {
     if(btnCrearActualizarHistorialVacuna.innerText === "Crear"){
         crearHistorialVacuna();
     } else if(btnCrearActualizarHistorialVacuna.innerText === "Editar"){
-        editarHistorialVacuna();
+        // editarHistorialVacuna();
     }
 }
 
@@ -200,7 +200,6 @@ cboVacunaHistorialVacuna.onfocus = ()=> {
 
 $('#myTableHistorialVacunas tbody').on('click', 'tr', async function () {
     var data = tablaHistorialVacuna.row(this).data();
-    let condicionMascota = false;
 
     txtDniHistorialVacuna.value = data[3];
         const query = await firebase.firestore().collection('usuario').get();
@@ -210,6 +209,7 @@ $('#myTableHistorialVacunas tbody').on('click', 'tr', async function () {
                 return;
             }
         })
+    
     cboMascotaHistorialVacuna.innerHTML = `<option value="${data[0]}">${data[0]}</option>`;
     cboEspecieHistorialVacuna.innerHTML = `<option value="${data[1]}">${data[1]}</option>`;
     cboRazaHistorialVacuna.innerHTML = `<option value="noValue">${data[2]}</option>`;
@@ -229,7 +229,6 @@ $('#myTableHistorialVacunas tbody').on('click', 'tr', async function () {
                         const consultaUsuario = await firebase.firestore().collection('usuario').get();
                         consultaUsuario.docs.forEach((miUsuario)=>{
                             if(data[3] == miUsuario.data().dni_usuario && miUsuario.data().dni_usuario == miMascota.data().usuario){
-                                condicionMascota = true;
                                 idFilaHistorialVacuna = doc.id;
                                 return;
                             }
@@ -240,18 +239,17 @@ $('#myTableHistorialVacunas tbody').on('click', 'tr', async function () {
                     return;
                 })
                 return;
-                } else {condicionMascota = false}
+            }
         })
     })
 
     cboMascotaHistorialVacuna.setAttribute("disabled", "true");
     cboVacunaHistorialVacuna.setAttribute("disabled", "true");
-    btnCrearActualizarHistorialVacuna.innerText = "Editar";
+    // btnCrearActualizarHistorialVacuna.innerText = "Editar";
 })
 
 $('#myTableHistorialVacunas tbody').on('dblclick', 'tr', async function () {
     var data = tablaHistorialVacuna.row(this).data();
-    let condicionMascota = false;
 
     const consultaHistorial = await firebase.firestore().collection('historial').get();
     consultaHistorial.docs.forEach(async(doc)=>{
@@ -265,9 +263,8 @@ $('#myTableHistorialVacunas tbody').on('dblclick', 'tr', async function () {
                         const consultaUsuario = await firebase.firestore().collection('usuario').get();
                         consultaUsuario.docs.forEach((miUsuario)=>{
                             if(data[3] == miUsuario.data().dni_usuario && miUsuario.data().dni_usuario == miMascota.data().usuario){
-                                condicionMascota = true;
                                 idFilaHistorialVacuna = doc.id;
-                                eliminarHistorialVacuna();
+                                // eliminarHistorialVacuna();
                                 return;
                             }
                             return;
@@ -277,7 +274,7 @@ $('#myTableHistorialVacunas tbody').on('dblclick', 'tr', async function () {
                     return;
                 })
                 return;
-                } else {condicionMascota = false}
+                }
         })
     })
 })
@@ -316,6 +313,7 @@ const crearHistorialVacuna = async ()=> {
     }
 }
 
+/*
 const eliminarHistorialVacuna = async ()=> {
     let historialVacunaSeleccionada = await firebase.firestore().collection("historial").doc(idFilaHistorialVacuna);
 
@@ -405,3 +403,4 @@ const editarHistorialVacuna = async ()=> {
         }
     }
 }
+*/

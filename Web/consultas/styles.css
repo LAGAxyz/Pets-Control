@@ -316,7 +316,7 @@ body .contenedor .part-right .links {
   padding: 5px 0px;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  /* justify-content: space-around; */
 }
 
 body .contenedor .part-right .links a {
@@ -389,6 +389,9 @@ body .contenedor .part-right .links a img {
   }
   body .contenedor .part-right figure {
     justify-content: center;
+  }
+  body .contenedor .part-right .links {
+    justify-content: space-around;
   }
 }
 

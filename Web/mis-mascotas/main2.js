@@ -108,9 +108,12 @@ const mostrarData = async ()=>{
             btnEditar.innerText = "Editar"
             btnEditar.type = "button"
             btnEditar.setAttribute("data-bs-toggle", "modal")
-            btnEditar.setAttribute("data-bs-target", "#modalEliminar")
+            btnEditar.setAttribute("data-bs-target", "#modalEditar")
             btnEliminar.innerText = "Eliminar"
             btnVerVacunas.innerText = "Ver Vacunas"
+            btnVerVacunas.type = "button"
+            btnVerVacunas.setAttribute("data-bs-toggle", "modal")
+            btnVerVacunas.setAttribute("data-bs-target", "#modalVerVacunas")
 
             btnEditar.onclick = ()=>{editarMascota(doc);};
             btnEliminar.onclick = ()=>{eliminarMascota(doc.id);};
@@ -244,8 +247,48 @@ const eliminarMascota = async (mascota)=> {
     })
 }
 
-const verVacunasMascota = (mascota)=> {
-    console.log("funcionando ver vacunas");
+const historialVacunasCarousel = document.getElementById("historialVacunasCarousel");
+const verVacunasMascota = async (mascota)=> {
+    let contadorVacunas = 0;
+    historialVacunasCarousel.innerHTML = '';
+
+    const query = await firebase.firestore().collection('historial').get();
+    query.docs.forEach(async(doc)=>{
+        if(doc.data().estado_hv == 1 && doc.data().mascota == mascota.id){
+            contadorVacunas++;
+            let carousel = document.createElement("div");
+                if(contadorVacunas==1){carousel.classList.add("carousel-item", "active","text-center", "p-5");}
+                if(contadorVacunas>1){carousel.classList.add("carousel-item","text-center", "p-5");}
+            let tVacuna = document.createElement("h4");
+                tVacuna.classList.add("text-white");
+            let cVacuna = document.createElement("span");
+                cVacuna.classList.add("badge", "bg-primary", "p-2", "mt-2");
+                cVacuna.innerText = "Nombre de la vacuna";
+            let pDescripcion = document.createElement("p");
+                pDescripcion.classList.add("text-center");
+                pDescripcion.innerText = "Descripción de la vacuna";
+            let tFechaV = document.createElement("h6");
+                tFechaV.classList.add("text-white");
+            let cFechaV = document.createElement("span");
+                cFechaV.classList.add("badge", "bg-success", "p-2");
+                cFechaV.innerText = doc.data().fecha_vacuna;
+            let tFechaC = document.createElement("h6");
+                tFechaC.classList.add("text-white");
+            let cFechaC = document.createElement("span");
+                cFechaC.classList.add("badge", "bg-danger", "p-2");
+                cFechaC.innerText = doc.data().fecha_caducidad;
+            
+            tFechaC.appendChild(cFechaC);
+            tFechaV.appendChild(cFechaV);
+            tVacuna.appendChild(cVacuna);
+            carousel.appendChild(tVacuna);
+            carousel.appendChild(pDescripcion);
+            carousel.appendChild(tFechaV);
+            carousel.appendChild(tFechaC);
+
+            historialVacunasCarousel.appendChild(carousel);
+        }
+    })
 }
 
 cboSelectMascotaEspecie.onchange = async ()=>{
