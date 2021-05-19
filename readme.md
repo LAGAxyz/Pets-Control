@@ -1,9 +1,9 @@
-
+﻿
 <p align="center">
-    <img src="./Web/assets/img/logos/logo.jpg" width="200">
+    <img src="./Web/assets/img/logos/logo.png" width="200">
 </p>
 
-<h5 align="center">Implementación de la plataforma "Pets Control" para el proceso de control y monitoreo de la empresa PET ID</h5>
+<h5 align="center">Implementación de la plataforma digital "Pets Control" para el monitoreo de vacunas de la empresa PET ID</h5>
 
 ------------
 
